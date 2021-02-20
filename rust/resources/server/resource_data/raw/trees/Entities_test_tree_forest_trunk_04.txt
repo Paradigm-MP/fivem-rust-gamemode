@@ -1,0 +1,5 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+test_tree_forest_trunk_04, -609.2201, 5792.438, 27.78274, -0.028676, -0.001725, 0.9270551, 0.373823, x64q.rpf\levels\gta5\_hills\country_01\country_01_metadata.rpf\cs1_16_critical_0.ymap
+test_tree_forest_trunk_04, -609.2201, 5792.438, 27.78274, -0.028676, -0.001725, 0.9270551, 0.373823, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_01\country_01_metadata.rpf\hei_cs1_16_critical_0.ymap
+test_tree_forest_trunk_04, -609.2201, 5792.438, 27.78274, -0.028676, -0.001725, 0.9270551, 0.373823, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_hills\country_01\country_01_metadata.rpf\cs1_16_critical_0.ymap
+test_tree_forest_trunk_04, -609.2201, 5792.438, 27.78274, -0.028676, -0.001725, 0.9270551, 0.373823, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_hills\country_01\country_01_metadata.rpf\cs1_16_critical_0.ymap

@@ -1,0 +1,6 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+prop_rock_2_f, 2158.401, 2800.696, 48.00802, 0, 0, 0, 1, x64u.rpf\levels\gta5\_hills\country_06\country_06_metadata.rpf\cs6_04_long_2.ymap
+prop_rock_2_f, 2158.401, 2800.696, 48.00802, 0, 0, 0, 1, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\hei_cs6_04_long_2.ymap
+prop_rock_2_f, 2158.401, 2800.696, 48.00802, 0, 0, 0, 1, update\x64\dlcpacks\mplowrider\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\lr_cs6_04_long_2.ymap
+prop_rock_2_f, 2158.401, 2800.696, 48.00802, 0, 0, 0, 1, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\cs6_04_long_2.ymap
+prop_rock_2_f, 2158.401, 2800.696, 48.00802, 0, 0, 0, 1, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\cs6_04_long_2.ymap
