@@ -7,3 +7,4 @@ license.cfg
 *.db
 .vscode
 /noclip/
+**/resource_data/cells/*.json
