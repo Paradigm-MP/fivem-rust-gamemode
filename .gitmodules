@@ -1,0 +1,15 @@
+[submodule "rust/oof"]
+	path = rust/oof
+	url = https://github.com/Paradigm-MP/oof
+[submodule "rust/chat"]
+	path = rust/chat
+	url = https://github.com/Paradigm-MP/oof-chat
+[submodule "rust/object-editor"]
+	path = rust/object-editor
+	url = https://github.com/Paradigm-MP/oof-object-editor
+[submodule "rust/blackscreen"]
+	path = rust/blackscreen
+	url = https://github.com/Paradigm-MP/oof-blackscreen
+[submodule "rust/events"]
+	path = rust/events
+	url = https://github.com/Paradigm-MP/oof-defaultevents

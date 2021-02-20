@@ -1,0 +1,9 @@
+CitizenMP.Server.exe
+CitizenMP.Server.exe.config
+NLog.config
+/cache/
+/resources/\[local\]/
+license.cfg
+*.db
+.vscode
+/noclip/
