@@ -5,6 +5,7 @@ function Movement:__init()
     LocalPlayer:GetPlayer():DisableFiring(true)
 
     LocalPlayer:RestrictAction(Control.NextCamera, true)
+    LocalPlayer:RestrictAction(Control.Cover, true)
     Camera:LockCameraMode(CameraViewMode.FirstPerson)
 
     -- Increase run speed a bit since they'll be running a lot
@@ -19,7 +20,6 @@ function Movement:__init()
 
     Keymap:Register("mouse_left", "mouse_button", "attack", function(args)
         if args.down then
-            print("go")
             self:TryToAttack()
         end
     end)
@@ -43,6 +43,15 @@ function Movement:TryToAttack()
         flag = AnimationFlags.ANIM_FLAG_CANCELABLE,
         animTime = 0.15
     })
+
+    local detection = MeleeActionStoneHatchet(LocalPlayer:GetPed())
+    detection:DetectHits()
+
+    Citizen.CreateThread(function()
+        Wait(800)
+        detection:StopDetecting()
+    end)
+
 end
 
 function Movement:StartStaminaLoop()

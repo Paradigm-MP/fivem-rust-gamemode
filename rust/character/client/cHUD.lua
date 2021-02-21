@@ -7,7 +7,7 @@ end
 function HUDDefaults:Render()
     -- TODO: call this once there is a custom inventory set up to change weapons
     -- because it disables the weapon wheel
-    -- HUD:HideHudAndRadarThisFrame()
+    HUD:HideHudAndRadarThisFrame()
 end
 
 HUDDefaults = HUDDefaults()
