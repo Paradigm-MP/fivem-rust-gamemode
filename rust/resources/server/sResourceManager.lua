@@ -167,7 +167,7 @@ function sResourceManager:GenerateCellFiles(cell_size)
             end
 
             SaveResourceFile(GetCurrentResourceName(), "resources/server/resource_data/generated.txt", 
-                string.format("Generated on %s", os.date("%Y-%m-%d-%H-%M-%S")))
+                string.format("Generated on %s\nDeleting this file will regenerate cell data on next server restart", os.date("%Y-%m-%d %H-%M-%S")))
 
             print(string.format("Finished writing cells to files in %.2f seconds.", t:GetSeconds()))
 
