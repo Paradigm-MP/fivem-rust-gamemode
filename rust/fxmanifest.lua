@@ -61,8 +61,6 @@ client_scripts {
     'blackscreen/client/BlackScreen.lua',
     -- sounds
     'sounds/client/Sounds.lua',
-    -- custom pause menu
-    'pause-menu/client/*.lua',
     -- chat
     'chat/shared/shChatUtility.lua',
     'chat/client/cChat.lua',
@@ -84,6 +82,7 @@ client_scripts {
 
     'environment/client/*.lua',
     'character/client/*.lua',
+    'character/client/**/*.lua',
 
     -- LOAD LAST
     'oof/shared/object-oriented/LOAD_ABSOLUTELY_LAST.lua'
@@ -165,9 +164,6 @@ files {
     'chat/client/ui/index.html',
     'chat/client/ui/script.js',
     'chat/client/ui/style.css',
-
-    -- custom pause menu
-    'pause-menu/client/html/*',
 
     -- Gamemode files
     'resources/shared/**/*',
