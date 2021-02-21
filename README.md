@@ -1,4 +1,4 @@
-![](icon.png) 
+<p align="center"><img src="icon.png"></p>
 
 # fivem-rust-gamemode
 Rust-inspired survival gamemode for FiveM using OOF
