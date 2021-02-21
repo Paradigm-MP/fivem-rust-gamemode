@@ -8,3 +8,4 @@ license.cfg
 .vscode
 /noclip/
 **/resource_data/cells/*.json
+**/resource_data/generated.txt

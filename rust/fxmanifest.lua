@@ -103,6 +103,7 @@ server_scripts {
     'oof/shared/events/*.lua', -- Events class
     'oof/server/network/*.lua', -- Network class
     'oof/server/json/*.lua', -- JsonOOF, JsonUtils classes
+    'oof/server/fs-additions/*.lua', -- Directory/file exists helper functions
     -- mysql enabler
     'oof/server/mysql-async/MySQLAsync.net.dll',
     'oof/server/mysql-async/lib/init.lua',

@@ -14,7 +14,24 @@ function sResourceManager:__init()
 end
 
 function sResourceManager:ModulesLoaded()
-    -- self:GenerateCellFiles(self.cell_size)
+
+    -- Generate cell data if it does not exist
+    local path = string.format("./resources/%s/resources/server/resource_data/generated.txt", GetCurrentResourceName())
+    if not fs_exists(path) then
+        Citizen.CreateThread(function()
+            Wait(3000)
+            print(string.format("%s\n-------------------------------------------------\n%s", Colors.Console.Yellow, Colors.Console.Default))
+            print(string.format("%sGenerated cell data does not exist. Generating now.%s", Colors.Console.Yellow, Colors.Console.Default))
+            print(string.format("%sThis is a normal step when running the server for the first time.%s", Colors.Console.Yellow, Colors.Console.Default))
+            print(string.format("%sThis will take a few minutes. Please keep the server open until it completes.%s", Colors.Console.Yellow, Colors.Console.Default))
+            print(string.format("%sTo regenerate cell data later, delete %sgenerated.txt%s in resource_data.%s", Colors.Console.Yellow, Colors.Console.LightBlue, Colors.Console.Yellow, Colors.Console.Default))
+            print(string.format("%s\n-------------------------------------------------\n%s", Colors.Console.Yellow, Colors.Console.Default))
+            Wait(10000)
+            print(string.format("%sBeginning cell generation process...%s", Colors.Console.Yellow, Colors.Console.Default))
+            Wait(2000)
+            self:GenerateCellFiles(self.cell_size)
+        end)
+    end
 end
 
 --[[
@@ -124,14 +141,14 @@ function sResourceManager:GenerateCellFiles(cell_size)
                             actual = actual + 1
                         end
 
-                        print(string.format("Parsed %d/%d (actual: %d) in %s/%s", _, total, actual, resource_type, resource_name))
                         if _ % 1000 == 0 then
                             Wait(1)
+                            print(string.format("Parsed %d/%d (actual: %d) in %s/%s", _, total, actual, resource_type, resource_name))
                         end
                     end
 
                     total_resources = total_resources + actual
-                    print(string.format("Finished parsing %s/%s", resource_type, resource_name))
+                    print(string.format("Finished parsing %d resources in %s/%s", actual, resource_type, resource_name))
                 end
 
                 print(string.format("Parsed %d %s (real count)", total_resources, resource_type))
@@ -145,9 +162,12 @@ function sResourceManager:GenerateCellFiles(cell_size)
                 for y, _ in pairs(cell_resources[x]) do
                     JsonUtils:SaveJSON(cell_resources[x][y], string.format("resources/server/resource_data/cells/%d_%d_%d.json", cell_size, x, y))
                     print(string.format("Wrote %d_%d_%d.json", cell_size, x, y))
-                    Wait(1)
                 end
+                Wait(1)
             end
+
+            SaveResourceFile(GetCurrentResourceName(), "resources/server/resource_data/generated.txt", 
+                string.format("Generated on %s", os.date("%Y-%m-%d-%H-%M-%S")))
 
             print(string.format("Finished writing cells to files in %.2f seconds.", t:GetSeconds()))
 
@@ -178,12 +198,15 @@ function sResourceManager:LoadResourcesFromFile(resource_type)
         processed_resource_files = processed_resource_files + 1
         local data = CSV:Parse(string.format("resources/server/resource_data/raw/%s/Entities_%s.txt", resource_type, resource_name), 10)
         self.raw_resources[resource_type][resource_name] = data
-        print(string.format("[resources] Loaded %s [%d/%d]",
-            resource_type, processed_resource_files, total_resource_files))
-        Wait(100)
+        
+        if processed_resource_files % 10 == 0 then
+            print(string.format("[resources] Loaded %s [%d/%d]",
+                resource_type, processed_resource_files, total_resource_files))
+        end
+        Wait(10)
     end
 
-    print(string.format("[resources] Finished loading all %s from file.", resource_type))
+    print(string.format("[resources] Finished loading all %s (%d/%d) from file.", resource_type, processed_resource_files, total_resource_files))
 end
 
 sResourceManager = sResourceManager()
