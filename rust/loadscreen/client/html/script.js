@@ -2,10 +2,19 @@ $(document).ready(function()
 {
     const states = {}
 
+    const names = 
+    {
+        ["INIT_BEFORE_MAP_LOADED"]: "Asset Warmup",
+        ["MAP"]: "Map",
+        ["INIT_AFTER_MAP_LOADED"]: "Initialization",
+        ["INIT_SESSION"]: "Session"
+    }
+
     function UpdateLoadStatus(name)
     {
         const load_status = states[name]
         load_status.progress = Math.min(load_status.progress, load_status.max_progress)
+        name = names[name] || name;
         let text_str = `${name} (${load_status.progress}/${load_status.max_progress})`;
         if (load_status.max_progress == 0)
         {
