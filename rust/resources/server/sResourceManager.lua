@@ -71,6 +71,12 @@ end
 function sResourceManager:LoadCellResources(cell)
     local data = JsonUtils:LoadJSON(string.format("resources/server/resource_data/cells/%d_%d_%d.json", self.cell_size, cell.x, cell.y))
     if data then
+
+        -- All resources start at 100% health
+        for _, resource in pairs(data) do
+            resource.health = 1
+        end
+
         self.resources[cell.x][cell.y] = data
     end
 end
