@@ -4,6 +4,7 @@ function sResourceManager:__init()
 
     -- Resources on a per-cell basis
     self.resources = {}
+    self.resource_id_pool = IdPool()
 
     -- Cell size for all resource streaming
     self.cell_size = 64
@@ -74,6 +75,7 @@ function sResourceManager:LoadCellResources(cell)
 
         -- All resources start at 100% health
         for _, resource in pairs(data) do
+            resource.id = self.resource_id_pool:GetNextId()
             resource.health = 1
         end
 

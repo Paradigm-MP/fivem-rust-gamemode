@@ -11,7 +11,7 @@ function Trees:__init()
         color = Colors.Red
     })
 
-    Events:Subscribe("Render", self, self.TreeCheck)
+    -- Events:Subscribe("Render", self, self.TreeCheck)
 
     -- Events:Subscribe('Loadingscreen/Ready', self, self.LoadingScreenReady)
 

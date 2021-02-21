@@ -29,7 +29,7 @@ function cResourceManager:SyncCells(args)
                         model = resource.model,
                         position = vector3(resource.posX, resource.posY, resource.posZ),
                         quaternion = quat(resource.rotW, resource.rotX, resource.rotY, resource.rotZ),
-                        -- kinematic = true,
+                        kinematic = true,
                         isNetwork = false
                     })
                 end
