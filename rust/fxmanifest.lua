@@ -85,6 +85,7 @@ client_scripts {
     'character/client/**/*.lua',
     
     'info/client/*.lua',
+    'discord-rich-presence/client/*.lua',
 
 
     -- LOAD LAST
@@ -146,6 +147,7 @@ server_scripts {
     'resources/server/*.lua',
 
     'info/server/*.lua',
+    'discord-rich-presence/server/*.lua',
     
     'oof/shared/object-oriented/LOAD_ABSOLUTELY_LAST.lua'
 }

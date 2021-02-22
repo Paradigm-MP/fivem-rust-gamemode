@@ -186,7 +186,6 @@ end
 
 function sResourceManager:LoadAllResourcesFromFile(callback)
 
-    print("sResourceManager:LoadResourcesFromFile")
     Citizen.CreateThread(function()
         self:LoadResourcesFromFile("trees")
         self:LoadResourcesFromFile("rocks")
