@@ -83,6 +83,9 @@ client_scripts {
     'environment/client/*.lua',
     'character/client/*.lua',
     'character/client/**/*.lua',
+    
+    'info/client/*.lua',
+
 
     -- LOAD LAST
     'oof/shared/object-oriented/LOAD_ABSOLUTELY_LAST.lua'
@@ -141,6 +144,8 @@ server_scripts {
     'resources/shared/*.lua',
     'resources/server/resource_data/**/*',
     'resources/server/*.lua',
+
+    'info/server/*.lua',
     
     'oof/shared/object-oriented/LOAD_ABSOLUTELY_LAST.lua'
 }
