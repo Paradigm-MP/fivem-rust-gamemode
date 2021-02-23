@@ -11,3 +11,6 @@ This gamemode is not currently functional in any sense. When this gamemode reach
 ## Bugs
 - The trees/rocks change size when I get close to them. How do I fix it?
   - Not possible to fix right now. The objects are converted from CBuildings which have custom scales, but custom scaling of object entities is not currently possible during runtime.
+
+## Contact Us
+You can get in touch with us on our [Discord](https://discord.gg/XAQ34Td).
