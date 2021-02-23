@@ -1,0 +1,17 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+prop_rock_2_g, -1830.35, 336.0451, 88.08521, 0, 0, 0.3185869, 0.9478937, x64n.rpf\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\ch1_06f_long_0.ymap
+prop_rock_2_g, -1845.055, 332.5117, 88.08521, 0, 0, 0.4889109, 0.8723338, x64n.rpf\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\ch1_06f_long_0.ymap
+prop_rock_2_g, -1851.297, 270.4242, 84.65195, 0, 0, 0.5379371, 0.842985, x64n.rpf\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\ch1_06f_strm_0.ymap
+prop_rock_2_g, 2157.127, 2802, 48.27416, 0, 0, 0, 1, x64u.rpf\levels\gta5\_hills\country_06\country_06_metadata.rpf\cs6_04_long_2.ymap
+prop_rock_2_g, 2205.828, 2793.816, 44.30962, 0, 0, -0.6170601, 0.7869161, x64u.rpf\levels\gta5\_hills\country_06\country_06_metadata.rpf\cs6_04_long_2.ymap
+prop_rock_2_g, -1830.35, 336.0451, 88.08521, 0, 0, 0.3185869, 0.9478937, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\hei_ch1_06f_long_0.ymap
+prop_rock_2_g, -1845.055, 332.5117, 88.08521, 0, 0, 0.4889109, 0.8723338, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\hei_ch1_06f_long_0.ymap
+prop_rock_2_g, -1851.297, 270.4242, 84.65195, 0, 0, 0.5379371, 0.842985, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\hei_ch1_06f_strm_0.ymap
+prop_rock_2_g, 2157.127, 2802, 48.27416, 0, 0, 0, 1, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\hei_cs6_04_long_2.ymap
+prop_rock_2_g, 2205.828, 2793.816, 44.30962, 0, 0, -0.6170601, 0.7869161, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\hei_cs6_04_long_2.ymap
+prop_rock_2_g, 2157.127, 2802, 48.27416, 0, 0, 0, 1, update\x64\dlcpacks\mplowrider\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\lr_cs6_04_long_2.ymap
+prop_rock_2_g, 2205.828, 2793.816, 44.30962, 0, 0, -0.6170601, 0.7869161, update\x64\dlcpacks\mplowrider\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\lr_cs6_04_long_2.ymap
+prop_rock_2_g, 2157.127, 2802, 48.27416, 0, 0, 0, 1, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\cs6_04_long_2.ymap
+prop_rock_2_g, 2205.828, 2793.816, 44.30962, 0, 0, -0.6170601, 0.7869161, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\cs6_04_long_2.ymap
+prop_rock_2_g, 2157.127, 2802, 48.27416, 0, 0, 0, 1, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\cs6_04_long_2.ymap
+prop_rock_2_g, 2205.828, 2793.816, 44.30962, 0, 0, -0.6170601, 0.7869161, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_hills\country_06\country_06_metadata.rpf\cs6_04_long_2.ymap

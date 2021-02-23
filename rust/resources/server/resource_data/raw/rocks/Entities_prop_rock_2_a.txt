@@ -1,3 +1,0 @@
-ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
-prop_rock_2_a, -2001.584, 662.0474, 121.1933, 0.05091299, 0.04675299, 0.9948668, 0.07390598, x64n.rpf\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\ch1_06c_strm_0.ymap
-prop_rock_2_a, -2001.584, 662.0474, 121.1933, 0.05091299, 0.04675299, 0.9948668, 0.07390598, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\hei_ch1_06c_strm_0.ymap

@@ -1,0 +1,14 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+prop_joshua_tree_02c, -401.0234, 672.1477, 161.5575, 0, 0, -0.2974631, 0.9547333, x64o.rpf\levels\gta5\_hills\cityhills_02\cityhills_02_metadata.rpf\ch2_05f_long_0.ymap
+prop_joshua_tree_02c, 2880.8, 4003.49, 49.93671, -0.002246999, -0.005456998, 0.8532347, -0.5214938, x64t.rpf\levels\gta5\_hills\country_04\country_04_metadata.rpf\cs4_11_long_1.ymap
+prop_joshua_tree_02c, 2858.725, 4054.161, 47.98615, 0.010821, 0.001241, -0.5316759, 0.8468778, x64t.rpf\levels\gta5\_hills\country_04\country_04_metadata.rpf\cs4_11_long_1.ymap
+prop_joshua_tree_02c, 2880.8, 4003.49, 49.93671, -0.002246999, -0.005456998, 0.8532347, -0.5214938, update\update.rpf\dlc_patch\mplowrider\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\lr_cs4_11_long_1.ymap
+prop_joshua_tree_02c, 2858.725, 4054.161, 47.98615, 0.010821, 0.001241, -0.5316759, 0.8468778, update\update.rpf\dlc_patch\mplowrider\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\lr_cs4_11_long_1.ymap
+prop_joshua_tree_02c, -401.0234, 672.1477, 161.5575, 0, 0, -0.2974631, 0.9547333, update\x64\dlcpacks\mpapartment\dlc.rpf\x64\levels\gta5\_hills\cityhills_02\cityhills_02_metadata.rpf\apa_ch2_05f_long_0.ymap
+prop_joshua_tree_02c, -401.0234, 672.1477, 161.5575, 0, 0, -0.2974631, 0.9547333, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_02\cityhills_02_metadata.rpf\hei_ch2_05f_long_0.ymap
+prop_joshua_tree_02c, 2880.8, 4003.49, 49.93671, -0.002246999, -0.005456998, 0.8532347, -0.5214938, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\hei_cs4_11_long_1.ymap
+prop_joshua_tree_02c, 2858.725, 4054.161, 47.98615, 0.010821, 0.001241, -0.5316759, 0.8468778, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\hei_cs4_11_long_1.ymap
+prop_joshua_tree_02c, 2880.8, 4003.49, 49.93671, -0.002246999, -0.005456998, 0.8532347, -0.5214938, update\x64\dlcpacks\mplowrider\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\lr_cs4_11_long_1.ymap
+prop_joshua_tree_02c, 2858.725, 4054.161, 47.98615, 0.010821, 0.001241, -0.5316759, 0.8468778, update\x64\dlcpacks\mplowrider\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\lr_cs4_11_long_1.ymap
+prop_joshua_tree_02c, 2880.8, 4003.49, 49.93671, -0.002246999, -0.005456998, 0.8532347, -0.5214938, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\cs4_11_long_1.ymap
+prop_joshua_tree_02c, 2858.725, 4054.161, 47.98615, 0.010821, 0.001241, -0.5316759, 0.8468778, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\cs4_11_long_1.ymap
