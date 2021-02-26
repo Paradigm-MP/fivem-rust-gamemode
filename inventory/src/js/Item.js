@@ -10,7 +10,8 @@ export default class Item extends React.Component {
         super(props);
         this.state = 
         {
-            item_data: props.item_data || {}
+            item_data: props.item_data || {},
+            hovered: false
         }
     }
 
@@ -18,16 +19,23 @@ export default class Item extends React.Component {
     render () {
         return (
             <>
-                <div className='item-container'>
+                <div className={`item-container ${this.state.hovered ? 'hovered' : ''} ${this.props.selected ? 'selected' : ''}`}>
+
+                    <div className='grab-container'
+                    onMouseEnter={() => this.setState({hovered: true})}
+                    onMouseLeave={() => this.setState({hovered: false})}
+                    onMouseUp={() => this.props.selectSlot(this.props.slot)}></div>
 
                     {/* Durability bar on the left */}
-                    <div className='durability'>
-                        <div className='durability-inner'></div>
-                    </div>
+                    {this.state.item_data.durable && 
+                        <div className='durability'>
+                            <div className='durability-inner'></div>
+                        </div>
+                    }
 
                     {/* Item amount, if greater than 1 */}
                     {this.state.item_data.amount > 1 && 
-                        <div className='amount'></div>
+                        <div className='amount'>x{this.state.item_data.amount}</div>
                     }
 
                     {/* Item Image */}
