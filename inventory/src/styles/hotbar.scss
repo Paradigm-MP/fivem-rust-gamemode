@@ -1,0 +1,11 @@
+div.main-inventory-container div.hotbar-container
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+    border: 2px dashed yellow;
+    position: relative;
+    display: grid;
+    grid-column-gap: 6px;
+    grid-template-rows: auto;
+    grid-template-columns: auto auto auto auto auto auto;
+}

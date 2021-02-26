@@ -87,6 +87,7 @@ client_scripts {
     'info/client/*.lua',
     'discord-rich-presence/client/*.lua',
 
+    'inventory/client/*.lua',
 
     -- LOAD LAST
     'oof/shared/object-oriented/LOAD_ABSOLUTELY_LAST.lua'
@@ -174,6 +175,9 @@ files {
 
     -- Gamemode files
     'resources/shared/**/*',
+
+    'inventory/client/ui/*',
+    'inventory/client/ui/images/*',
 
     -- Streaming
     'stream/**/*.ytyp',

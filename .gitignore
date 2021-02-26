@@ -10,6 +10,7 @@ license.cfg
 **/resource_data/cells/*.json
 **/resource_data/generated.txt
 inventory/client/ui/app.js*
+inventory/client/ui/images/
 .DS_Store
 .env
 .gclient_done

@@ -1,5 +1,6 @@
 const path = require('path');
 const webpack = require('webpack');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = options => ({
     mode: options.mode,
@@ -58,6 +59,14 @@ module.exports = options => ({
             }
         ]
     },
+    plugins: [
+        // Use CopyWebpackPlugin to copy images to the client directory so we can use them in both locations
+        new CopyWebpackPlugin({
+            patterns: [
+                { from: './src/images', to: './images' }
+            ]
+        }),
+    ],
     resolve: {
         extensions: ['.js'],
     },
