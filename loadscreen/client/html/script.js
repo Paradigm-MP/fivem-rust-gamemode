@@ -32,7 +32,11 @@ $(document).ready(function()
     {
         OOF.Subscribe('Update', (args) => 
         {
-            let text_str = `${args.name} [${args.progress}/${args.progress_max}]`;
+            text_str = args.name;
+            if (args.progress != undefined)
+            {
+                text_str = `${args.name} [${args.progress}/${args.progress_max}]`;
+            }
             $('div.subtitle').text(text_str);
         })
 
@@ -85,15 +89,25 @@ $(document).ready(function()
     
         performMapLoadFunction(data)
         {
+            if (!states["MAP"])
+            {
+                states["MAP"] = {};
+                states["MAP"].max_progress = data.count;
+                states["MAP"].progress = 0; 
+            }
+
             states["MAP"].progress++;
             UpdateLoadStatus("MAP");
         },
     
         startDataFileEntries(data)
         {
-            states["MAP"] = {};
-            states["MAP"].max_progress = data.count;
-            states["MAP"].progress = 0; 
+            if (!states["MAP"])
+            {
+                states["MAP"] = {};
+                states["MAP"].max_progress = data.count;
+                states["MAP"].progress = 0; 
+            }
             UpdateLoadStatus("MAP");
         },
     

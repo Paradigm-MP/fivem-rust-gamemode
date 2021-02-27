@@ -23,6 +23,9 @@ end
 function Loadscreen:UIReady()
     Events:Fire("Loadingscreen/Ready")
 
+end
+
+function Loadscreen:FinishLoading()
     Events:Fire('Loadingscreen/Finished')
     self.ui:Hide()
     UI:SetFocus(false)
@@ -49,8 +52,7 @@ function Loadscreen:Remove(args)
     if count_table(self.loading_functions) > 0 then
         self.loading_functions[1].callback()
     else
-        Events:Fire('Loadingscreen/Finished')
-        self.ui:Hide()
+        self:FinishLoading()
     end
 end
 
