@@ -24,7 +24,8 @@ export default class Item extends React.Component {
                     <div className='grab-container'
                     onMouseEnter={() => this.setState({hovered: true})}
                     onMouseLeave={() => this.setState({hovered: false})}
-                    onMouseUp={() => this.props.selectSlot(this.props.slot)}></div>
+                    onMouseUp={(e) => this.props.itemMouseUp(e, this.props.slot)}
+                    onMouseDown={(e) => this.props.itemMouseDown(e, this.props.slot)}></div>
 
                     {/* Durability bar on the left */}
                     {this.state.item_data.durable && 

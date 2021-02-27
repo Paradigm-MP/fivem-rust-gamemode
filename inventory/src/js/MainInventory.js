@@ -3,6 +3,7 @@ import "../styles/main_inventory.scss"
 import "./Hotbar"
 import Item from "./Item"
 import Hotbar from './Hotbar';
+import InventoryViewDragSections from "./constants/InventoryViewDragSections"
 
 export default class MainInventory extends React.Component {
 
@@ -18,11 +19,24 @@ export default class MainInventory extends React.Component {
         // It's also not part of the state, so if you do change it, you
         // should only do it once or add it to the state.
         this.num_inv_slots = 24;
+        this.drag_section = InventoryViewDragSections.Main;
     }
 
     selectSlot (slot)
     {
         this.setState({selected_slot: slot == this.state.selected_slot ? -1 : slot})
+    }
+
+    itemMouseUp (event, slot)
+    {
+        this.props.stopDraggingItem(event, slot);
+    }
+
+    itemMouseDown (event, slot)
+    {
+        this.selectSlot(slot);
+
+        this.props.startDraggingItem(event, slot, this.drag_section);
     }
 
     render () {
@@ -35,12 +49,13 @@ export default class MainInventory extends React.Component {
                         {
                             return <Item 
                             key={`itemslot_main_inv_${index}`}
-                            selectSlot={this.selectSlot.bind(this)}
+                            itemMouseUp={this.itemMouseUp.bind(this)}
+                            itemMouseDown={this.itemMouseDown.bind(this)}
                             slot={index}
                             selected={index == this.state.selected_slot}
                             item_data={{
                                 name: "Rock", 
-                                amount: 2, 
+                                amount: Math.floor(Math.random() * 1000), 
                                 durable: true, 
                                 durability: 0.7
                             }}></Item>
