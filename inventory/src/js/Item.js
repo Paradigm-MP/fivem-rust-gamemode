@@ -33,7 +33,7 @@ export default class Item extends React.Component {
                     {/* Durability bar on the left */}
                     {this.state.item_data.durable && 
                         <div className='durability'>
-                            <div className='durability-inner'></div>
+                            <div className='durability-inner' style={{height: `${this.state.item_data.durability * 100}%`}}></div>
                         </div>
                     }
 
