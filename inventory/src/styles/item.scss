@@ -14,10 +14,12 @@ div.item-container.selected
     background-color: rgba(47, 136, 219, 0.6);
 }
 
-div.item-container.hovered
-{
-    animation: hover-item ease-in-out 0.1s;
-}
+// TODO: re-enable hover animations
+// Apparently CSS hover animations cause React rerenders so the hover events continously loop :(
+// div.item-container:hover
+// {
+//     animation: hover-item ease-in-out 0.1s;
+// }
 
 @keyframes hover-item
 {

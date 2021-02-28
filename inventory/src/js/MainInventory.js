@@ -10,10 +10,6 @@ export default class MainInventory extends React.Component {
     constructor (props)
     {
         super(props);
-        this.state = 
-        {
-            selected_slot: -1
-        }
 
         // Number of inventory slots. You probably shouldn't change this.
         // It's also not part of the state, so if you do change it, you
@@ -22,20 +18,14 @@ export default class MainInventory extends React.Component {
         this.drag_section = InventoryViewDragSections.Main;
     }
 
-    selectSlot (slot)
-    {
-        this.setState({selected_slot: slot == this.state.selected_slot ? -1 : slot})
-    }
-
     itemMouseUp (event, slot)
     {
-        this.props.stopDraggingItem(event, slot);
+        
     }
 
     itemMouseDown (event, slot)
     {
-        this.selectSlot(slot);
-
+        this.props.selectSlot(slot, this.drag_section);
         this.props.startDraggingItem(event, slot, this.drag_section);
     }
 
@@ -45,14 +35,18 @@ export default class MainInventory extends React.Component {
                 <div className='main-inventory-container'>
                     <div className='title'>Inventory</div>
                     <div className='inventory-items-container'>
+                        {/* TODO: replace this generic array with the actual inventory */}
                         {[...Array(this.num_inv_slots)].map((value, index) => 
                         {
                             return <Item 
-                            key={`itemslot_main_inv_${index}`}
+                            {...this.props}
+                            key={`itemslot_inv_${this.drag_section}_${index}`}
+                            setHoveredSlotAndSection={this.props.setHoveredSlotAndSection}
                             itemMouseUp={this.itemMouseUp.bind(this)}
                             itemMouseDown={this.itemMouseDown.bind(this)}
                             slot={index}
-                            selected={index == this.state.selected_slot}
+                            selected={index == this.props.selectedSlot && this.props.selectedDragSection == this.drag_section}
+                            drag_section={this.drag_section}
                             item_data={{
                                 name: "Rock", 
                                 amount: Math.floor(Math.random() * 1000), 
@@ -62,7 +56,9 @@ export default class MainInventory extends React.Component {
                         })}
                     </div>
                     <div className='hotbar-container-outer'>
-                        <Hotbar></Hotbar>
+                        <Hotbar
+                            {...this.props}
+                        ></Hotbar>
                     </div>
                 </div>
 

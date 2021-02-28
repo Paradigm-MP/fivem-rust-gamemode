@@ -10,20 +10,23 @@ export default class Item extends React.Component {
         super(props);
         this.state = 
         {
-            item_data: props.item_data || {},
-            hovered: false
+            item_data: props.item_data || {}
         }
     }
 
+    hoverItem(hovered)
+    {
+        this.props.setHoveredSlotAndSection(hovered ? this.props.slot : -1, this.props.drag_section)
+    }
 
     render () {
         return (
             <>
-                <div className={`item-container ${this.state.hovered ? 'hovered' : ''} ${this.props.selected ? 'selected' : ''}`}>
+                <div className={`item-container ${this.props.selected ? 'selected' : ''}`}>
 
                     <div className='grab-container'
-                    onMouseEnter={() => this.setState({hovered: true})}
-                    onMouseLeave={() => this.setState({hovered: false})}
+                    onMouseOver={() => this.hoverItem(true)}
+                    onMouseOut={() => this.hoverItem(false)}
                     onMouseUp={(e) => this.props.itemMouseUp(e, this.props.slot)}
                     onMouseDown={(e) => this.props.itemMouseDown(e, this.props.slot)}></div>
 

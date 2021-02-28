@@ -14,6 +14,9 @@ export default class InventoryView extends React.Component {
         super(props);
         this.state = 
         {
+            selected_slot: -1,
+            selected_drag_section: InventoryViewDragSections.Main,
+
             drag_active: false, // If the player is currently dragging an item
             drag_ready: false,
             drag_section: InventoryViewDragSections.Main, // What section the item is being dragged from
@@ -22,16 +25,25 @@ export default class InventoryView extends React.Component {
             drag_position: {left: 0, top: 0},
             drag_width: 0,
             drag_height: 0,
-            drag_slot: -1 // What slot is being dragged
+            drag_slot: -1, // What slot is being dragged
+
+            // Store currently hovered slot and section
+            hover_section: InventoryViewDragSections.Main,
+            hover_slot: -1
         }
     }
 
     componentDidMount ()
     {
-        OOF.Subscribe("")
-
-
         OOF.CallEvent("Ready")
+    }
+
+    selectSlot (slot, drag_section)
+    {
+        this.setState({
+            selected_slot: slot == this.state.selected_slot ? -1 : slot,
+            selected_drag_section: drag_section
+        })
     }
 
     /**
@@ -43,23 +55,26 @@ export default class InventoryView extends React.Component {
     {
         if (!this.state.drag_active) {return;}
 
-        console.log("stopDraggingItem");
-        console.log(event);
-
-        if (event.target == this.state.drag_element)
-        {
-            // Dragged it onto the same slot
-            console.log("Same")
-        }
-        else
-        {
-            // Dragged it into a different slot
-            console.log("Different")
-        }
-
         this.setState({
             drag_active: false,
-            drag_ready: false
+            drag_ready: false,
+        })
+
+        if (this.state.drag_slot == this.state.hover_slot && this.state.drag_section == this.state.hover_section)
+        {
+            // Dragged item to same slot and section, so don't do anything
+            return;
+        }
+
+        console.log(`Dragged from ${this.state.drag_slot} ${this.state.drag_section} to ${this.state.hover_slot} ${this.state.hover_section}`);
+
+    }
+
+    setHoveredSlotAndSection(slot, section)
+    {
+        this.setState({
+            hover_slot: slot,
+            hover_section: section
         })
     }
 
@@ -71,9 +86,13 @@ export default class InventoryView extends React.Component {
      */
     startDraggingItem (event, slot, drag_section)
     {
+        if (this.state.drag_active) {return;}
+
         // TODO: check if this is an empty slot. If so, do not drag
-        console.log("startDraggingItem");
-        console.log(event);
+        // console.log("startDraggingItem");
+        // console.log(event);
+
+        // jQuery could be replaced with a pure DOM/React solution
         const element_offset = $(event.target).offset();
         const offset = {left: element_offset.left - event.clientX, top: element_offset.top - event.clientY}
         this.setState({
@@ -141,8 +160,11 @@ export default class InventoryView extends React.Component {
                 {/* Inventory + hotbar section */}
                 <div className='inv-section'>
                     <MainInventory
+                        setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
                         startDraggingItem={this.startDraggingItem.bind(this)}
-                        stopDraggingItem={this.stopDraggingItem.bind(this)}
+                        selectSlot={this.selectSlot.bind(this)}
+                        selectedSlot={this.state.selected_slot}
+                        selectedDragSection={this.state.selected_drag_section}
                     ></MainInventory>
                 </div>
 
