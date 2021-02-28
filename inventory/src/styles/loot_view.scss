@@ -1,0 +1,30 @@
+div.inv-section:nth-child(3) div.main-loot-container
+{
+    position: absolute;
+    bottom: 20%;
+    padding: 8px;
+}
+
+div.inv-section:nth-child(3) div.title
+{
+    font-size: 30px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: white;
+    font-family: 'Source Sans Pro';
+}
+
+div.inv-section:nth-child(3) div.items-container
+{
+    border: 2px dashed red;
+    display: grid;
+    grid-column-gap: 6px;
+    grid-row-gap: 6px;
+    grid-template-rows: auto auto;
+    grid-template-columns: auto auto auto auto auto auto;
+}
+
+div.inv-section:nth-child(3) div.hotbar-container-outer
+{
+    border: 2px dashed green;
+}
