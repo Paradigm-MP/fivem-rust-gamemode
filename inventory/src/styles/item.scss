@@ -4,8 +4,6 @@ div.item-container
 {
     display: inline-block;
     position: relative;
-    background-color: rgba(255, 255, 255, 0.25);
-    padding: 4px;
     user-select: none;
 }
 
@@ -14,12 +12,24 @@ div.item-container.selected
     background-color: rgba(47, 136, 219, 0.6);
 }
 
-// TODO: re-enable hover animations
-// Apparently CSS hover animations cause React rerenders so the hover events continously loop :(
-// div.item-container:hover
-// {
-//     animation: hover-item ease-in-out 0.1s;
-// }
+div.item-container div.innner-hover-container
+{
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(255, 255, 255, 0.25);
+}
+
+div.item-container.selected div.innner-hover-container
+{
+    background-color: rgba(47, 136, 219, 0.6);
+}
+
+div.item-container div.innner-hover-container.hovered
+{
+    animation: hover-item ease-in-out 0.1s;
+}
 
 @keyframes hover-item
 {

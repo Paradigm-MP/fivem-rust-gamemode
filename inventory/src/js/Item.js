@@ -10,12 +10,14 @@ export default class Item extends React.Component {
         super(props);
         this.state = 
         {
-            item_data: props.item_data || {}
+            item_data: props.item_data || {},
+            hovered: false
         }
     }
 
     hoverItem(hovered)
     {
+        this.setState({hovered: hovered})
         this.props.setHoveredSlotAndSection(hovered ? this.props.slot : -1, this.props.drag_section)
     }
 
@@ -30,20 +32,23 @@ export default class Item extends React.Component {
                     onMouseUp={(e) => this.props.itemMouseUp(e, this.props.slot)}
                     onMouseDown={(e) => this.props.itemMouseDown(e, this.props.slot)}></div>
 
-                    {/* Durability bar on the left */}
-                    {this.state.item_data.durable && 
-                        <div className='durability'>
-                            <div className='durability-inner' style={{height: `${this.state.item_data.durability * 100}%`}}></div>
-                        </div>
-                    }
+                    {/* Use an inner container to have a hover animation without messing with the hover events */}
+                    <div className={`innner-hover-container ${this.state.hovered ? 'hovered' : ''}`}>
+                        {/* Durability bar on the left */}
+                        {this.state.item_data.durable && 
+                            <div className='durability'>
+                                <div className='durability-inner' style={{height: `${this.state.item_data.durability * 100}%`}}></div>
+                            </div>
+                        }
 
-                    {/* Item amount, if greater than 1 */}
-                    {this.state.item_data.amount > 1 && 
-                        <div className='amount'>x{this.state.item_data.amount}</div>
-                    }
+                        {/* Item amount, if greater than 1 */}
+                        {this.state.item_data.amount > 1 && 
+                            <div className='amount'>x{this.state.item_data.amount}</div>
+                        }
 
-                    {/* Item Image */}
-                    <img src={GetItemImage(this.state.item_data.name)} className='item-image'></img>
+                        {/* Item Image */}
+                        <img src={GetItemImage(this.state.item_data.name)} className='item-image'></img>
+                    </div>
                 </div>
             </>
         )
