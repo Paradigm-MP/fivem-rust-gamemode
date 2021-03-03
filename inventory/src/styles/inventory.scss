@@ -5,6 +5,7 @@ div.inventory-view-container
     position: relative;
     width: 100%;
     height: 100%;
+    background-color: rgba($color: #000000, $alpha: 0.5);
 }
 
 div.inv-section
@@ -19,17 +20,17 @@ div.inv-section
 div.inv-section:nth-child(1)
 {
     left: 5%;
-    background-color: rgba(255, 0, 0, 0.2);
+    // background-color: rgba(255, 0, 0, 0.2);
 }
 
 div.inv-section:nth-child(2)
 {
     left: calc(90% / 3 + 5%);
-    background-color: rgba(0, 255, 0, 0.2);
+    // background-color: rgba(0, 255, 0, 0.2);
 }
 
 div.inv-section:nth-child(3)
 {
     left: calc(90% / 3 * 2 + 5%);
-    background-color: rgba(0, 0, 255, 0.2);
+    // background-color: rgba(0, 0, 255, 0.2);
 }

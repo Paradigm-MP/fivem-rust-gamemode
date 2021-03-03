@@ -9,6 +9,7 @@ div.inv-section:nth-child(3) div.main-loot-container
 
 div.inv-section:nth-child(3) div.title
 {
+    margin-bottom: 4px;
     font-size: 30px;
     font-weight: bold;
     text-transform: uppercase;
@@ -18,7 +19,7 @@ div.inv-section:nth-child(3) div.title
 
 div.inv-section:nth-child(3) div.items-container
 {
-    border: 2px dashed red;
+    // border: 2px dashed red;
     display: grid;
     grid-column-gap: 6px;
     grid-row-gap: 6px;
@@ -28,5 +29,5 @@ div.inv-section:nth-child(3) div.items-container
 
 div.inv-section:nth-child(3) div.hotbar-container-outer
 {
-    border: 2px dashed green;
+    // border: 2px dashed green;
 }
