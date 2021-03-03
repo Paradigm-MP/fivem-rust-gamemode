@@ -53,9 +53,6 @@ export default class InventoryView extends React.Component {
         }
     }
 
-    // TODO: store all inventory/ loot/etc in this component and pass it into all other components
-    // also pass in the name of the dragged item to DragItem
-
     componentDidMount ()
     {
         // Test code
@@ -68,9 +65,7 @@ export default class InventoryView extends React.Component {
             durability: Math.random()
         }
         this.setState({
-            inventory: copy,
-            selected_drag_section: InventorySections.Main,
-            selected_slot: 0
+            inventory: copy
         })
 
         OOF.CallEvent("Ready")
