@@ -7,23 +7,18 @@ div.item-container
     user-select: none;
 }
 
-div.item-container.selected
-{
-    background-color: rgba(47, 136, 219, 0.6);
-}
-
 div.item-container div.innner-hover-container
 {
     position: relative;
     display: inline-block;
     width: 100%;
     height: 100%;
-    background-color: rgba(255, 255, 255, 0.25);
+    background-color: rgba(255, 255, 255, 0.15);
 }
 
 div.item-container.selected div.innner-hover-container
 {
-    background-color: rgba(47, 136, 219, 0.6);
+    background-color: rgba(47, 136, 219, 0.75);
 }
 
 div.item-container div.innner-hover-container.hovered
@@ -50,9 +45,10 @@ div.item-container div.grab-container
 
 div.item-container img.item-image
 {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+    height: 90%;
     user-select: none;
+    padding: 5%;
 }
 
 div.item-container div.amount
