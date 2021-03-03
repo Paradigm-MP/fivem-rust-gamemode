@@ -70,6 +70,8 @@ client_scripts {
     'anticheat/client/*.lua',
 
     -- Gamemode scripts
+    'config/shared/*.lua',
+
     'loadscreen/client/*.lua',
 
     'spawnmanager/client/*.lua',
@@ -139,6 +141,7 @@ server_scripts {
     'anticheat/server/*.lua',
 
     -- Gamemode modules
+    'config/shared/*.lua',
     
     'cells/shared/*.lua',
     'cells/server/*.lua',
