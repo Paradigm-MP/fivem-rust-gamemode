@@ -24,7 +24,8 @@ export default class InventoryView extends React.Component {
                 [InventorySections.Main]: {},
                 [InventorySections.Hotbar]: {},
                 [InventorySections.Loot]: {},
-                [InventorySections.Character]: {}
+                [InventorySections.Character]: {},
+                [InventorySections.ItemInfo]: {}
             },
 
             // Currently opened type of container, if any (right side)
@@ -54,6 +55,7 @@ export default class InventoryView extends React.Component {
 
     componentDidMount ()
     {
+        // Test code
         const copy = JSON.parse(JSON.stringify(this.state.inventory));
         copy[InventorySections.Main][0] = 
         {
@@ -63,7 +65,9 @@ export default class InventoryView extends React.Component {
             durability: Math.random()
         }
         this.setState({
-            inventory: copy
+            inventory: copy,
+            selected_drag_section: InventorySections.Main,
+            selected_slot: 0
         })
 
         OOF.CallEvent("Ready")
@@ -71,9 +75,16 @@ export default class InventoryView extends React.Component {
 
     selectSlot (slot, drag_section)
     {
+        // Cannot select item info section, only drag
+        if (drag_section == InventorySections.ItemInfo) {return;}
+
+        const inventory_copy = JSON.parse(JSON.stringify(this.state.inventory));
+        inventory_copy[InventorySections.ItemInfo][0] = inventory_copy[drag_section][slot];
+
         this.setState({
             selected_slot: slot == this.state.selected_slot ? -1 : slot,
-            selected_drag_section: drag_section
+            selected_drag_section: drag_section,
+            inventory: inventory_copy
         })
     }
 
@@ -248,26 +259,29 @@ export default class InventoryView extends React.Component {
                 {/* Item Info + Inventory + hotbar section */}
                 <div className='inv-section'>
                     
-                    {/* TODO: pass in selected item info */}
-                    {typeof this.getSelectedItem() != 'undefined' &&
-                        <ItemInfo
-                            setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
-                            startDraggingItem={this.startDraggingItem.bind(this)}
-                            selectSlot={this.selectSlot.bind(this)}
-                            selectedSlot={this.state.selected_slot}
-                            selectedDragSection={this.state.selected_drag_section}
-                            item_data={this.getSelectedItem()}
-                        ></ItemInfo>}
+                    <div className='middle-section-container-relative'>
+                        <div className='middle-section-container-bottom'>
+                            {typeof this.getSelectedItem() != 'undefined' &&
+                                <ItemInfo
+                                    setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
+                                    startDraggingItem={this.startDraggingItem.bind(this)}
+                                    selectSlot={this.selectSlot.bind(this)}
+                                    selectedSlot={this.state.selected_slot}
+                                    selectedDragSection={this.state.selected_drag_section}
+                                    item_data={this.getSelectedItem()}
+                                ></ItemInfo>}
 
-                    <MainInventory
-                        setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
-                        startDraggingItem={this.startDraggingItem.bind(this)}
-                        selectSlot={this.selectSlot.bind(this)}
-                        selectedSlot={this.state.selected_slot}
-                        selectedDragSection={this.state.selected_drag_section}
-                        contents={this.state.inventory[InventorySections.Main]}
-                        contents_hotbar={this.state.inventory[InventorySections.Hotbar]}
-                    ></MainInventory>
+                            <MainInventory
+                                setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
+                                startDraggingItem={this.startDraggingItem.bind(this)}
+                                selectSlot={this.selectSlot.bind(this)}
+                                selectedSlot={this.state.selected_slot}
+                                selectedDragSection={this.state.selected_drag_section}
+                                contents={this.state.inventory[InventorySections.Main]}
+                                contents_hotbar={this.state.inventory[InventorySections.Hotbar]}
+                            ></MainInventory>
+                        </div>
+                    </div>
                 </div>
 
                 {/* Loot/quick craft/Other section */}

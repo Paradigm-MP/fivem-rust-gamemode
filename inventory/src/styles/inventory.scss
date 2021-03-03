@@ -10,7 +10,7 @@ div.inventory-view-container
 div.inv-section
 {
     position: absolute;
-    top: 0;
+    bottom: 0;
     display: inline-block;
     width: calc(100% / 3); // Each inventory section is 1/3 of the screen
     height: 100vh;

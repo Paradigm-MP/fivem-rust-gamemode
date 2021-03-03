@@ -26,6 +26,12 @@ div.item-container div.innner-hover-container.hovered
     animation: hover-item ease-in-out 0.1s;
 }
 
+// Disable hover animation when in item info container for splitting
+div.item-info-container div.item-container div.innner-hover-container.hovered
+{
+    animation: none;
+}
+
 @keyframes hover-item
 {
     0% {transform: scale(1);}
