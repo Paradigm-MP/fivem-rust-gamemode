@@ -3,8 +3,9 @@ import "../styles/item_info.scss"
 import Item from "./Item"
 import GetItemImage from "./constants/Images"
 import InventorySections from "./constants/InventorySections"
+import $ from "jquery";
 
-export default class Hotbar extends React.Component {
+export default class ItemInfo extends React.Component {
 
     constructor (props)
     {
@@ -12,7 +13,11 @@ export default class Hotbar extends React.Component {
 
         this.state = 
         {
-            split_amount: 0 // Amount selected to split the item stack
+            current_slot: -1,
+            current_section: InventorySections.Main,
+            dragging: false,
+            start_slider_x: 0,
+            slider_width: 0
         }
 
         this.drag_section = InventorySections.ItemInfo;
@@ -34,9 +39,69 @@ export default class Hotbar extends React.Component {
     {
         const item_data = JSON.parse(JSON.stringify(this.props.item_data));
         item_data.durable = false;
+        item_data.amount = this.props.split_amount;
         return item_data;
     }
 
+    componentDidMount ()
+    {
+        if (this.props.selectedSlot != this.state.current_slot ||
+            this.props.selectedDragSection != this.state.current_section)
+        {
+            this.setState({
+                current_slot: this.props.selectedSlot,
+                current_section: this.props.selectedDragSection
+            })
+
+            this.props.setSplitAmount(Math.ceil(this.props.item_data.amount / 2))
+        }
+    }
+
+    onMouseDown (event)
+    {
+        const $elem = $('div.item-info-container div.slider-container')
+        this.setState({
+            dragging: true,
+            start_slider_x: $elem.offset().left,
+            slider_width: $elem.width()
+        })
+    }
+    
+    onMouseUp (event)
+    {
+        this.setState({
+            dragging: false
+        })
+    }
+
+    onMouseMove (event)
+    {
+        if (!this.state.dragging) {return;}
+
+        if (!this.props.mouse_down)
+        {
+            this.setState({
+                dragging: false
+            })
+            return;
+        }
+
+        let percent = (event.clientX - this.state.start_slider_x) / this.state.slider_width;
+        
+        if (percent <= 0)
+        {
+            percent = 0.001;
+        }
+        else if (percent >= 1)
+        {
+            percent = 1;
+        }
+        
+        const split_amount = Math.ceil(this.props.item_data.amount * percent)
+
+        this.props.setSplitAmount(split_amount);
+    }
+    
     render () {
         return (
             <>
@@ -64,9 +129,12 @@ export default class Hotbar extends React.Component {
                                 <div className='title-left'>Splitting</div>
                                 <div className='title-right'>Set Amount &#38; Drag Icon</div>
                             </div>
-                            <div className='slider-container'>
-                                <div className='slider'>
-                                    <div className='amount-text'>{this.getDisplayItemData().amount}</div>
+                            <div className='slider-container'
+                            onMouseDown={(e) => this.onMouseDown(e)}
+                            onMouseUp={(e) => this.onMouseUp(e)}
+                            onMouseMove={(e) => this.onMouseMove(e)}>
+                                <div className='slider' style={{width: `${this.props.split_amount / this.props.item_data.amount * 100}%`}}>
+                                    <div className='amount-text'>{this.props.split_amount}</div>
                                 </div>
                             </div>
                         </div>

@@ -34,6 +34,9 @@ export default class InventoryView extends React.Component {
             selected_slot: -1,
             selected_drag_section: InventorySections.Main,
 
+            // Current split amount used in ItemInfo
+            split_amount: 0,
+
             drag_active: false, // If the player is currently dragging an item
             drag_ready: false,
             drag_section: InventorySections.Main, // What section the item is being dragged from
@@ -73,10 +76,20 @@ export default class InventoryView extends React.Component {
         OOF.CallEvent("Ready")
     }
 
+    setSplitAmount(amount)
+    {
+        this.setState({
+            split_amount: amount
+        })
+    }
+
     selectSlot (slot, drag_section)
     {
         // Cannot select item info section, only drag
         if (drag_section == InventorySections.ItemInfo) {return;}
+
+        // Disable selecting slots while dragging
+        if (this.state.drag_active) {return;}
 
         const inventory_copy = JSON.parse(JSON.stringify(this.state.inventory));
         inventory_copy[InventorySections.ItemInfo][0] = inventory_copy[drag_section][slot];
@@ -190,7 +203,8 @@ export default class InventoryView extends React.Component {
     onMouseUp (event)
     {
         this.setState({
-            drag_ready: false
+            drag_ready: false,
+            mouse_down: false
         })
 
         if (this.state.drag_active)
@@ -201,6 +215,13 @@ export default class InventoryView extends React.Component {
                 drag_ready: false
             })
         }
+    }
+
+    onMouseDown (event)
+    {
+        this.setState({
+            mouse_down: true
+        })
     }
 
     onMouseMove (event)
@@ -240,6 +261,7 @@ export default class InventoryView extends React.Component {
         return (
             <div 
             className='inventory-view-container'
+            onMouseDown={(e) => this.onMouseDown(e)}
             onMouseUp={(e) => this.onMouseUp(e)}
             onMouseMove={(e) => this.onMouseMove(e)}
             >
@@ -269,6 +291,9 @@ export default class InventoryView extends React.Component {
                                     selectedSlot={this.state.selected_slot}
                                     selectedDragSection={this.state.selected_drag_section}
                                     item_data={this.getSelectedItem()}
+                                    setSplitAmount={this.setSplitAmount.bind(this)}
+                                    split_amount={this.state.split_amount}
+                                    mouse_down={this.state.mouse_down}
                                 ></ItemInfo>}
 
                             <MainInventory
