@@ -33,6 +33,12 @@ When you start the server for the first time, you should see a lot of messages s
 
 In the case that your generated resource data becomes corrupted or you'd like to regenerate it using a different cell size, just delete `resources/server/resource_data/generated.txt` and restart the server. It should automatically generate for you.
 
+### Server Customization
+Every server that uses this gamemode will be a little bit different, thanks to a few global configuration options.
+
+You can find these config options in `config/shared/RustConfig.lua`. After adjusting the config options, you might also want to update your server title to include any options that you changed so that players know what kind of server it is. 
+
+For example, if you set `BaseUpkeepModifier` to `0.25` and `MaxGroupSize` to `2`, you might include something like this in your server title: `[Duos Only] [Low Upkeep]`. Or if you set `MaxGroupSize` to `0` and `BaseUpkeepModifier` to `0`, you might add something like this to your title: `[Anarchy] [No Decay]`.
 
 ## Bugs
 - The trees/rocks change size when I get close to them. How do I fix it?
