@@ -1,4 +1,5 @@
 export default {
-    Loot: 1,
-    Player: 2
+    None: 1,
+    Loot: 2,
+    Player: 3
 }

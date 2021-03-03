@@ -7,5 +7,5 @@ div.main-inventory-container div.hotbar-container
     display: grid;
     grid-column-gap: 6px;
     grid-template-rows: auto;
-    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-columns: repeat(6, auto);
 }

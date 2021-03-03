@@ -21,7 +21,7 @@ div.inv-section:nth-child(1) div.items-container
     display: grid;
     grid-column-gap: 6px;
     grid-template-rows: auto;
-    grid-template-columns: auto auto auto auto auto auto auto;
+    grid-template-columns: repeat(7, auto);
 }
 
 div.inv-section:nth-child(1) div.hotbar-container-outer

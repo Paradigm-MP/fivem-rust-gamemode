@@ -10,15 +10,36 @@ export default class Item extends React.Component {
         super(props);
         this.state = 
         {
-            item_data: props.item_data || {},
             hovered: false
         }
+    }
+
+    shouldComponentUpdate(nextProps, nextState)
+    {
+        let shouldUpdate = false;
+
+        // Selected props updated
+        shouldUpdate = shouldUpdate || nextProps.selected != this.props.selected;
+
+        // Item data updated
+        shouldUpdate = shouldUpdate || JSON.stringify(this.props.item_data) != JSON.stringify(nextProps.item_data);
+
+        // Hovered internal state changed
+        shouldUpdate = shouldUpdate || nextState.hovered != this.state.hovered;
+
+        return shouldUpdate;
     }
 
     hoverItem(hovered)
     {
         this.setState({hovered: hovered})
         this.props.setHoveredSlotAndSection(hovered ? this.props.slot : -1, this.props.drag_section)
+    }
+
+    // Helper function to ensure this still works if no item data is passed in
+    getItem(item)
+    {
+        return item || {};
     }
 
     render () {
@@ -35,19 +56,20 @@ export default class Item extends React.Component {
                     {/* Use an inner container to have a hover animation without messing with the hover events */}
                     <div className={`innner-hover-container ${this.state.hovered ? 'hovered' : ''}`}>
                         {/* Durability bar on the left */}
-                        {this.state.item_data.durable && 
+                        {this.getItem(this.props.item_data).durable && 
                             <div className='durability'>
-                                <div className='durability-inner' style={{height: `${this.state.item_data.durability * 100}%`}}></div>
+                                <div className='durability-inner' style={{height: `${this.getItem(this.props.item_data).durability * 100}%`}}></div>
                             </div>
                         }
 
                         {/* Item amount, if greater than 1 */}
-                        {this.state.item_data.amount > 1 && 
-                            <div className='amount'>x{this.state.item_data.amount}</div>
+                        {this.getItem(this.props.item_data).amount > 1 && 
+                            <div className='amount'>x{this.props.item_data.amount}</div>
                         }
 
                         {/* Item Image */}
-                        <img src={GetItemImage(this.state.item_data.name)} className='item-image'></img>
+                        <img src={GetItemImage(this.getItem(this.props.item_data).name)} className='item-image'></img>
+                        
                     </div>
                 </div>
             </>

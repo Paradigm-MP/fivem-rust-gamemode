@@ -2,12 +2,12 @@
 
 const item_images = {
     ["DEFAULT"]: "images/default.png",
-    ["ITEM_ROCK"]: "rock.png"
+    ["TRANSPARENT"]: "images/transparent.png"
 }
 
 function GetItemImage(item_name)
 {
-    return item_images[item_name] || item_images["DEFAULT"];
+    return (typeof item_name != 'undefined') ? (item_images[item_name] || item_images["DEFAULT"]) : item_images["TRANSPARENT"];
 }
 
 export default GetItemImage

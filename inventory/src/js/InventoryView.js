@@ -2,12 +2,12 @@ import React, {useState, useEffect} from 'react';
 import "../styles/inventory.scss"
 import OOF from "./OOF"
 import MainInventory from "./MainInventory"
-import InventoryViewDragSections from "./constants/InventoryViewDragSections"
+import InventorySections from "./constants/InventorySections"
 import ContainerType from "./constants/ContainerType"
 import DragItem from "./DragItem"
 import LootView from "./LootView"
 import CharacterView from "./CharacterView"
-import GetItemImage from "./constants/Images"
+import ItemInfo from "./ItemInfo"
 import $ from "jquery";
 
 export default class InventoryView extends React.Component {
@@ -17,13 +17,25 @@ export default class InventoryView extends React.Component {
         super(props);
         this.state = 
         {
+
+            // Inventories
+            inventory: 
+            {
+                [InventorySections.Main]: {},
+                [InventorySections.Hotbar]: {},
+                [InventorySections.Loot]: {},
+                [InventorySections.Character]: {}
+            },
+
+            // Currently opened type of container, if any (right side)
             container_type: ContainerType.Loot,
+
             selected_slot: -1,
-            selected_drag_section: InventoryViewDragSections.Main,
+            selected_drag_section: InventorySections.Main,
 
             drag_active: false, // If the player is currently dragging an item
             drag_ready: false,
-            drag_section: InventoryViewDragSections.Main, // What section the item is being dragged from
+            drag_section: InventorySections.Main, // What section the item is being dragged from
             drag_element: null,
             drag_offset: {left: 0, top: 0},
             drag_position: {left: 0, top: 0},
@@ -32,13 +44,28 @@ export default class InventoryView extends React.Component {
             drag_slot: -1, // What slot is being dragged
 
             // Store currently hovered slot and section
-            hover_section: InventoryViewDragSections.Main,
+            hover_section: InventorySections.Main,
             hover_slot: -1
         }
     }
 
+    // TODO: store all inventory/ loot/etc in this component and pass it into all other components
+    // also pass in the name of the dragged item to DragItem
+
     componentDidMount ()
     {
+        const copy = JSON.parse(JSON.stringify(this.state.inventory));
+        copy[InventorySections.Main][0] = 
+        {
+            name: "Rock",
+            amount: Math.floor(Math.random() * 1000),
+            durable: true,
+            durability: Math.random()
+        }
+        this.setState({
+            inventory: copy
+        })
+
         OOF.CallEvent("Ready")
     }
 
@@ -75,25 +102,33 @@ export default class InventoryView extends React.Component {
         if (this.state.hover_slot == -1)
         {
             // Drop on ground
-
             return;
         }
 
-        if (this.state.hover_section == InventoryViewDragSections.Main)
+        let dragged_item = this.state.inventory[this.state.drag_section][this.state.drag_slot];
+
+        // They dragged an empty slot, so return
+        if (!dragged_item) {return;}
+
+        if (this.state.hover_section == InventorySections.Main)
         {
             // Dragged item on main inventory
         }
-        else if (this.state.hover_section == InventoryViewDragSections.Character)
+        else if (this.state.hover_section == InventorySections.Character)
         {
             // Dragged item on character slots   
         }
-        else if (this.state.hover_section == InventoryViewDragSections.Hotbar)
+        else if (this.state.hover_section == InventorySections.Hotbar)
         {
             // Dragged item on hotbar slots
         }
-        else if (this.state.hover_section == InventoryViewDragSections.Loot)
+        else if (this.state.hover_section == InventorySections.Loot)
         {
             // Dragged item on loot slots
+        }
+        else if (this.state.hover_section == InventorySections.ItemInfo)
+        {
+            // Dragged item on the single item info slot - do nothing
         }
 
     }
@@ -116,9 +151,9 @@ export default class InventoryView extends React.Component {
     {
         if (this.state.drag_active) {return;}
 
-        // TODO: check if this is an empty slot. If so, do not drag
-        // console.log("startDraggingItem");
-        // console.log(event);
+        // Check if they are dragging an empty slot
+        const dragged_item = this.state.inventory[drag_section][slot];
+        if (!dragged_item) {return}
 
         // jQuery could be replaced with a pure DOM/React solution
         const element_offset = $(event.target).offset();
@@ -174,6 +209,22 @@ export default class InventoryView extends React.Component {
         }
     }
 
+    getSelectedItem()
+    {
+        if (this.state.selected_slot != -1 && this.state.selected_drag_section != -1)
+        {
+            return this.state.inventory[this.state.selected_drag_section][this.state.selected_slot];
+        }
+    }
+
+    getDraggingItem()
+    {
+        if (this.state.drag_slot != -1 && this.state.drag_section != -1)
+        {
+            return this.state.inventory[this.state.drag_section][this.state.drag_slot];
+        }
+    }
+
     render () {
         return (
             <div 
@@ -190,17 +241,32 @@ export default class InventoryView extends React.Component {
                         selectSlot={this.selectSlot.bind(this)}
                         selectedSlot={this.state.selected_slot}
                         selectedDragSection={this.state.selected_drag_section}
+                        contents={this.state.inventory[InventorySections.Character]}
                     ></CharacterView>
                 </div>
 
-                {/* Inventory + hotbar section */}
+                {/* Item Info + Inventory + hotbar section */}
                 <div className='inv-section'>
+                    
+                    {/* TODO: pass in selected item info */}
+                    {typeof this.getSelectedItem() != 'undefined' &&
+                        <ItemInfo
+                            setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
+                            startDraggingItem={this.startDraggingItem.bind(this)}
+                            selectSlot={this.selectSlot.bind(this)}
+                            selectedSlot={this.state.selected_slot}
+                            selectedDragSection={this.state.selected_drag_section}
+                            item_data={this.getSelectedItem()}
+                        ></ItemInfo>}
+
                     <MainInventory
                         setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
                         startDraggingItem={this.startDraggingItem.bind(this)}
                         selectSlot={this.selectSlot.bind(this)}
                         selectedSlot={this.state.selected_slot}
                         selectedDragSection={this.state.selected_drag_section}
+                        contents={this.state.inventory[InventorySections.Main]}
+                        contents_hotbar={this.state.inventory[InventorySections.Hotbar]}
                     ></MainInventory>
                 </div>
 
@@ -214,12 +280,14 @@ export default class InventoryView extends React.Component {
                             selectSlot={this.selectSlot.bind(this)}
                             selectedSlot={this.state.selected_slot}
                             selectedDragSection={this.state.selected_drag_section}
+                            contents={this.state.inventory[InventorySections.Loot]}
                         ></LootView>}
                 </div>
                 
                 {/* Dragging item display */}
                 {this.state.drag_active && 
                     <DragItem 
+                        name={this.getDraggingItem().name}
                         offset={this.state.drag_offset} 
                         position={this.state.drag_position}
                         width={this.state.drag_width} 

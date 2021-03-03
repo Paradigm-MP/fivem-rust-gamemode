@@ -3,6 +3,8 @@ div.inv-section:nth-child(3) div.main-loot-container
     position: absolute;
     bottom: 20%;
     padding: 8px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 div.inv-section:nth-child(3) div.title
@@ -20,8 +22,8 @@ div.inv-section:nth-child(3) div.items-container
     display: grid;
     grid-column-gap: 6px;
     grid-row-gap: 6px;
-    grid-template-rows: auto auto;
-    grid-template-columns: auto auto auto auto auto auto;
+    grid-template-rows: repeat(2, auto);
+    grid-template-columns: repeat(6, auto);
 }
 
 div.inv-section:nth-child(3) div.hotbar-container-outer

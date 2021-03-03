@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import "../styles/character_view.scss"
 import Item from "./Item"
-import InventoryViewDragSections from "./constants/InventoryViewDragSections"
+import InventorySections from "./constants/InventorySections"
 
 export default class CharacterView extends React.Component {
 
@@ -9,18 +9,35 @@ export default class CharacterView extends React.Component {
     {
         super(props);
 
+        this.state = 
+        {
+            contents: [
+                {
+                    name: "Rock",
+                    amount: Math.floor(Math.random() * 1000),
+                    durable: Math.random() > 0.8,
+                    durability: Math.random()
+                },
+                {},
+                {},
+                {},
+                {},
+                {},
+                {}
+            ]
+        }
+
         this.num_slots = 7;
-        this.drag_section = InventoryViewDragSections.Character;
+        this.drag_section = InventorySections.Character;
     }
 
     itemMouseUp (event, slot)
     {
-        
+        this.props.selectSlot(slot, this.drag_section);
     }
 
     itemMouseDown (event, slot)
     {
-        this.props.selectSlot(slot, this.drag_section);
         this.props.startDraggingItem(event, slot, this.drag_section);
     }
 
@@ -41,12 +58,7 @@ export default class CharacterView extends React.Component {
                             slot={index}
                             selected={index == this.props.selectedSlot && this.props.selectedDragSection == this.drag_section}
                             drag_section={this.drag_section}
-                            item_data={{
-                                name: "Rock", 
-                                amount: Math.floor(Math.random() * 5), 
-                                durable: true, 
-                                durability: 0.7
-                            }}></Item>
+                            item_data={{}}></Item>
                         })}
                     </div>
                 </div>

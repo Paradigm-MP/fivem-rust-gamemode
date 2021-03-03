@@ -3,29 +3,27 @@ import "../styles/main_inventory.scss"
 import "./Hotbar"
 import Item from "./Item"
 import Hotbar from './Hotbar';
-import InventoryViewDragSections from "./constants/InventoryViewDragSections"
+import InventorySections from "./constants/InventorySections"
 
 export default class MainInventory extends React.Component {
 
     constructor (props)
     {
         super(props);
-
         // Number of inventory slots. You probably shouldn't change this.
         // It's also not part of the state, so if you do change it, you
         // should only do it once or add it to the state.
         this.num_inv_slots = 24;
-        this.drag_section = InventoryViewDragSections.Main;
+        this.drag_section = InventorySections.Main;
     }
 
     itemMouseUp (event, slot)
     {
-        
+        this.props.selectSlot(slot, this.drag_section);
     }
 
     itemMouseDown (event, slot)
     {
-        this.props.selectSlot(slot, this.drag_section);
         this.props.startDraggingItem(event, slot, this.drag_section);
     }
 
@@ -47,12 +45,7 @@ export default class MainInventory extends React.Component {
                             slot={index}
                             selected={index == this.props.selectedSlot && this.props.selectedDragSection == this.drag_section}
                             drag_section={this.drag_section}
-                            item_data={{
-                                name: "Rock", 
-                                amount: Math.floor(Math.random() * 1000), 
-                                durable: true, 
-                                durability: 0.7
-                            }}></Item>
+                            item_data={this.props.contents[index]}></Item>
                         })}
                     </div>
                     <div className='hotbar-container-outer'>

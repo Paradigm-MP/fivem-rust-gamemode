@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import "../styles/loot_view.scss"
 import Item from "./Item"
-import InventoryViewDragSections from "./constants/InventoryViewDragSections"
+import InventorySections from "./constants/InventorySections"
 
 export default class LootView extends React.Component {
 
@@ -14,17 +14,16 @@ export default class LootView extends React.Component {
             num_slots: 12
         }
 
-        this.drag_section = InventoryViewDragSections.Loot;
+        this.drag_section = InventorySections.Loot;
     }
 
     itemMouseUp (event, slot)
     {
-        
+        this.props.selectSlot(slot, this.drag_section);
     }
 
     itemMouseDown (event, slot)
     {
-        this.props.selectSlot(slot, this.drag_section);
         this.props.startDraggingItem(event, slot, this.drag_section);
     }
 
@@ -46,12 +45,7 @@ export default class LootView extends React.Component {
                             slot={index}
                             selected={index == this.props.selectedSlot && this.props.selectedDragSection == this.drag_section}
                             drag_section={this.drag_section}
-                            item_data={{
-                                name: "Rock", 
-                                amount: Math.floor(Math.random() * 5), 
-                                durable: true, 
-                                durability: Math.random()
-                            }}></Item>
+                            item_data={this.props.contents[index]}></Item>
                         })}
                     </div>
                     {/* Only show hotbar if it is the body of a player */}

@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import "../styles/hotbar.scss"
 import Item from "./Item"
-import InventoryViewDragSections from "./constants/InventoryViewDragSections"
+import InventorySections from "./constants/InventorySections"
 
 export default class Hotbar extends React.Component {
 
@@ -10,17 +10,16 @@ export default class Hotbar extends React.Component {
         super(props);
 
         this.num_hotbar_slots = 6;
-        this.drag_section = InventoryViewDragSections.Hotbar;
+        this.drag_section = InventorySections.Hotbar;
     }
 
     itemMouseUp (event, slot)
     {
-        
+        this.props.selectSlot(slot, this.drag_section);
     }
 
     itemMouseDown (event, slot)
     {
-        this.props.selectSlot(slot, this.drag_section);
         this.props.startDraggingItem(event, slot, this.drag_section);
     }
 
@@ -39,12 +38,7 @@ export default class Hotbar extends React.Component {
                         slot={index}
                         selected={index == this.props.selectedSlot && this.props.selectedDragSection == this.drag_section}
                         drag_section={this.drag_section}
-                        item_data={{
-                            name: "Rock", 
-                            amount: Math.floor(Math.random() * 1000), 
-                            durable: true, 
-                            durability: 0.7
-                        }}></Item>
+                        item_data={this.props.contents_hotbar[index]}></Item>
                     })}
                 </div>
             </>
