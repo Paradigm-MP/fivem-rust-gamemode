@@ -132,7 +132,7 @@ export default class ItemInfo extends React.Component {
                                 <div className='content-abs'>
                                     {this.props.item_data.actions && this.props.item_data.actions.map((action) => 
                                     {
-                                        return <div className='action-container'>
+                                        return <div className='action-container' key={`item_action_${action}`}>
                                             <img src={`./images/${action}.png`} className='icon'></img>
                                             <div className='title'>{action}</div>
                                         </div>
@@ -159,7 +159,7 @@ export default class ItemInfo extends React.Component {
                         <div className='drag-item-container'>
                             <Item 
                             {...this.props}
-                            key={`itemslot_inv_${this.drag_section}_${this.slot}}`}
+                            key={`itemslot_inv_${this.drag_section}_${this.slot}`}
                             setHoveredSlotAndSection={this.props.setHoveredSlotAndSection}
                             itemMouseUp={this.itemMouseUp.bind(this)}
                             itemMouseDown={this.itemMouseDown.bind(this)}
