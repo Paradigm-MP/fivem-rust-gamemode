@@ -36,7 +36,6 @@ function Loadscreen:Add(args)
     table.insert(self.loading_functions, args)
 
     if count_table(self.loading_functions) == 1 then
-        output_table(self.loading_functions[1])
         self.loading_functions[1].callback()
     end
 end
