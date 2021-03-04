@@ -1,8 +1,9 @@
 // Add new images for items here
 
 const item_images = {
-    ["DEFAULT"]: "images/default.png",
-    ["TRANSPARENT"]: "images/transparent.png"
+    ["DEFAULT"]:            "images/default.png",
+    ["TRANSPARENT"]:        "images/transparent.png",
+    ["Rock"]:               "images/rock.png"
 }
 
 function GetItemImage(item_name)

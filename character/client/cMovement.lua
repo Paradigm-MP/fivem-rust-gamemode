@@ -4,9 +4,9 @@ function Movement:__init()
 
     LocalPlayer:GetPlayer():DisableFiring(true)
 
-    LocalPlayer:RestrictAction(Control.NextCamera, true)
+    -- LocalPlayer:RestrictAction(Control.NextCamera, true)
     LocalPlayer:RestrictAction(Control.Cover, true)
-    Camera:LockCameraMode(CameraViewMode.FirstPerson)
+    -- Camera:LockCameraMode(CameraViewMode.FirstPerson)
 
     -- Increase run speed a bit since they'll be running a lot
     LocalPlayer:GetPlayer():SetRunSprintMultiplier(1.25)

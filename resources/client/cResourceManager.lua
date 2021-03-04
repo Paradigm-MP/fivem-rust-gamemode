@@ -32,6 +32,8 @@ function cResourceManager:SyncCells(args)
                         kinematic = true,
                         isNetwork = false
                     })
+
+                    resource.object:SetValue("IsResource", true)
                 end
             end
         end

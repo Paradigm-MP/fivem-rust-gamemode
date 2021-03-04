@@ -43,22 +43,26 @@ function MeleeActionStoneHatchet:DetectHitFrame()
 end
 
 function MeleeActionStoneHatchet:HitSomething(ray)
-    
-    self.ped:StopAnim({
-        animDict = "anim@melee@machete@streamed_core@",
-        animName = "plyr_walking_attack_a"
-    })
 
-    local pfx = ParticleEffect({
-        bank = "core",
-        effect = "bul_wood_splinter",
-        type = ParticleEffectTypes.Position,
-        position = ray.position,
-        scale = 1,
-        rotation = vector3(0, 0, 0)
-    })
+    local obj = ObjectManager:FindObjectByEntityId(ray.entity)
+    if obj and obj:GetValue("IsResource") then
+        
+        self.ped:StopAnim({
+            animDict = "anim@melee@machete@streamed_core@",
+            animName = "plyr_walking_attack_a"
+        })
 
-    self.active = false
+        local pfx = ParticleEffect({
+            bank = "core",
+            effect = "bul_wood_splinter",
+            type = ParticleEffectTypes.Position,
+            position = ray.position,
+            scale = 1,
+            rotation = vector3(0, 0, 0)
+        })
 
+        self.active = false
+
+    end
 
 end
