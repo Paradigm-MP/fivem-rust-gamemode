@@ -128,7 +128,6 @@ function cInventory:UIReady()
 
     end)
 
-    -- TODO: Bring UI to front once loaded fully, after loadscreen ends
 end
 
 

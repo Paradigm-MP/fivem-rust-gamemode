@@ -28,7 +28,6 @@ export default class CharacterView extends React.Component {
             <>
                 <div className='main-character-container'>
                     <div className='items-container'>
-                        {/* TODO: replace this generic array with the actual loot */}
                         {[...Array(this.num_slots)].map((value, index) => 
                         {
                             return <Item 

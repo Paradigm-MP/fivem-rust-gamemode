@@ -33,7 +33,6 @@ export default class MainInventory extends React.Component {
                 <div className='main-inventory-container'>
                     {this.props.open && <div className='title'>Inventory</div>}
                     {this.props.open && <div className='inventory-items-container'>
-                        {/* TODO: replace this generic array with the actual inventory */}
                         {[...Array(this.num_inv_slots)].map((value, index) => 
                         {
                             return <Item 

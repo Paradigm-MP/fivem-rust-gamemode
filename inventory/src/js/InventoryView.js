@@ -286,6 +286,7 @@ export default class InventoryView extends React.Component {
                         selectedSlot={this.state.selected_slot}
                         selectedDragSection={this.state.selected_drag_section}
                         contents={this.state.inventory[InventorySections.Character]}
+                        {...this.props}
                     ></CharacterView>}
                 </div>
 
@@ -332,6 +333,7 @@ export default class InventoryView extends React.Component {
                             selectedSlot={this.state.selected_slot}
                             selectedDragSection={this.state.selected_drag_section}
                             contents={this.state.inventory[InventorySections.Loot]}
+                            {...this.props}
                         ></LootView>}
                 </div>
                 
