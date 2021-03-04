@@ -28,6 +28,20 @@ export default class App extends React.Component {
             this.onKeyDown(e);
         }, false);
 
+        OOF.Subscribe('Open', () => 
+        {
+            this.setState({
+                open: !this.state.open
+            })
+        })
+
+        OOF.Subscribe('Close', () => 
+        {
+            this.setState({
+                open: !this.state.open
+            })
+        })
+
         // Call OOF ready event at end of mounting finish
         OOF.CallEvent("Ready");
     }
@@ -44,16 +58,18 @@ export default class App extends React.Component {
     {
         if (e.key == "Tab")
         {
+            // KeepInput disables this, so it is only for developing right now
             this.setState({
                 open: !this.state.open
             })
+            OOF.CallEvent('Close')
         }
     }
 
     render () {
         return (
             <>
-                <div className="background">
+                <div className="background" style={this.state.open ? {} : {backgroundColor: `transparent`}}>
                     {this.view == Views.InventoryView && <InventoryView open={this.state.open}></InventoryView>}
                     {this.view == Views.CraftingView && <CraftingView open={this.state.open}></CraftingView>}
                 </div>

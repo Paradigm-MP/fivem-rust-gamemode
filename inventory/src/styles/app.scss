@@ -4,4 +4,11 @@ div.background
     width: 100vw;
     height: 100vh;
     background: rgba($color: #000000, $alpha: 0.5); 
+    animation: fade-in-bg 0.2s ease-in-out;
+}
+
+@keyframes fade-in-bg
+{
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
