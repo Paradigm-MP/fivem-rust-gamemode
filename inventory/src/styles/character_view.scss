@@ -1,9 +1,10 @@
-div.inv-section:nth-child(1) div.main-loot-container
+div.inv-section:nth-child(1) div.main-character-container
 {
     position: absolute;
     bottom: 15%;
     padding-left: 20px;
     padding-right: 20px;
+    animation: appear 0.2s ease-in-out;
 }
 
 div.inv-section:nth-child(1) div.title

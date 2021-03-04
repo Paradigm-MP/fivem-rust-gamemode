@@ -14,6 +14,8 @@ div.inv-section:nth-child(2) div.title
     text-transform: uppercase;
     color: white;
     font-family: 'Source Sans Pro';
+    animation: appear 0.2s ease-in-out;
+    user-select: none;
 }
 
 div.inv-section:nth-child(2) div.inventory-items-container
@@ -24,6 +26,7 @@ div.inv-section:nth-child(2) div.inventory-items-container
     grid-row-gap: 6px;
     grid-template-rows: repeat(4, auto);
     grid-template-columns: repeat(6, auto);
+    animation: appear 0.2s ease-in-out;
 }
 
 div.inv-section:nth-child(2) div.hotbar-container-outer

@@ -31,8 +31,8 @@ export default class MainInventory extends React.Component {
         return (
             <>
                 <div className='main-inventory-container'>
-                    <div className='title'>Inventory</div>
-                    <div className='inventory-items-container'>
+                    {this.props.open && <div className='title'>Inventory</div>}
+                    {this.props.open && <div className='inventory-items-container'>
                         {/* TODO: replace this generic array with the actual inventory */}
                         {[...Array(this.num_inv_slots)].map((value, index) => 
                         {
@@ -47,7 +47,7 @@ export default class MainInventory extends React.Component {
                             drag_section={this.drag_section}
                             item_data={this.props.contents[index]}></Item>
                         })}
-                    </div>
+                    </div>}
                     <div className='hotbar-container-outer'>
                         <Hotbar
                             {...this.props}

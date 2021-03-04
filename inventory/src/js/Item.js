@@ -32,6 +32,8 @@ export default class Item extends React.Component {
 
     hoverItem(hovered)
     {
+        if (!this.props.open) {return;}
+
         this.setState({hovered: hovered})
         this.props.setHoveredSlotAndSection(hovered ? this.props.slot : -1, this.props.drag_section)
     }

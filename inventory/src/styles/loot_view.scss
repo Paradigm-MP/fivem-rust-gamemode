@@ -5,6 +5,7 @@ div.inv-section:nth-child(3) div.main-loot-container
     padding: 8px;
     padding-left: 20px;
     padding-right: 20px;
+    animation: appear 0.2s ease-in-out;
 }
 
 div.inv-section:nth-child(3) div.title
@@ -15,6 +16,7 @@ div.inv-section:nth-child(3) div.title
     text-transform: uppercase;
     color: white;
     font-family: 'Source Sans Pro';
+    user-select: none;
 }
 
 div.inv-section:nth-child(3) div.items-container

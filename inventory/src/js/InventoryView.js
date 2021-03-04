@@ -18,6 +18,7 @@ export default class InventoryView extends React.Component {
         this.state = 
         {
 
+
             // Inventories
             inventory: 
             {
@@ -74,6 +75,8 @@ export default class InventoryView extends React.Component {
 
     setSplitAmount(amount)
     {
+        if (!this.props.open) {return;}
+
         this.setState({
             split_amount: amount
         })
@@ -81,6 +84,8 @@ export default class InventoryView extends React.Component {
 
     selectSlot (slot, drag_section)
     {
+        if (!this.props.open) {return;}
+
         // Cannot select item info section, only drag
         if (drag_section == InventorySections.ItemInfo) {return;}
 
@@ -155,6 +160,8 @@ export default class InventoryView extends React.Component {
 
     setHoveredSlotAndSection(slot, section)
     {
+        if (!this.props.open) {return;}
+
         this.setState({
             hover_slot: slot,
             hover_section: section
@@ -169,6 +176,8 @@ export default class InventoryView extends React.Component {
      */
     startDraggingItem (event, slot, drag_section)
     {
+        if (!this.props.open) {return;}
+
         if (this.state.drag_active) {return;}
 
         // Check if they are dragging an empty slot
@@ -198,6 +207,8 @@ export default class InventoryView extends React.Component {
      */
     onMouseUp (event)
     {
+        if (!this.props.open) {return;}
+
         this.setState({
             drag_ready: false,
             mouse_down: false
@@ -215,6 +226,8 @@ export default class InventoryView extends React.Component {
 
     onMouseDown (event)
     {
+        if (!this.props.open) {return;}
+
         this.setState({
             mouse_down: true
         })
@@ -222,6 +235,8 @@ export default class InventoryView extends React.Component {
 
     onMouseMove (event)
     {
+        if (!this.props.open) {return;}
+
         if (!this.state.drag_active && this.state.drag_ready)
         {
             this.setState({
@@ -264,14 +279,14 @@ export default class InventoryView extends React.Component {
 
                 {/* Character section */}
                 <div className='inv-section'>
-                    <CharacterView
+                    {this.props.open && <CharacterView
                         setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
                         startDraggingItem={this.startDraggingItem.bind(this)}
                         selectSlot={this.selectSlot.bind(this)}
                         selectedSlot={this.state.selected_slot}
                         selectedDragSection={this.state.selected_drag_section}
                         contents={this.state.inventory[InventorySections.Character]}
-                    ></CharacterView>
+                    ></CharacterView>}
                 </div>
 
                 {/* Item Info + Inventory + hotbar section */}
@@ -279,7 +294,7 @@ export default class InventoryView extends React.Component {
                     
                     <div className='middle-section-container-relative'>
                         <div className='middle-section-container-bottom'>
-                            {typeof this.getSelectedItem() != 'undefined' &&
+                            {this.props.open && typeof this.getSelectedItem() != 'undefined' &&
                                 <ItemInfo
                                     setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
                                     startDraggingItem={this.startDraggingItem.bind(this)}
@@ -300,6 +315,7 @@ export default class InventoryView extends React.Component {
                                 selectedDragSection={this.state.selected_drag_section}
                                 contents={this.state.inventory[InventorySections.Main]}
                                 contents_hotbar={this.state.inventory[InventorySections.Hotbar]}
+                                {...this.props}
                             ></MainInventory>
                         </div>
                     </div>
@@ -308,7 +324,7 @@ export default class InventoryView extends React.Component {
                 {/* Loot/quick craft/Other section */}
                 <div className='inv-section'>
                     {/* Render display depending on state - lootbox type, workbench, etc */}
-                    {this.state.container_type == ContainerType.Loot && 
+                    {this.props.open && this.state.container_type == ContainerType.Loot && 
                         <LootView
                             setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
                             startDraggingItem={this.startDraggingItem.bind(this)}
