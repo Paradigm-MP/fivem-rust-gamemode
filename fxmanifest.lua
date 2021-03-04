@@ -1,6 +1,7 @@
 ui_page 'oof/client/ui/index.html'
 
 loadscreen 'loadscreen/client/html/index.html'
+loadscreen_manual_shutdown 'yes'
 
 client_scripts {
     -- oof module, nothing should precede this module

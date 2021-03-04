@@ -21,8 +21,8 @@ function Loadscreen:__init()
 end
 
 function Loadscreen:UIReady()
+    ShutdownLoadingScreenNui()
     Events:Fire("Loadingscreen/Ready")
-
 end
 
 function Loadscreen:FinishLoading()
