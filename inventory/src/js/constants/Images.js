@@ -3,7 +3,7 @@
 const item_images = {
     ["DEFAULT"]:            "images/default.png",
     ["TRANSPARENT"]:        "images/transparent.png",
-    ["Rock"]:               "images/rock.png"
+    // ["Rock"]:               "images/rock.png"
 }
 
 function GetItemImage(item_name)
