@@ -9,24 +9,6 @@ export default class CharacterView extends React.Component {
     {
         super(props);
 
-        this.state = 
-        {
-            contents: [
-                {
-                    name: "Rock",
-                    amount: Math.floor(Math.random() * 1000),
-                    durable: Math.random() > 0.8,
-                    durability: Math.random()
-                },
-                {},
-                {},
-                {},
-                {},
-                {},
-                {}
-            ]
-        }
-
         this.num_slots = 7;
         this.drag_section = InventorySections.Character;
     }
@@ -58,7 +40,7 @@ export default class CharacterView extends React.Component {
                             slot={index}
                             selected={index == this.props.selectedSlot && this.props.selectedDragSection == this.drag_section}
                             drag_section={this.drag_section}
-                            item_data={{}}></Item>
+                            item_data={this.props.contents[index]}></Item>
                         })}
                     </div>
                 </div>

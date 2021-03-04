@@ -62,7 +62,8 @@ export default class InventoryView extends React.Component {
             name: "Rock",
             amount: Math.floor(Math.random() * 1000),
             durable: true,
-            durability: Math.random()
+            durability: Math.random(),
+            actions: ["drop"]
         }
         this.setState({
             inventory: copy

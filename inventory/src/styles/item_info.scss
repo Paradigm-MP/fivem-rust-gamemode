@@ -43,6 +43,7 @@ div.item-info-container div.description-container img
 
 div.item-info-container div.info-actions-container
 {
+    position: relative;
     display: grid;
     margin-top: 4px;
     grid-column-gap: 4px;
@@ -61,9 +62,18 @@ div.item-info-container div.info-actions-container div.title
 
 div.item-info-container div.info-actions-container div.content
 {
+    position: relative;
+    width: 100%;
     margin-top: 2px;
-    height: 100px;
+    height: 150px;
     background-color: rgba(255, 255, 255, 0.15);
+}
+
+div.item-info-container div.info-actions-container div.content div.content-abs
+{
+    position: absolute;
+    bottom: 0;
+    width: 100%;
 }
 
 div.item-info-container div.splitting-container
@@ -135,4 +145,34 @@ div.item-info-container div.drag-item-container img
     height: 75px;
     width: auto;
     padding: 6px;
+}
+
+div.item-info-container div.actions-container div.action-container
+{
+    background-color: rgba(255, 255, 255, 0.2);
+    color: white;
+    display: grid;
+    grid-column-gap: 6px;
+    grid-template-rows: auto;
+    grid-template-columns: 36px auto;
+    align-items: center;
+    width: 100%;
+    margin-top: 2px;
+    cursor: pointer;
+}
+
+div.item-info-container div.actions-container div.action-container img
+{
+    display: inline-block;
+    width: 32px;
+    padding: 8px;
+}
+
+div.item-info-container div.actions-container div.action-container div.title
+{
+    display: inline-block;
+    background-color: transparent;
+    text-transform: capitalize;
+    color: white;
+    font-size: 22px;
 }

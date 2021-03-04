@@ -65,6 +65,11 @@ export default class ItemInfo extends React.Component {
             start_slider_x: $elem.offset().left,
             slider_width: $elem.width()
         })
+
+        // Update it on a small delay to update next frame
+        setTimeout(() => {
+            this.updateSlider(event);
+        }, 10);
     }
     
     onMouseUp (event)
@@ -86,6 +91,11 @@ export default class ItemInfo extends React.Component {
             return;
         }
 
+        this.updateSlider(event);
+    }
+
+    updateSlider (event)
+    {
         let percent = (event.clientX - this.state.start_slider_x) / this.state.slider_width;
         
         if (percent <= 0)
@@ -119,7 +129,15 @@ export default class ItemInfo extends React.Component {
                         <div className='actions-container'>
                             <div className='title'>Actions</div>
                             <div className='content'>
-                                {/* Add buttons here */}
+                                <div className='content-abs'>
+                                    {this.props.item_data.actions && this.props.item_data.actions.map((action) => 
+                                    {
+                                        return <div className='action-container'>
+                                            <img src={`./images/${action}.png`} className='icon'></img>
+                                            <div className='title'>{action}</div>
+                                        </div>
+                                    })}
+                                </div>
                             </div>
                         </div>
                     </div>
