@@ -35,9 +35,15 @@ export default class ItemInfo extends React.Component {
         this.props.startDraggingItem(event, slot, this.drag_section);
     }
 
+    // Helper function to ensure this still works if no item data is passed in
+    getItem(stack)
+    {
+        return (typeof stack != 'undefined') ? stack.contents[0] : {};
+    }
+
     getDisplayItemData()
     {
-        const item_data = JSON.parse(JSON.stringify(this.props.item_data));
+        const item_data = JSON.parse(JSON.stringify(this.getItem(this.props.stack)));
         item_data.durable = false;
         item_data.amount = this.props.split_amount;
         return item_data;
@@ -53,7 +59,7 @@ export default class ItemInfo extends React.Component {
                 current_section: this.props.selectedDragSection
             })
 
-            this.props.setSplitAmount(Math.ceil(this.props.item_data.amount / 2))
+            this.props.setSplitAmount(Math.ceil(this.getItem(this.props.stack).amount / 2))
         }
     }
 
@@ -107,7 +113,7 @@ export default class ItemInfo extends React.Component {
             percent = 1;
         }
         
-        const split_amount = Math.ceil(this.props.item_data.amount * percent)
+        const split_amount = Math.ceil(this.getItem(this.props.stack).amount * percent)
 
         this.props.setSplitAmount(split_amount);
     }
@@ -116,10 +122,10 @@ export default class ItemInfo extends React.Component {
         return (
             <>
                 <div className='item-info-container'>
-                    <div className='item-title'>{this.props.item_data.name}</div>
+                    <div className='item-title'>{this.getItem(this.props.stack).name}</div>
                     <div className='description-container'>
                         <div className='description'>This is a test item description.</div>
-                        <img src={GetItemImage(this.props.item_data.name)}></img>
+                        <img src={GetItemImage(this.getItem(this.props.stack).name)}></img>
                     </div>
                     <div className='info-actions-container'>
                         <div className='info-container'>
@@ -130,7 +136,7 @@ export default class ItemInfo extends React.Component {
                             <div className='title'>Actions</div>
                             <div className='content'>
                                 <div className='content-abs'>
-                                    {this.props.item_data.actions && this.props.item_data.actions.map((action) => 
+                                    {this.getItem(this.props.stack).actions && this.getItem(this.props.stack).actions.map((action) => 
                                     {
                                         return <div className='action-container' key={`item_action_${action}`}>
                                             <img src={`./images/${action}.png`} className='icon'></img>
@@ -151,7 +157,7 @@ export default class ItemInfo extends React.Component {
                             onMouseDown={(e) => this.onMouseDown(e)}
                             onMouseUp={(e) => this.onMouseUp(e)}
                             onMouseMove={(e) => this.onMouseMove(e)}>
-                                <div className='slider' style={{width: `${this.props.split_amount / this.props.item_data.amount * 100}%`}}>
+                                <div className='slider' style={{width: `${this.props.split_amount / this.getItem(this.props.stack).amount * 100}%`}}>
                                     <div className='amount-text'>{this.props.split_amount}</div>
                                 </div>
                             </div>
@@ -166,7 +172,7 @@ export default class ItemInfo extends React.Component {
                             slot={this.slot}
                             selected={this.slot == this.props.selectedSlot && this.props.selectedDragSection == this.drag_section}
                             drag_section={this.drag_section}
-                            item_data={this.getDisplayItemData()}></Item>
+                            stack={this.getDisplayItemData()}></Item>
                         </div>
                     </div>
                 </div>

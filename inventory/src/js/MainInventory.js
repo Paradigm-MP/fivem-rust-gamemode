@@ -44,7 +44,7 @@ export default class MainInventory extends React.Component {
                             slot={index}
                             selected={index == this.props.selectedSlot && this.props.selectedDragSection == this.drag_section}
                             drag_section={this.drag_section}
-                            item_data={this.props.contents[index]}></Item>
+                            stack={this.props.contents[index]}></Item>
                         })}
                     </div>}
                     <div className='hotbar-container-outer'>

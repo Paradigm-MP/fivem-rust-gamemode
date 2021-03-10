@@ -39,9 +39,15 @@ export default class Item extends React.Component {
     }
 
     // Helper function to ensure this still works if no item data is passed in
-    getItem(item)
+    getItem(stack)
     {
-        return item || {};
+        return (typeof stack != 'undefined') ? stack.contents[0] : {};
+    }
+
+    getDurabilityPercent(_item)
+    {
+        const item = this.getItem(_item);
+        return item.durability / item.max_durability;
     }
 
     render () {
@@ -60,7 +66,7 @@ export default class Item extends React.Component {
                         {/* Durability bar on the left */}
                         {this.getItem(this.props.item_data).durable && 
                             <div className='durability'>
-                                <div className='durability-inner' style={{height: `${this.getItem(this.props.item_data).durability * 100}%`}}></div>
+                                <div className='durability-inner' style={{height: `${this.getDurabilityPercent(this.props.item_data) * 100}%`}}></div>
                             </div>
                         }
 

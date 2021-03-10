@@ -9,6 +9,7 @@ import LootView from "./LootView"
 import CharacterView from "./CharacterView"
 import ItemInfo from "./ItemInfo"
 import $ from "jquery";
+import InvStack from "./InvStack"
 
 export default class InventoryView extends React.Component {
 
@@ -57,20 +58,51 @@ export default class InventoryView extends React.Component {
     componentDidMount ()
     {
         // Test code
-        const copy = JSON.parse(JSON.stringify(this.state.inventory));
-        copy[InventorySections.Main][0] = 
+        // const copy = JSON.parse(JSON.stringify(this.state.inventory));
+        // copy[InventorySections.Main][0] = 
+        // {
+        //     name: "Rock",
+        //     amount: Math.floor(Math.random() * 1000),
+        //     durable: true,
+        //     durability: Math.random(),
+        //     actions: ["drop"]
+        // }
+        // this.setState({
+        //     inventory: copy
+        // })
+
+        OOF.Subscribe("InventoryUpdated", (args) => 
         {
-            name: "Rock",
-            amount: Math.floor(Math.random() * 1000),
-            durable: true,
-            durability: Math.random(),
-            actions: ["drop"]
-        }
+            const contents = {}
+
+            // Parse contents back into a table/map/dict
+            args.data.contents.forEach((sync_object) => {
+                contents[sync_object.index] = new InvStack(sync_object);
+            });
+
+            args.contents = contents
+
+            if (args.action == "full")
+            {
+                this.fullInventorySync(args);
+            }
+
+            // TODO: add the rest of the actions
+            
+        })
+
+        OOF.CallEvent("Inventory/Ready")
+    }
+
+    // Called when an entire inventory syncs
+    fullInventorySync(args)
+    {
+        const copy = JSON.parse(JSON.stringify(this.state.inventory));
+        copy[args.data.type] = args.data.contents;
+
         this.setState({
             inventory: copy
         })
-
-        OOF.CallEvent("Ready")
     }
 
     setSplitAmount(amount)
@@ -302,7 +334,7 @@ export default class InventoryView extends React.Component {
                                     selectSlot={this.selectSlot.bind(this)}
                                     selectedSlot={this.state.selected_slot}
                                     selectedDragSection={this.state.selected_drag_section}
-                                    item_data={this.getSelectedItem()}
+                                    stack={this.getSelectedItem()}
                                     setSplitAmount={this.setSplitAmount.bind(this)}
                                     split_amount={this.state.split_amount}
                                     mouse_down={this.state.mouse_down}

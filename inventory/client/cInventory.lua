@@ -3,6 +3,8 @@ cInventory = class()
 function cInventory:__init()
 
     self.open = false
+    self.player_inventories_loaded = 0
+    self.total_player_inventories = 3
 
     self.restricted_actions = 
     {
@@ -32,6 +34,8 @@ function cInventory:__init()
 
     Events:Subscribe("Loadingscreen/Ready", self, self.LoadingscreenReady)
     Events:Subscribe("onResourceStop", self, self.onResourceStop)
+
+    Network:Subscribe("InventoryUpdated", self, self.InventoryUpdated)
 
 end
 
@@ -97,7 +101,7 @@ function cInventory:LoadingscreenReady()
         callback = function()
 
             Events:Fire("Loadingscreen/Update", {
-                name = "Inventory"
+                name = "Inventory UI"
             })
 
             self.ui = UI:Create({
@@ -114,17 +118,66 @@ function cInventory:LoadingscreenReady()
     })
 end
 
+function cInventory:InventoryUpdated(args)
+
+    self.ui:CallEvent("InventoryUpdated", args)
+    
+    if args.action == "full" then
+        -- Loading the inventory for the first time
+
+        if self.player_inventories_loaded < 3 then
+            self.player_inventories_loaded = self.player_inventories_loaded + 1
+            
+            Events:Fire("Loadingscreen/Update", {
+                name = string.format("Inventory (%d/%d)", 
+                    self.player_inventories_loaded,
+                    self.total_player_inventories)
+            })
+
+            -- Finished loading inventories
+            if self.player_inventories_loaded == self.total_player_inventories then
+                Events:Fire("Loadingscreen/Remove", {
+                    name = "inventory_init_sync"
+                })
+                
+                self:FinishedLoadingInventories()
+            end
+
+        end
+
+    end
+
+end
+
+-- Called after initial sync of player inventories finishes
+function cInventory:FinishedLoadingInventories()
+    self.ui:Show()
+end
+
 function cInventory:UIReady()
 
     Citizen.CreateThread(function()
 
         Wait(1000)
 
+        Network:Send("InventoryUILoaded-" .. tostring(LocalPlayer:GetUniqueId()))
+
+        Events:Fire("Loadingscreen/Add", {
+            name = "inventory_init_sync",
+            callback = function()
+    
+                Events:Fire("Loadingscreen/Update", {
+                    name = string.format("Inventory (%d/%d)", 
+                        self.player_inventories_loaded,
+                        self.total_player_inventories)
+                })
+    
+            end
+        })
+
         Events:Fire("Loadingscreen/Remove", {
             name = "inventory_ui"
         })
-
-        self.ui:Show()
 
     end)
 

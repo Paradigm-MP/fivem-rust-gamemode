@@ -5,10 +5,25 @@ sInventory = class()
 ]]
 function sInventory:__init(args)
 
-    output_table(args)
     self.id = args.id
-    self.contents = args.contents or {} -- Contents of the inventory
     self.num_slots = args.num_slots -- Number of slots in the inventory
+    self.contents = args.contents or {} -- Contents of the inventory
+    self.type = args.type -- Inventory type
+
+    for i = 1, 4 do
+        self.contents[i] = sStack({
+            contents = {
+                sItem({
+                    name = "Rock",
+                    amount = 1,
+                    stacklimit = 1,
+                    durable = true,
+                    durability = math.random() * 100,
+                    max_durability = 100
+                }),
+            }
+        })
+    end
 
     -- All events to interface with this inventory
     self.events = {}
@@ -33,6 +48,14 @@ function sInventory:__init(args)
     table.insert(self.network_events, Network:Subscribe("Inventory/Split" .. self.id, self, self.SplitStack))
     table.insert(self.network_events, Network:Subscribe("Inventory/Swap" .. self.id, self, self.SwapStack))
 
+end
+
+function sInventory:AddPlayerOpened(player)
+    self.players_opened[player:GetUniqueId()] = player
+end
+
+function sInventory:RemovePlayerOpened(player)
+    self.players_opened[player:GetUniqueId()] = nil
 end
 
 -- Returns whether a player can do anything on the contents of this inventory
@@ -460,7 +483,7 @@ function sInventory:RemoveStack(args)
 
             if leftover_stack and leftover_stack:GetAmount() > 0 then
                 print("**Unable to remove some items!**")
-                print(string.format("Player: %s [%s]", tostring(self.player:GetSteamId())))
+                print(string.format("Player: %s [%s]", tostring(self.player:GetUniqueId())))
                 print(leftover_stack:ToString())
                 print(debug.traceback())
             end
@@ -608,6 +631,7 @@ function sInventory:ModifyStack(stack, index)
 end
 
 -- Syncs inventory to all players who have it open
+-- Specify args.player to sync to one specific player
 function sInventory:Sync(args)
 
     local all_players_to_sync = shallow_copy(self.players_opened)
@@ -615,31 +639,25 @@ function sInventory:Sync(args)
         all_players_to_sync[id] = player
     end
 
+    local sync_target = args.player or all_players_to_sync
+
     if args.sync_full then -- Sync entire inventory
-        Network:Send(all_players_to_sync, "InventoryUpdated", 
+        Network:Send("InventoryUpdated", all_players_to_sync,  
             {action = "full", data = self:GetSyncObject()})
     elseif args.sync_stack then -- Sync a single stack
-        Network:Send(all_players_to_sync, "InventoryUpdated", 
+        Network:Send("InventoryUpdated", all_players_to_sync,  
             {action = "update", stack = args.stack:GetSyncObject(), index = args.index})
     elseif args.sync_remove then -- Sync the removal of a stack (only used if it was the top stack)
-        Network:Send(all_players_to_sync, "InventoryUpdated", 
+        Network:Send("InventoryUpdated", all_players_to_sync,  
             {action = "remove", index = args.index})
     elseif args.sync_cat then -- Sync an entire category of items
-        Network:Send(all_players_to_sync, "InventoryUpdated", 
+        Network:Send("InventoryUpdated", all_players_to_sync,  
             {action = "cat", cat = args.cat, data = self:GetCategorySyncObject(args.cat)})
     elseif args.sync_slots then -- Sync ONLY slots
-        Network:Send(all_players_to_sync, "InventoryUpdated", 
+        Network:Send("InventoryUpdated", all_players_to_sync,  
             {action = "slots", slots = self.slots})
     end
 
-end
-
-function sInventory:Serialize()
-    return Serialize(self.contents, true)
-end
-
-function sInventory:Deserialize(data)
-    self.contents = Deserialize(data, true)
 end
 
 function sInventory:Unload()
@@ -654,12 +672,8 @@ function sInventory:Unload()
         Network:Unsubscribe(v)
     end
 
-    Timer.Clear(self.update_timer)
-    
     self.player = nil
     self.contents = nil
-    self.initial_sync = nil
-    self.steamID = nil
     self.events = nil
     self.network_events = nil
     self = nil
@@ -672,10 +686,12 @@ function sInventory:GetSyncObject()
     local data = {}
 
     for k,v in pairs(self.contents) do
-        data[k] = v:GetSyncObject()
+        local sync_object = v:GetSyncObject()
+        sync_object.index = k
+        table.insert(data, sync_object)
     end
 
-    return data
+    return {contents = data, id = self.id, num_slots = self.num_slots, type = self.type}
 
 end
 

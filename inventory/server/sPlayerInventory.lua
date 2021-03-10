@@ -14,7 +14,25 @@ function sPlayerInventory:__init(player)
         [InventoryTypeEnum.Character] = true
     }
 
+    self.network_events = 
+    {
+        Network:Subscribe("InventoryUILoaded-" .. tostring(self.player:GetUniqueId()), self, self.InventoryUILoaded)
+    }
+
+end
+
+-- Called when the player's UI finishes loading
+function sPlayerInventory:InventoryUILoaded(args)
+    
+    -- Player does not match this inventory
+    if args.player:GetUniqueId() ~= self.player:GetUniqueId() then return end
+
     self:LoadInventories()
+
+end
+
+-- Sync all player inventories on initial load
+function sPlayerInventory:SyncInventories()
 
 end
 
@@ -34,31 +52,39 @@ function sPlayerInventory:SaveInventory(inventory_type)
 end
 
 function sPlayerInventory:LoadInventories()
-    print("Start sPlayerInventory:LoadInventories")
-
     for inventory_type, enabled in pairs(self.inventories) do
         if enabled then
-            self.inventories[inventory_type] = self:LoadInventory(inventory_type)
+            -- Load and sync inventory to player
+            self:LoadInventory(inventory_type)
         end
     end
-
-    print("Finished sPlayerInventory:LoadInventories")
 end
 
 function sPlayerInventory:LoadInventory(inventory_type)
 
+    print("sPlayerInventory:LoadInventory " .. tostring(inventory_type))
     local key = string.format("inventory_%s", tostring(inventory_type))
 
-    -- TODO: investigate if async is better
-    local contents = self.player:GetStoredValue({
+    self.player:GetStoredValue({
         key = key,
-        synchronous = true
-    })
+        callback = function(contents)
+                    
+            self.inventories[inventory_type] = sInventory({
+                id = sInventoryManager:GetNewInventoryId(),
+                contents = contents,
+                num_slots = sPlayerInventoryConfig.default_slots[inventory_type],
+                type = inventory_type
+            })
 
-    return sInventory({
-        id = sInventoryManager:GetNewInventoryId(),
-        contents = contents or {},
-        num_slots = sPlayerInventoryConfig.default_slots[inventory_type]
+            self.inventories[inventory_type]:AddPlayerOpened(self.player)
+            self.inventories[inventory_type]:Sync({
+                sync_full = true,
+                player = self.player
+            })
+
+            print("Loaded and synced inventory to player")
+
+        end
     })
 
 end
