@@ -147,6 +147,8 @@ server_scripts {
     'cells/shared/*.lua',
     'cells/server/*.lua',
 
+    'inventory/server/*.lua',
+
     'resources/shared/*.lua',
     'resources/server/resource_data/**/*',
     'resources/server/*.lua',
