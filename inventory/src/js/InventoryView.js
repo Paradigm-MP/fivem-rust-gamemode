@@ -35,6 +35,9 @@ export default class InventoryView extends React.Component {
             selected_slot: -1,
             selected_drag_section: InventorySections.Main,
 
+            //
+            equipped_hotbar_slot: -1,
+
             // Current split amount used in ItemInfo
             split_amount: 0,
 
@@ -312,9 +315,14 @@ export default class InventoryView extends React.Component {
 
         if (!this.state.drag_active && this.state.drag_ready)
         {
-            this.setState({
-                drag_active: true
-            })
+            // Small threshold for clicking items
+            if (Math.abs(this.state.drag_position.left - event.clientX) > this.state.drag_width * 0.1
+            || Math.abs(this.state.drag_position.top - event.clientY) > this.state.drag_width * 0.1)
+            {
+                this.setState({
+                    drag_active: true
+                })
+            }
         }
 
         if (this.state.drag_active)
