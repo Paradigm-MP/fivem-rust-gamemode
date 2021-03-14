@@ -19,7 +19,7 @@ function Movement:__init()
     }
 
     Keymap:Register("mouse_left", "mouse_button", "attack", function(args)
-        if args.down then
+        if args.down and not Inventory:IsOpen() then
             self:TryToAttack()
         end
     end)
