@@ -10,19 +10,32 @@ function sInventory:__init(args)
     self.contents = args.contents or {} -- Contents of the inventory
     self.type = args.type -- Inventory type
 
-    for i = 1, 4 do
-        self.contents[i] = sStack({
-            contents = {
-                sItem({
-                    name = "Rock",
-                    amount = 1,
-                    stacklimit = 1,
-                    durable = true,
-                    durability = math.random() * 100,
-                    max_durability = 100
-                }),
-            }
-        })
+    for i = 0, math.random(4) do
+        if self.type == InventoryTypeEnum.Main then
+            self.contents[i] = sStack({
+                contents = {
+                    sItem({
+                        name = "Rock",
+                        amount = 1,
+                        stacklimit = 1,
+                        durable = true,
+                        durability = math.random() * 100,
+                        max_durability = 100
+                    }),
+                }
+            })
+        else
+            self.contents[i] = sStack({
+                contents = {
+                    sItem({
+                        name = "Rock",
+                        amount = math.random(1000),
+                        stacklimit = 1000,
+                        durable = false
+                    }),
+                }
+            })
+        end
     end
 
     -- All events to interface with this inventory

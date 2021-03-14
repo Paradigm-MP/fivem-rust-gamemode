@@ -43,13 +43,13 @@ export default class ItemInfo extends React.Component {
 
     getDisplayItemData()
     {
-        const item_data = JSON.parse(JSON.stringify(this.getItem(this.props.stack)));
-        item_data.durable = false;
-        item_data.amount = this.props.split_amount;
-        return item_data;
+        const stack = JSON.parse(JSON.stringify(this.props.stack));
+        stack.contents[0].durable = false;
+        stack.contents[0].amount = this.props.split_amount;
+        return stack;
     }
 
-    componentDidMount ()
+    onComponentMountOrUpdate()
     {
         if (this.props.selectedSlot != this.state.current_slot ||
             this.props.selectedDragSection != this.state.current_section)
@@ -61,6 +61,16 @@ export default class ItemInfo extends React.Component {
 
             this.props.setSplitAmount(Math.ceil(this.getItem(this.props.stack).amount / 2))
         }
+    }
+
+    componentDidUpdate()
+    {
+        this.onComponentMountOrUpdate();
+    }
+
+    componentDidMount ()
+    {
+        this.onComponentMountOrUpdate();
     }
 
     onMouseDown (event)

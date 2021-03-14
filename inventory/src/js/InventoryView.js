@@ -9,7 +9,6 @@ import LootView from "./LootView"
 import CharacterView from "./CharacterView"
 import ItemInfo from "./ItemInfo"
 import $ from "jquery";
-import InvStack from "./InvStack"
 
 export default class InventoryView extends React.Component {
 
@@ -58,7 +57,7 @@ export default class InventoryView extends React.Component {
     componentDidMount ()
     {
         // Test code
-        // const copy = JSON.parse(JSON.stringify(this.state.inventory));
+        // const copy = this.getInventoryCopy();
         // copy[InventorySections.Main][0] = 
         // {
         //     name: "Rock",
@@ -77,10 +76,10 @@ export default class InventoryView extends React.Component {
 
             // Parse contents back into a table/map/dict
             args.data.contents.forEach((sync_object) => {
-                contents[sync_object.index] = new InvStack(sync_object);
+                contents[sync_object.index] = sync_object;
             });
 
-            args.contents = contents
+            args.data.contents = contents;
 
             if (args.action == "full")
             {
@@ -97,12 +96,17 @@ export default class InventoryView extends React.Component {
     // Called when an entire inventory syncs
     fullInventorySync(args)
     {
-        const copy = JSON.parse(JSON.stringify(this.state.inventory));
+        const copy = this.getInventoryCopy();
         copy[args.data.type] = args.data.contents;
 
         this.setState({
             inventory: copy
         })
+    }
+
+    getInventoryCopy()
+    {
+        return JSON.parse(JSON.stringify(this.state.inventory))
     }
 
     setSplitAmount(amount)
@@ -124,7 +128,7 @@ export default class InventoryView extends React.Component {
         // Disable selecting slots while dragging
         if (this.state.drag_active) {return;}
 
-        const inventory_copy = JSON.parse(JSON.stringify(this.state.inventory));
+        const inventory_copy = this.getInventoryCopy();
         inventory_copy[InventorySections.ItemInfo][0] = inventory_copy[drag_section][slot];
 
         this.setState({
@@ -284,7 +288,7 @@ export default class InventoryView extends React.Component {
         }
     }
 
-    getSelectedItem()
+    getSelectedStack()
     {
         if (this.state.selected_slot != -1 && this.state.selected_drag_section != -1)
         {
@@ -292,7 +296,7 @@ export default class InventoryView extends React.Component {
         }
     }
 
-    getDraggingItem()
+    getDraggingStack()
     {
         if (this.state.drag_slot != -1 && this.state.drag_section != -1)
         {
@@ -327,14 +331,14 @@ export default class InventoryView extends React.Component {
                     
                     <div className='middle-section-container-relative'>
                         <div className='middle-section-container-bottom'>
-                            {this.props.open && typeof this.getSelectedItem() != 'undefined' &&
+                            {this.props.open && typeof this.getSelectedStack() != 'undefined' &&
                                 <ItemInfo
                                     setHoveredSlotAndSection={this.setHoveredSlotAndSection.bind(this)}
                                     startDraggingItem={this.startDraggingItem.bind(this)}
                                     selectSlot={this.selectSlot.bind(this)}
                                     selectedSlot={this.state.selected_slot}
                                     selectedDragSection={this.state.selected_drag_section}
-                                    stack={this.getSelectedItem()}
+                                    stack={this.getSelectedStack()}
                                     setSplitAmount={this.setSplitAmount.bind(this)}
                                     split_amount={this.state.split_amount}
                                     mouse_down={this.state.mouse_down}
@@ -372,7 +376,7 @@ export default class InventoryView extends React.Component {
                 {/* Dragging item display */}
                 {this.state.drag_active && 
                     <DragItem 
-                        name={this.getDraggingItem().name}
+                        name={this.getDraggingStack().contents[0].name}
                         offset={this.state.drag_offset} 
                         position={this.state.drag_position}
                         width={this.state.drag_width} 
