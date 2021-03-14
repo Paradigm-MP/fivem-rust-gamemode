@@ -25,8 +25,8 @@ div.inv-section:nth-child(3) div.items-container
     display: grid;
     grid-column-gap: 6px;
     grid-row-gap: 6px;
-    grid-template-rows: repeat(2, auto);
-    grid-template-columns: repeat(6, auto);
+    grid-template-rows: repeat(2, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 div.inv-section:nth-child(3) div.hotbar-container-outer

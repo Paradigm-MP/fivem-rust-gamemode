@@ -24,8 +24,8 @@ div.inv-section:nth-child(2) div.inventory-items-container
     display: grid;
     grid-column-gap: 6px;
     grid-row-gap: 6px;
-    grid-template-rows: repeat(4, auto);
-    grid-template-columns: repeat(6, auto);
+    grid-template-rows: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(6, minmax(0, 1fr));
     animation: appear 0.2s ease-in-out;
 }
 

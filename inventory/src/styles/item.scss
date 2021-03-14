@@ -52,7 +52,8 @@ div.item-container div.grab-container
 div.item-container img.item-image
 {
     width: 90%;
-    height: 90%;
+    height: auto;
+    max-height: 90%;
     user-select: none;
     padding: 5%;
 }

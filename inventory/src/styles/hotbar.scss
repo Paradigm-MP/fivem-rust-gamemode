@@ -6,6 +6,6 @@ div.main-inventory-container div.hotbar-container
     position: relative;
     display: grid;
     grid-column-gap: 6px;
-    grid-template-rows: auto;
-    grid-template-columns: repeat(6, auto);
+    grid-template-rows: minmax(0, 1fr);
+    grid-template-columns: repeat(6, minmax(0, 1fr));
 }
