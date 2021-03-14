@@ -15,7 +15,7 @@ function sInventory:__init(args)
             self.contents[i] = sStack({
                 contents = {
                     sItem({
-                        name = "Rock",
+                        name = "rock",
                         amount = 1,
                         stacklimit = 1,
                         durable = true,
@@ -24,11 +24,29 @@ function sInventory:__init(args)
                     }),
                 }
             })
+            self.contents[i+7] = sStack({
+                contents = {
+                    sItem({
+                        name = "wood",
+                        amount = math.random(1000),
+                        stacklimit = 1000
+                    }),
+                }
+            })
+            self.contents[i+8] = sStack({
+                contents = {
+                    sItem({
+                        name = "stone",
+                        amount = math.random(1000),
+                        stacklimit = 1000
+                    }),
+                }
+            })
         else
             self.contents[i] = sStack({
                 contents = {
                     sItem({
-                        name = "Rock",
+                        name = "rock",
                         amount = math.random(1000),
                         stacklimit = 1000,
                         durable = false
@@ -220,7 +238,7 @@ function sInventory:AddStackRemote(args)
     end
 
     args.stack = self:RecreateStack(args.stack)
-    self:AddStack(args)
+    return self:AddStack(args)
 
 end
 
@@ -255,7 +273,7 @@ function sInventory:AddItemRemote(args)
         return
     end
 
-    self:AddStack({stack = shStack({contents = {shItem(args.item)}}), index = args.index})
+    return self:AddStack({stack = shStack({contents = {shItem(args.item)}}), index = args.index})
 
 end
 

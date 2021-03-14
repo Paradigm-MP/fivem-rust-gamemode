@@ -79,7 +79,8 @@ function cInventory:OpenInventory()
 
     Filter:Apply({
         name = "hud_def_blur",
-        amount = 1
+        amount = 1,
+        extra = true
     })
 end
 
@@ -92,7 +93,9 @@ function cInventory:CloseInventory()
     UI:SetFocus(false)
     UI:KeepInput(false)
 
-    Filter:Clear()
+    Filter:Clear({
+        extra = true
+    })
 end
 
 function cInventory:LoadingscreenReady()
@@ -161,6 +164,8 @@ function cInventory:FinishedLoadingInventories()
 end
 
 function cInventory:UIReady()
+
+    self.ui:CallEvent("SetLocale", {locale = GetConvar("locale", "en-US")})
 
     Citizen.CreateThread(function()
 

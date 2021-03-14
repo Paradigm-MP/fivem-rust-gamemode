@@ -4,6 +4,7 @@ import "./Hotbar"
 import Item from "./Item"
 import Hotbar from './Hotbar';
 import InventorySections from "./constants/InventorySections"
+import Localizations from "./locale/common"
 
 export default class MainInventory extends React.Component {
 
@@ -31,7 +32,7 @@ export default class MainInventory extends React.Component {
         return (
             <>
                 <div className='main-inventory-container'>
-                    {this.props.open && <div className='title'>Inventory</div>}
+                    {this.props.open && <div className='title'>{Localizations.GetMenuItemName("inventory")}</div>}
                     {this.props.open && <div className='inventory-items-container'>
                         {[...Array(this.num_inv_slots)].map((value, index) => 
                         {

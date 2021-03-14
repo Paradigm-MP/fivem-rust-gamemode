@@ -10,6 +10,42 @@ This gamemode is not currently functional in any sense. When this gamemode reach
 
 ## Setting Up
 
+### Set Language
+If you plan on using a language other than English on your server, you'll want to add this line to your server config:
+```
+setr locale "en-US"
+```
+Replace `en-US` with the locale of your choice.
+
+Unsupported locales will fallback to the `en-US` locale by default. If a locale for your language does not exist, please feel free to add it and create a PR! Follow the steps below to add a locale.
+
+**Supported Locales:**
+ - `en-us`: English
+
+### Adding a New Locale
+If you'd like to use a language other than English and your locale currently isn't added, follow these steps.
+
+1. Set your locale in the server config to the desired locale (instructions above).
+2. Navigate to `inventory/src/js/locale`.
+3. Copy `en-US.js` to a new file and rename it to your locale, eg. `aa-AA.js`. 
+4. Open the file you just renamed and edit the localized strings. Do not edit the keys inside brackets (`["key"]`), but edit their values instead: `["key"]: "value"`. 
+5. Once you have finished editing the file, we now need to import it. Open `inventory/src/js/locale/common.js`.
+6. Near the top you should see a comment saying: `// Import languages here`. Copy these two lines and paste them under the existing localizations.
+```js
+import LOCALE_EN_US from "./en-US";
+LOCALES["en-US"] = LOCALE_EN_US;
+```
+Replace the localization names with your own, for example:
+```js
+import LOCALE_AA_AA from "./aa-AA";
+LOCALES["aa-AA"] = LOCALE_AA_AA;
+```
+
+Now you'll need to build the UI again, which is covered in the below step.
+
+Now you should be all set with your new localization! Please make a [PR](https://github.com/Paradigm-MP/fivem-rust-gamemode/pulls) so it can be included in the main repository.
+
+
 ### Inventory UI
 The inventory/crafting UI uses React, so you'll need to compile it using webpack first.
 

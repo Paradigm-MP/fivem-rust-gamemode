@@ -5,6 +5,7 @@ import InventoryView from "./InventoryView"
 import CraftingView from "./CraftingView"
 import Views from "./constants/Views"
 import OOF from "./OOF"
+import Localizations from "./locale/common"
 
 export default class App extends React.Component {
 
@@ -40,6 +41,11 @@ export default class App extends React.Component {
             this.setState({
                 open: !this.state.open
             })
+        })
+
+        OOF.Subscribe('SetLocale', (args) => 
+        {
+            Localizations.SetLocale(args.locale);
         })
 
         // Call OOF ready event at end of mounting finish

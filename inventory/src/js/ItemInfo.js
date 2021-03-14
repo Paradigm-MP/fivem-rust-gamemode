@@ -4,6 +4,7 @@ import Item from "./Item"
 import GetItemImage from "./constants/Images"
 import InventorySections from "./constants/InventorySections"
 import $ from "jquery";
+import Localizations from "./locale/common"
 
 export default class ItemInfo extends React.Component {
 
@@ -132,18 +133,18 @@ export default class ItemInfo extends React.Component {
         return (
             <>
                 <div className='item-info-container'>
-                    <div className='item-title'>{this.getItem(this.props.stack).name}</div>
+                    <div className='item-title'>{Localizations.GetItemName(this.getItem(this.props.stack).name)}</div>
                     <div className='description-container'>
-                        <div className='description'>This is a test item description.</div>
+                        <div className='description'>{Localizations.GetItemDescription(this.getItem(this.props.stack).name)}</div>
                         <img src={GetItemImage(this.getItem(this.props.stack).name)}></img>
                     </div>
                     <div className='info-actions-container'>
                         <div className='info-container'>
-                            <div className='title'>Information</div>
+                            <div className='title'>{Localizations.GetMenuItemName("information")}</div>
                             <div className='content'></div>
                         </div>
                         <div className='actions-container'>
-                            <div className='title'>Actions</div>
+                            <div className='title'>{Localizations.GetMenuItemName("actions")}</div>
                             <div className='content'>
                                 <div className='content-abs'>
                                     {this.getItem(this.props.stack).actions && this.getItem(this.props.stack).actions.map((action) => 
@@ -160,8 +161,8 @@ export default class ItemInfo extends React.Component {
                     <div className='splitting-container'>
                         <div className='content-container'>
                             <div className='title'>
-                                <div className='title-left'>Splitting</div>
-                                <div className='title-right'>Set Amount &#38; Drag Icon</div>
+                                <div className='title-left'>{Localizations.GetMenuItemName("splitting")}</div>
+                                <div className='title-right'>{Localizations.GetMenuItemName("set amount and drag icon")}</div>
                             </div>
                             <div className='slider-container'
                             onMouseDown={(e) => this.onMouseDown(e)}
