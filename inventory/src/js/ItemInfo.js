@@ -46,7 +46,7 @@ export default class ItemInfo extends React.Component {
     {
         const stack = JSON.parse(JSON.stringify(this.props.stack));
         stack.contents[0].durable = false;
-        stack.contents[0].amount = this.props.split_amount;
+        stack.contents[0].amount = Math.min(this.props.split_amount, this.getItem(this.props.stack).amount);
         return stack;
     }
 
