@@ -72,25 +72,68 @@ export default class InventoryView extends React.Component {
 
         OOF.Subscribe("InventoryUpdated", (args) => 
         {
-            const contents = {}
-
-            // Parse contents back into a table/map/dict
-            args.data.contents.forEach((sync_object) => {
-                contents[sync_object.index] = sync_object;
-            });
-
-            args.data.contents = contents;
-
             if (args.action == "full")
             {
+                const contents = {}
+
+                // Parse contents back into a table/map/dict
+                args.data.contents.forEach((sync_object) => {
+                    contents[sync_object.index] = sync_object;
+                });
+
+                args.data.contents = contents;
+
                 this.fullInventorySync(args);
             }
+            else if (args.action == "swap")
+            {
+                this.inventorySwapped(args)
+            }
+            else if (args.action == "update")
+            {
+                this.inventoryUpdated(args)
+            }
+            else if (args.action == "remove")
+            {
+                this.inventoryRemoved(args)
+            }
 
-            // TODO: add the rest of the actions
-            
         })
 
         OOF.CallEvent("Inventory/Ready")
+    }
+
+    inventorySwapped(args)
+    {
+        const copy = this.getInventoryCopy();
+        const stack = copy[args.section][args.from];
+        copy[args.section][args.from] = copy[args.section][args.to];
+        copy[args.section][args.to] = stack;
+
+        this.setState({
+            inventory: copy,
+            selectedSlot: args.to
+        })
+    }
+
+    inventoryUpdated(args)
+    {
+        const copy = this.getInventoryCopy();
+        copy[args.section][args.index] = args.stack;
+        
+        this.setState({
+            inventory: copy
+        })
+    }
+
+    inventoryRemoved(args)
+    {
+        const copy = this.getInventoryCopy();
+        delete copy[args.section][args.index];
+        
+        this.setState({
+            inventory: copy
+        })
     }
 
     // Called when an entire inventory syncs
@@ -171,26 +214,15 @@ export default class InventoryView extends React.Component {
         // They dragged an empty slot, so return
         if (!dragged_item) {return;}
 
-        if (this.state.hover_section == InventorySections.Main)
+        if (this.state.hover_section == InventorySections.ItemInfo) {return;}
+
+        OOF.CallEvent("Inventory/DragItem", 
         {
-            // Dragged item on main inventory
-        }
-        else if (this.state.hover_section == InventorySections.Character)
-        {
-            // Dragged item on character slots   
-        }
-        else if (this.state.hover_section == InventorySections.Hotbar)
-        {
-            // Dragged item on hotbar slots
-        }
-        else if (this.state.hover_section == InventorySections.Loot)
-        {
-            // Dragged item on loot slots
-        }
-        else if (this.state.hover_section == InventorySections.ItemInfo)
-        {
-            // Dragged item on the single item info slot - do nothing
-        }
+            from_section: this.state.drag_section,
+            from_slot: this.state.drag_slot,
+            to_section: this.state.hover_section,
+            to_slot: this.state.hover_slot
+        })
 
     }
 

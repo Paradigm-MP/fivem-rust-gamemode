@@ -167,8 +167,8 @@ export default class ItemInfo extends React.Component {
                             onMouseDown={(e) => this.onMouseDown(e)}
                             onMouseUp={(e) => this.onMouseUp(e)}
                             onMouseMove={(e) => this.onMouseMove(e)}>
-                                <div className='slider' style={{width: `${this.props.split_amount / this.getItem(this.props.stack).amount * 100}%`}}>
-                                    <div className='amount-text'>{this.props.split_amount}</div>
+                                <div className='slider' style={{width: `${Math.min(this.props.split_amount, this.getItem(this.props.stack).amount) / this.getItem(this.props.stack).amount * 100}%`}}>
+                                    <div className='amount-text'>{Math.min(this.props.split_amount, this.getItem(this.props.stack).amount)}</div>
                                 </div>
                             </div>
                         </div>

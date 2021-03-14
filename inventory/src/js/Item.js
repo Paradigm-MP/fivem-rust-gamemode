@@ -14,11 +14,6 @@ export default class Item extends React.Component {
         }
     }
 
-    componentDidMount()
-    {
-        console.log(this.props.stack)
-    }
-
     shouldComponentUpdate(nextProps, nextState)
     {
         let shouldUpdate = false;

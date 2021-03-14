@@ -114,8 +114,14 @@ function cInventory:LoadingscreenReady()
             self.ui:Subscribe("Ready", self, self.UIReady)
             self.ui:Subscribe("Close", self, self.CloseInventory)
 
+            self.ui:Subscribe("Inventory/DragItem", self, self.DragItem)
+
         end
     })
+end
+
+function cInventory:DragItem(args)
+    Network:Send("Inventory/DragItem", args)
 end
 
 function cInventory:InventoryUpdated(args)

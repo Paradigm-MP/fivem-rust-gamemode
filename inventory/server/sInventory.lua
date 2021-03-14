@@ -47,14 +47,6 @@ function sInventory:__init(args)
 
     self.players_opened = {} -- [player id]: player, list of players who we should sync this to
 
-    table.insert(self.events, Events:Subscribe("Inventory.AddStack-" .. self.id, self, self.AddStackRemote))
-    table.insert(self.events, Events:Subscribe("Inventory.AddItem-" .. self.id, self, self.AddItemRemote))
-    table.insert(self.events, Events:Subscribe("Inventory.RemoveStack-" .. self.id, self, self.RemoveStackRemote))
-    table.insert(self.events, Events:Subscribe("Inventory.RemoveItem-" .. self.id, self, self.RemoveItemRemote))
-    table.insert(self.events, Events:Subscribe("Inventory.ModifyStack-" .. self.id, self, self.ModifyStackRemote))
-    table.insert(self.events, Events:Subscribe("Inventory.ModifyDurability-" .. self.id, self, self.ModifyDurabilityRemote))
-    table.insert(self.events, Events:Subscribe("Inventory.ModifyItemCustomData-" .. self.id, self, self.ModifyItemCustomDataRemote))
-
     table.insert(self.network_events, Network:Subscribe("Inventory/Shift" .. self.id, self, self.ShiftStack))
     table.insert(self.network_events, Network:Subscribe("Inventory/Use" .. self.id, self, self.UseItem))
     table.insert(self.network_events, Network:Subscribe("Inventory/Drop" .. self.id, self, self.DropStack))
@@ -659,16 +651,13 @@ function sInventory:Sync(args)
             {action = "full", data = self:GetSyncObject()})
     elseif args.sync_stack then -- Sync a single stack
         Network:Send("InventoryUpdated", all_players_to_sync,  
-            {action = "update", stack = args.stack:GetSyncObject(), index = args.index})
-    elseif args.sync_remove then -- Sync the removal of a stack (only used if it was the top stack)
+            {action = "update", stack = args.stack:GetSyncObject(), section = args.section, index = args.index})
+    elseif args.sync_remove then -- Sync the removal of a stack
         Network:Send("InventoryUpdated", all_players_to_sync,  
-            {action = "remove", index = args.index})
-    elseif args.sync_cat then -- Sync an entire category of items
+            {action = "remove", section = args.section, index = args.index})
+    elseif args.sync_swap then -- Syncs the swap of two items
         Network:Send("InventoryUpdated", all_players_to_sync,  
-            {action = "cat", cat = args.cat, data = self:GetCategorySyncObject(args.cat)})
-    elseif args.sync_slots then -- Sync ONLY slots
-        Network:Send("InventoryUpdated", all_players_to_sync,  
-            {action = "slots", slots = self.slots})
+            {action = "swap", section = args.section, from = args.from, to = args.to})
     end
 
 end

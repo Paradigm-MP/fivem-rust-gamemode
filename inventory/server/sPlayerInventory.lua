@@ -14,11 +14,89 @@ function sPlayerInventory:__init(player)
         [InventoryTypeEnum.Character] = true
     }
 
+    -- If they have a lootbox open, it will be in self.inventories
+
     self.network_events = 
     {
         Network:Subscribe("InventoryUILoaded-" .. tostring(self.player:GetUniqueId()), self, self.InventoryUILoaded)
     }
 
+end
+
+function sPlayerInventory:DragItem(args)
+    -- Invalid args
+    if not args.from_section
+    or not args.from_slot
+    or not args.to_section
+    or not args.to_slot then return end
+
+    local from_inventory = self.inventories[args.from_section]
+    local to_inventory = self.inventories[args.to_section]
+
+    -- Inventory does not exist
+    if not from_inventory
+    or not to_inventory then return end
+
+    -- Neither slot in the inventories has an item in it
+    if not from_inventory.contents[args.from_slot]
+    and not to_inventory.contents[args.to_slot] then return end
+
+    -- Invalid slot index
+    if args.from_slot > from_inventory.num_slots
+    or args.from_slot < 0
+    or args.to_slot > to_inventory.num_slots
+    or args.to_slot < 0 then return end
+
+    if from_inventory.id == to_inventory.id then
+        -- Dragging within an inventory
+        local from_item = from_inventory.contents[args.from_slot]
+        from_inventory.contents[args.from_slot] = from_inventory.contents[args.to_slot]
+        from_inventory.contents[args.to_slot] = from_item
+
+        from_inventory:Sync({
+            sync_swap = true,
+            section = args.from_section,
+            from = args.from_slot,
+            to = args.to_slot
+        })
+    else
+        -- Dragging from one inventory to another
+        local from_item = from_inventory.contents[args.from_slot]
+        from_inventory.contents[args.from_slot] = to_inventory.contents[args.to_slot]
+        to_inventory.contents[args.to_slot] = from_item
+
+        -- If the item exists, sync it, otherwise remove it
+        if from_inventory.contents[args.from_slot] then
+            from_inventory:Sync({
+                sync_stack = true,
+                section = args.from_section,
+                index = args.from_slot,
+                stack = from_inventory.contents[args.from_slot]
+            })
+        else
+            from_inventory:Sync({
+                sync_remove = true,
+                section = args.from_section,
+                index = args.from_slot
+            })
+        end
+
+        -- If the item exists, sync it, otherwise remove it
+        if to_inventory.contents[args.to_slot] then
+            to_inventory:Sync({
+                sync_stack = true,
+                section = args.to_section,
+                index = args.to_slot,
+                stack = to_inventory.contents[args.to_slot]
+            })
+        else
+            to_inventory:Sync({
+                sync_remove = true,
+                section = args.to_section,
+                index = args.to_slot
+            })
+        end
+    end
 end
 
 -- Called when the player's UI finishes loading
