@@ -109,6 +109,7 @@ export default class InventoryView extends React.Component {
         const stack = copy[args.section][args.from];
         copy[args.section][args.from] = copy[args.section][args.to];
         copy[args.section][args.to] = stack;
+        copy[InventorySections.ItemInfo][0] = copy[this.state.selected_drag_section][this.state.selected_slot];
 
         this.setState({
             inventory: copy,
@@ -120,6 +121,7 @@ export default class InventoryView extends React.Component {
     {
         const copy = this.getInventoryCopy();
         copy[args.section][args.index] = args.stack;
+        copy[InventorySections.ItemInfo][0] = copy[this.state.selected_drag_section][this.state.selected_slot];
         
         this.setState({
             inventory: copy
@@ -130,6 +132,7 @@ export default class InventoryView extends React.Component {
     {
         const copy = this.getInventoryCopy();
         delete copy[args.section][args.index];
+        copy[InventorySections.ItemInfo][0] = copy[this.state.selected_drag_section][this.state.selected_slot];
         
         this.setState({
             inventory: copy
@@ -160,6 +163,8 @@ export default class InventoryView extends React.Component {
             split_amount: amount
         })
     }
+
+
 
     selectSlot (slot, drag_section)
     {
