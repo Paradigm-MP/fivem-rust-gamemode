@@ -17,8 +17,6 @@ export default class InventoryView extends React.Component {
         super(props);
         this.state = 
         {
-
-
             // Inventories
             inventory: 
             {
@@ -54,6 +52,18 @@ export default class InventoryView extends React.Component {
             // Store currently hovered slot and section
             hover_section: InventorySections.Main,
             hover_slot: -1
+        }
+    }
+
+    componentDidUpdate(prevProps, prevState)
+    {
+        // Disable dragging once inventory is closed
+        if (this.props.open && this.state.drag_active && !prevProps.open)
+        {
+            this.setState({
+                drag_active: false,
+                drag_ready: false
+            })
         }
     }
 
@@ -419,7 +429,7 @@ export default class InventoryView extends React.Component {
                 </div>
                 
                 {/* Dragging item display */}
-                {this.state.drag_active && 
+                {this.state.drag_active && this.props.open && 
                     <DragItem 
                         name={this.getDraggingStack().contents[0].name}
                         offset={this.state.drag_offset} 
