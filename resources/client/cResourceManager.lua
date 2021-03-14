@@ -34,6 +34,9 @@ function cResourceManager:SyncCells(args)
                     })
 
                     resource.object:SetValue("IsResource", true)
+                    resource.object:SetValue("ResourceId", resource.id)
+                    resource.object:SetValue("ResourceType", resource.type)
+                    resource.object:SetValue("Cell", cell)
                 end
             end
         end

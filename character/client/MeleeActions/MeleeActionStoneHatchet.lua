@@ -63,6 +63,12 @@ function MeleeActionStoneHatchet:HitSomething(ray)
 
         self.active = false
 
+        Network:Send("Character/HitResource", {
+            id = obj:GetValue("ResourceId"),
+            type = obj:GetValue("ResourceType"),
+            cell = obj:GetValue("Cell")
+        })
+
     end
 
 end

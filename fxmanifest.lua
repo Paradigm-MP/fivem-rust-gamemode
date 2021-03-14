@@ -84,13 +84,13 @@ client_scripts {
     'resources/client/*.lua',
 
     'environment/client/*.lua',
-    'character/client/*.lua',
     'character/client/**/*.lua',
     
     'info/client/*.lua',
     'discord-rich-presence/client/*.lua',
 
     'inventory/client/*.lua',
+    'inventory/shared/*.lua',
 
     -- LOAD LAST
     'oof/shared/object-oriented/LOAD_ABSOLUTELY_LAST.lua'
@@ -148,6 +148,7 @@ server_scripts {
     'cells/server/*.lua',
 
     'inventory/server/*.lua',
+    'inventory/shared/*.lua',
 
     'resources/shared/*.lua',
     'resources/server/resource_data/**/*',

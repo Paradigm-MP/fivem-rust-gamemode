@@ -24,24 +24,6 @@ function sInventory:__init(args)
                     }),
                 }
             })
-            self.contents[i+7] = sStack({
-                contents = {
-                    sItem({
-                        name = "wood",
-                        amount = math.random(1000),
-                        stacklimit = 1000
-                    }),
-                }
-            })
-            self.contents[i+8] = sStack({
-                contents = {
-                    sItem({
-                        name = "stone",
-                        amount = math.random(1000),
-                        stacklimit = 1000
-                    }),
-                }
-            })
         else
             self.contents[i] = sStack({
                 contents = {
@@ -260,21 +242,12 @@ function sInventory:RemoveItemRemote(args)
         return
     end
 
-    self:RemoveItem({item = shItem(args.item), index = args.index})
+    self:RemoveItem({item = sItem(args.item), index = args.index})
 
 end
 
-function sInventory:AddItemRemote(args)
-
-    if not IsValid(args.player) or not IsValid(self.player) then return end
-
-    if args.player ~= self.player then
-        error(debug.traceback("sInventory:AddItemRemote failed: player does not match"))
-        return
-    end
-
-    return self:AddStack({stack = shStack({contents = {shItem(args.item)}}), index = args.index})
-
+function sInventory:AddItem(args)
+    return self:AddStack({stack = sStack({contents = {args.item}}), index = args.index})
 end
 
 function sInventory:RecreateStack(stackobj)
@@ -282,10 +255,10 @@ function sInventory:RecreateStack(stackobj)
     local items = {}
 
     for i, j in ipairs(stackobj.contents) do
-        items[i] = shItem(j)
+        items[i] = sItem(j)
     end
 
-    return shStack({contents = items, uid = stackobj.uid})
+    return sStack({contents = items, uid = stackobj.uid})
 
 end
 
@@ -438,7 +411,8 @@ function sInventory:AddStack(args)
     -- Loop through stacks and see if we can stack the item(s)
     if not args.new_space then
 
-        for i, istack in ipairs(self.contents) do
+        for i = 0, self.num_slots - 1 do
+            local istack = self.contents[i]
 
             if istack and i ~= args.avoid_index then
 
@@ -469,11 +443,14 @@ function sInventory:AddStack(args)
     while args.stack:GetAmount() > 0 and self:HaveEmptySpaces() and max_items_added > 0 do
 
         -- TODO: fix this to loop through all spaces instead and find the empty space
-        local index = count_table(self.contents) + 1
-        self.contents[index] = args.stack:Copy()
-        args.stack.contents = {} -- Clear stack contents
-        self:Sync({index = index, stack = self.contents[index], sync_stack = true})
-        max_items_added = max_items_added - 1
+        for i = 0, self.num_slots - 1 do
+            if args.stack:GetAmount() > 0 and not self.contents[i] then
+                self.contents[i] = args.stack:Copy()
+                args.stack.contents = {} -- Clear stack contents
+                self:Sync({index = i, stack = self.contents[i], sync_stack = true})
+                max_items_added = max_items_added - 1
+            end
+        end
     
     end
 
@@ -644,7 +621,7 @@ function sInventory:RemoveStack(args)
 end
 
 function sInventory:RemoveItem(args)
-    args.stack = shStack({contents = {args.item}})
+    args.stack = sStack({contents = {args.item}})
     self:RemoveStack(args)
 end
 
@@ -669,13 +646,13 @@ function sInventory:Sync(args)
             {action = "full", data = self:GetSyncObject()})
     elseif args.sync_stack then -- Sync a single stack
         Network:Send("InventoryUpdated", all_players_to_sync,  
-            {action = "update", stack = args.stack:GetSyncObject(), section = args.section, index = args.index})
+            {action = "update", stack = args.stack:GetSyncObject(), section = self.type, index = args.index})
     elseif args.sync_remove then -- Sync the removal of a stack
         Network:Send("InventoryUpdated", all_players_to_sync,  
-            {action = "remove", section = args.section, index = args.index})
+            {action = "remove", section = self.type, index = args.index})
     elseif args.sync_swap then -- Syncs the swap of two items
         Network:Send("InventoryUpdated", all_players_to_sync,  
-            {action = "swap", section = args.section, from = args.from, to = args.to})
+            {action = "swap", section = self.type, from = args.from, to = args.to})
     end
 
 end

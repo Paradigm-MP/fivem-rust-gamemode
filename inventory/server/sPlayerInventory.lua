@@ -23,6 +23,22 @@ function sPlayerInventory:__init(player)
 
 end
 
+function sPlayerInventory:AddItem(args)
+    return self:AddStack({stack = sStack({contents = {args.item}}), index = args.index})
+end
+
+function sPlayerInventory:AddStack(args)
+    local return_stack = self.inventories[InventoryTypeEnum.Main]:AddStack(args)
+
+    if return_stack and return_stack:GetAmount() > 0 then
+        return_stack = self.inventories[InventoryTypeEnum.Hotbar]:AddStack(args)
+
+        if return_stack and return_stack:GetAmount() > 0 then
+            return return_stack
+        end
+    end
+end
+
 function sPlayerInventory:DragItem(args)
     -- Invalid args
     if not args.from_section
@@ -55,7 +71,6 @@ function sPlayerInventory:DragItem(args)
 
         from_inventory:Sync({
             sync_swap = true,
-            section = args.from_section,
             from = args.from_slot,
             to = args.to_slot
         })
@@ -69,14 +84,12 @@ function sPlayerInventory:DragItem(args)
         if from_inventory.contents[args.from_slot] then
             from_inventory:Sync({
                 sync_stack = true,
-                section = args.from_section,
                 index = args.from_slot,
                 stack = from_inventory.contents[args.from_slot]
             })
         else
             from_inventory:Sync({
                 sync_remove = true,
-                section = args.from_section,
                 index = args.from_slot
             })
         end
@@ -85,14 +98,12 @@ function sPlayerInventory:DragItem(args)
         if to_inventory.contents[args.to_slot] then
             to_inventory:Sync({
                 sync_stack = true,
-                section = args.to_section,
                 index = args.to_slot,
                 stack = to_inventory.contents[args.to_slot]
             })
         else
             to_inventory:Sync({
                 sync_remove = true,
-                section = args.to_section,
                 index = args.to_slot
             })
         end

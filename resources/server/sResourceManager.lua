@@ -12,6 +12,46 @@ function sResourceManager:__init()
     Events:Subscribe('ModulesLoaded', self, self.ModulesLoaded)
     Events:Subscribe('Cells/PlayerCellUpdate' .. tostring(self.cell_size), self, self.PlayerCellUpdate)
 
+    Network:Subscribe("Character/HitResource", self, self.CharacterHitResource)
+
+end
+
+function sResourceManager:CharacterHitResource(args)
+    if not args.id
+    or not args.type
+    or not args.cell
+    or not args.cell.x
+    or not args.cell.y then return end
+
+    VerifyCellExists(self.resources, args.cell)
+    local resource = self.resources[args.cell.x][args.cell.y][args.id]
+
+    if not resource then return end
+    if resource.health <= 0 then return end
+    if resource.type ~= args.type then return end
+
+    -- TODO: handle resources on a type by type basis
+    -- TODO: check player tool and distance to resource and check player countdown
+    -- TODO: damage player tool
+
+    if resource.type == ResourceType.Tree then
+
+        local inventory = args.player:GetValue("Inventory")
+        local item = sItem({
+            name = "wood",
+            amount = math.random(7) + 5,
+            stacklimit = 1000
+        })
+        local return_stack = inventory:AddItem({
+            item = item
+        })
+
+        if return_stack then
+            -- Drop on ground
+        end
+
+    end
+
 end
 
 function sResourceManager:ModulesLoaded()
@@ -73,13 +113,17 @@ function sResourceManager:LoadCellResources(cell)
     local data = JsonUtils:LoadJSON(string.format("resources/server/resource_data/cells/%d_%d_%d.json", self.cell_size, cell.x, cell.y))
     if data then
 
+        local indexed_data = {}
+
         -- All resources start at 100% health
         for _, resource in pairs(data) do
             resource.id = self.resource_id_pool:GetNextId()
-            resource.health = 1
+            resource.health = 1 -- TODO: use health from ResourceData
+            resource.type = GetResourceTypeFromModel(resource.model)
+            indexed_data[resource.id] = resource
         end
 
-        self.resources[cell.x][cell.y] = data
+        self.resources[cell.x][cell.y] = indexed_data
     end
 end
 

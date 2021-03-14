@@ -1,6 +1,24 @@
+ResourceType = 
+{
+    Tree = 1,
+    Rock = 2
+}
+
+function GetResourceTypeFromModel(model)
+    if ResourceData[ResourceType.Tree][model] then
+        return ResourceType.Tree
+    elseif ResourceData[ResourceType.Rock][model] then
+        return ResourceType.Rock
+    end
+end
+
+function GetResourceData(model, type)
+    return ResourceData[type][model]
+end
+
 ResourceData = 
 {
-    trees = 
+    [ResourceType.Tree] = 
     {
         ["prop_tree_cedar_02"] = true,
         ["prop_tree_cedar_04"] = true,
@@ -92,7 +110,7 @@ ResourceData =
         ["prop_joshua_tree_02d"] = true,
         ["prop_joshua_tree_02e"] = true
     },
-    rocks = 
+    [ResourceType.Rock] = 
     {
         ["cs_x_rublrga"] = true,
         ["cs_x_rublrgb"] = true,
