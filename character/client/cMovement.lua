@@ -2,11 +2,7 @@ Movement = class()
 
 function Movement:__init()
 
-    LocalPlayer:GetPlayer():DisableFiring(true)
-
-    LocalPlayer:RestrictAction(Control.NextCamera, true)
-    LocalPlayer:RestrictAction(Control.Cover, true)
-    Camera:LockCameraMode(CameraViewMode.FirstPerson)
+    self:RestrictDefaultActions()
 
     -- Increase run speed a bit since they'll be running a lot
     LocalPlayer:GetPlayer():SetRunSprintMultiplier(1.25)
@@ -27,6 +23,43 @@ function Movement:__init()
     if IsTest then
         self:TestCommands()
     end
+
+end
+
+function Movement:RestrictDefaultActions()
+    
+    LocalPlayer:GetPlayer():DisableFiring(true)
+
+    LocalPlayer:RestrictAction(Control.NextCamera, true)
+    LocalPlayer:RestrictAction(Control.Cover, true)
+    LocalPlayer:RestrictAction(Control.WeaponWheelUpDown, true)
+    LocalPlayer:RestrictAction(Control.WeaponWheelLeftRight, true)
+    LocalPlayer:RestrictAction(Control.WeaponWheelNext, true)
+    LocalPlayer:RestrictAction(Control.WeaponWheelPrev, true)
+    LocalPlayer:RestrictAction(Control.SelectNextWeapon, true)
+    LocalPlayer:RestrictAction(Control.SelectPrevWeapon, true)
+    LocalPlayer:RestrictAction(Control.CharacterWheel, true)
+    LocalPlayer:RestrictAction(Control.SelectWeapon, true)
+    LocalPlayer:RestrictAction(Control.WeaponSpecial, true)
+    LocalPlayer:RestrictAction(Control.WeaponSpecial2, true)
+    LocalPlayer:RestrictAction(Control.DropWeapon, true)
+    LocalPlayer:RestrictAction(Control.DropAmmo, true)
+    LocalPlayer:RestrictAction(Control.SpecialAbilityPC, true)
+    LocalPlayer:RestrictAction(Control.Attack2, true)
+    LocalPlayer:RestrictAction(Control.PrevWeapon, true)
+    LocalPlayer:RestrictAction(Control.NextWeapon, true)
+    LocalPlayer:RestrictAction(Control.MeleeAttack1, true)
+    LocalPlayer:RestrictAction(Control.MeleeAttack2, true)
+    LocalPlayer:RestrictAction(Control.Phone, true)
+    LocalPlayer:RestrictAction(Control.SpecialAbility, true)
+    LocalPlayer:RestrictAction(Control.SpecialAbilitySecondary, true)
+    LocalPlayer:RestrictAction(Control.Attack, true)
+    LocalPlayer:RestrictAction(Control.MeleeAttackLight, true)
+    LocalPlayer:RestrictAction(Control.MeleeAttackHeavy, true)
+    LocalPlayer:RestrictAction(Control.MeleeAttackAlternate, true)
+    LocalPlayer:RestrictAction(Control.MeleeBlock, true)
+
+    Camera:LockCameraMode(CameraViewMode.FirstPerson)
 
 end
 
