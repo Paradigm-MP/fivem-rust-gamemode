@@ -231,8 +231,8 @@ end
 function sResourceManager:LoadAllResourcesFromFile(callback)
 
     Citizen.CreateThread(function()
-        self:LoadResourcesFromFile("trees")
-        self:LoadResourcesFromFile("rocks")
+        self:LoadResourcesFromFile(ResourceType.Tree)
+        self:LoadResourcesFromFile(ResourceType.Rock)
         -- self:LoadResourcesFromFile("barrels")
 
         if callback then callback() end

@@ -1,7 +1,7 @@
 ResourceType = 
 {
-    Tree = 1,
-    Rock = 2
+    Tree = "trees",
+    Rock = "rocks"
 }
 
 function GetResourceTypeFromModel(model)
@@ -218,14 +218,14 @@ ResourceData =
         ["prop_rock_4_b"] = true,
         ["prop_rock_4_big"] = true,
         ["prop_rock_4_big2"] = true,
-        -- These rocks are a bit too small to be worth it. Object limit is ~2300 so we can't use everything
+        -- Some of these rocks are a bit too small to be worth it. Object limit is ~2300 so we can't use everything
         -- Smaller rocks could potentially be CPickups
-        -- ["prop_rock_4_c"] = true,
-        -- ["prop_rock_4_c_2"] = true,
-        -- ["prop_rock_4_cl_1"] = true,
+        ["prop_rock_4_c"] = true,
+        ["prop_rock_4_c_2"] = true,
+        ["prop_rock_4_cl_1"] = true,
         -- ["prop_rock_4_cl_2"] = true,
-        -- ["prop_rock_4_d"] = true,
-        -- ["prop_rock_4_e"] = true,
+        ["prop_rock_4_d"] = true,
+        ["prop_rock_4_e"] = true,
         -- ["prop_rock_5_a"] = true,
         -- ["prop_rock_5_b"] = true,
         -- ["prop_rock_5_c"] = true,
