@@ -12,7 +12,14 @@ function sInventoryManager:__init()
     Events:Subscribe("ClientModulesLoaded", self, self.ClientModulesLoaded)
 
     Network:Subscribe("Inventory/DragItem", self, self.DragItem)
+    Network:Subscribe("Inventory/SplitStack", self, self.SplitStack)
 
+end
+
+function sInventoryManager:SplitStack(args)
+    local player_inventory = args.player:GetValue("Inventory")
+    if not player_inventory then return end
+    player_inventory:SplitStack(args)
 end
 
 function sInventoryManager:DragItem(args)

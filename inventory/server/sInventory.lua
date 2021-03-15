@@ -38,20 +38,21 @@ function sInventory:__init(args)
         end
     end
 
-    -- All events to interface with this inventory
-    self.events = {}
-    self.network_events = {}
-
     -- Functionality for admins to spectate any inventory
     self.invsee = {}
 
     self.players_opened = {} -- [player id]: player, list of players who we should sync this to
 
-    table.insert(self.network_events, Network:Subscribe("Inventory/Shift" .. self.id, self, self.ShiftStack))
-    table.insert(self.network_events, Network:Subscribe("Inventory/Use" .. self.id, self, self.UseItem))
-    table.insert(self.network_events, Network:Subscribe("Inventory/Drop" .. self.id, self, self.DropStack))
-    table.insert(self.network_events, Network:Subscribe("Inventory/Split" .. self.id, self, self.SplitStack))
-    table.insert(self.network_events, Network:Subscribe("Inventory/Swap" .. self.id, self, self.SwapStack))
+    -- All events to interface with this inventory
+    self.events = {}
+
+    -- All network events
+    self.network_events = {}
+    -- table.insert(self.network_events, Network:Subscribe("Inventory/Shift" .. self.id, self, self.ShiftStack))
+    -- table.insert(self.network_events, Network:Subscribe("Inventory/Use" .. self.id, self, self.UseItem))
+    -- table.insert(self.network_events, Network:Subscribe("Inventory/Drop" .. self.id, self, self.DropStack))
+    -- table.insert(self.network_events, Network:Subscribe("Inventory/Split" .. self.id, self, self.SplitStack))
+    -- table.insert(self.network_events, Network:Subscribe("Inventory/Swap" .. self.id, self, self.SwapStack))
 
 end
 
@@ -158,119 +159,8 @@ function sInventory:DropStack(args, player)
 
 end
 
--- TODO: come back to this
-function sInventory:SplitStack(args, player)
-
-    if not self:CanPlayerPerformOperations(player) then return end
-    if not self.contents[args.index] then return end
-    if not args.amount or args.amount < 1 then return end
-
-    if not tonumber(tostring(args.amount)) then
-        args.amount = 1
-    end
-
-    if args.amount > self.contents[args.index]:GetAmount() or args.amount < 1 then return end
-    
-    if self.contents[args.index]:GetAmount() == args.amount then
-        -- Trying to recombine a stack
-        local stack = self.contents[args.index]:Copy()
-        self:RemoveStack({stack = stack:Copy(), index = args.index, amount = args.amount})
-        
-        self:AddStack({stack = stack})
-
-    else
-
-        local split_stack = self.contents[args.index]:Split(args.amount)
-        self:Sync({index = args.index, stack = self.contents[args.index], sync_stack = true})
-
-        local return_stack = self:AddStack({stack = split_stack, new_space = true})
-
-        if return_stack then
-            self:AddStack({stack = return_stack})
-        end
-
-    end
-
-
-end
-
-function sInventory:SwapStack(args, player)
-
-    if not self:CanPlayerPerformOperations(player) then return end
-    if not args.from or not args.to then return end
-    if not self.contents[args.from] or not self.contents[args.to] then return end
-
-    local stack = self.contents[args.from]
-
-    local stack_copy = self.contents[args.from]:Copy()
-
-    self.contents[args.from] = self.contents[args.to]
-    self.contents[args.to] = stack_copy
-
-    -- TODO: change this sync call
-    self:Sync({sync_cat = true})
-
-end
-
-function sInventory:AddStackRemote(args)
-
-    if args.player ~= self.player then
-        error(debug.traceback("sInventory:AddStackRemote failed: player does not match"))
-        return
-    end
-
-    args.stack = self:RecreateStack(args.stack)
-    return self:AddStack(args)
-
-end
-
-function sInventory:RemoveStackRemote(args)
-
-    if args.player ~= self.player then
-        error(debug.traceback("sInventory:RemoveStackRemote failed: player does not match"))
-        return
-    end
-
-    self:RemoveStack({stack = self:RecreateStack(args.stack), index = args.index})
-
-end
-
-function sInventory:RemoveItemRemote(args)
-
-    if args.player ~= self.player then
-        error(debug.traceback("sInventory:RemoveItemRemote failed: player does not match"))
-        return
-    end
-
-    self:RemoveItem({item = sItem(args.item), index = args.index})
-
-end
-
 function sInventory:AddItem(args)
     return self:AddStack({stack = sStack({contents = {args.item}}), index = args.index})
-end
-
-function sInventory:RecreateStack(stackobj)
-
-    local items = {}
-
-    for i, j in ipairs(stackobj.contents) do
-        items[i] = sItem(j)
-    end
-
-    return sStack({contents = items, uid = stackobj.uid})
-
-end
-
-function sInventory:ModifyStackRemote(args)
-
-    if args.player ~= self.player then
-        error(debug.traceback("sInventory:ModifyStackRemote failed: player does not match"))
-        return
-    end
-
-    self:ModifyStack({stack = self:RecreateStack(args.stack), index = args.index})
-
 end
 
 function sInventory:ModifyItemCustomDataRemote(args)
@@ -385,9 +275,16 @@ function sInventory:AddStack(args)
 
         local istack = self.contents[args.index]
 
-        if not istack
-        or istack:GetProperty("name") ~= args.stack:GetProperty("name")
-        or istack:GetAmount() == istack:GetProperty("name") then
+        -- Nothing exists in the slot, so just add it
+        if not istack then
+            self.contents[args.index] = args.stack
+            self:Sync({index = args.index, stack = self.contents[args.index], sync_stack = true})
+            return
+        end
+
+        if istack
+        and (istack:GetProperty("name") ~= args.stack:GetProperty("name")
+            or istack:GetAmount() == istack:GetProperty("stacklimit")) then
             return args.stack
         end 
 

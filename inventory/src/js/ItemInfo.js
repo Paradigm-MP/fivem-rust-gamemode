@@ -113,6 +113,11 @@ export default class ItemInfo extends React.Component {
 
     updateSlider (event)
     {
+        if (this.getItem(this.props.stack).amount == 1)
+        {
+            return;
+        }
+
         let percent = (event.clientX - this.state.start_slider_x) / this.state.slider_width;
         
         if (percent <= 0)
@@ -124,7 +129,7 @@ export default class ItemInfo extends React.Component {
             percent = 1;
         }
         
-        const split_amount = Math.ceil(this.getItem(this.props.stack).amount * percent)
+        const split_amount = Math.min(this.getItem(this.props.stack).amount - 1, Math.ceil(this.getItem(this.props.stack).amount * percent))
 
         this.props.setSplitAmount(split_amount);
     }

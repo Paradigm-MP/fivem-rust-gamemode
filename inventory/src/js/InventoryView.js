@@ -136,8 +136,16 @@ export default class InventoryView extends React.Component {
         copy[args.section][args.index] = args.stack;
         copy[InventorySections.ItemInfo][0] = copy[this.state.selected_drag_section][this.state.selected_slot];
         
+        let split_amount = this.state.split_amount;
+        if (args.section == this.state.selected_drag_section
+            && args.index == this.state.selected_slot)
+        {
+            split_amount = Math.ceil(args.stack.contents[0].amount / 2);
+        }
+
         this.setState({
-            inventory: copy
+            inventory: copy,
+            split_amount: split_amount
         })
     }
 
@@ -176,8 +184,6 @@ export default class InventoryView extends React.Component {
             split_amount: amount
         })
     }
-
-
 
     selectSlot (slot, drag_section)
     {
@@ -234,14 +240,37 @@ export default class InventoryView extends React.Component {
 
         if (this.state.hover_section == InventorySections.ItemInfo) {return;}
 
-        OOF.CallEvent("Inventory/DragItem", 
+        if (this.state.drag_section == InventorySections.ItemInfo
+            && (this.state.hover_section == InventorySections.Main
+                || this.state.hover_section == InventorySections.Hotbar))
         {
-            from_section: this.state.drag_section,
-            from_slot: this.state.drag_slot,
-            to_section: this.state.hover_section,
-            to_slot: this.state.hover_slot
-        })
+            // Non-empty space
+            if (typeof this.state.inventory[this.state.hover_section][this.state.hover_slot] != 'undefined')
+            {
+                return;
+            }
 
+            // Dragged from ItemInfo to Main inventory
+            // Split the stack based on split amount  
+            OOF.CallEvent("Inventory/SplitStack", 
+            {
+                index: this.state.hover_slot,
+                to_section: this.state.hover_section,
+                base_index: this.state.selected_slot,
+                base_section: this.state.selected_drag_section,
+                amount: this.state.split_amount
+            }) 
+        }
+        else
+        {
+            OOF.CallEvent("Inventory/DragItem", 
+            {
+                from_section: this.state.drag_section,
+                from_slot: this.state.drag_slot,
+                to_section: this.state.hover_section,
+                to_slot: this.state.hover_slot
+            })
+        }
     }
 
     setHoveredSlotAndSection(slot, section)

@@ -39,6 +39,43 @@ function sPlayerInventory:AddStack(args)
     end
 end
 
+function sPlayerInventory:SplitStack(args)
+    if not args.to_section
+    or not args.base_section
+    or not args.index
+    or not args.base_index
+    or not args.amount then return end
+    if args.to_section ~= InventoryTypeEnum.Main and args.to_section ~= InventoryTypeEnum.Hotbar then return end
+    if args.amount < 1 then return end
+
+    local base_inventory = self.inventories[args.base_section]
+    local to_inventory = self.inventories[args.to_section]
+
+    if not base_inventory
+    or not to_inventory then return end
+
+    local base_stack = base_inventory.contents[args.base_index]
+    local to_stack = to_inventory.contents[args.index]
+
+    if not base_stack
+    or to_stack then return end
+
+    if args.amount >= base_stack:GetAmount() then return end
+
+    local split_stack = base_stack:Split(args.amount)
+    base_inventory.contents[args.base_index] = base_stack
+    base_inventory:Sync({index = args.base_index, stack = base_stack, sync_stack = true})
+
+    local return_stack = to_inventory:AddStack({
+        stack = split_stack,
+        index = args.index
+    })
+
+    if return_stack then
+        base_inventory:AddStack({stack = return_stack})
+    end
+end
+
 function sPlayerInventory:DragItem(args)
     -- Invalid args
     if not args.from_section
@@ -63,6 +100,47 @@ function sPlayerInventory:DragItem(args)
     or args.to_slot > to_inventory.num_slots
     or args.to_slot < 0 then return end
 
+    local from_stack = from_inventory.contents[args.from_slot]
+    local to_stack = to_inventory.contents[args.to_slot]
+
+    -- Dragging same type of items on top of each other - try to combine them
+    if from_stack and to_stack 
+    and from_stack:GetProperty("name") == to_stack:GetProperty("name") then
+
+        local from_stack_copy = from_stack:Copy()
+        local return_stack = to_stack:AddStack(from_stack)
+
+        -- Combined at least one item in the stacks, so don't swap and just return after syncing
+        if not return_stack or return_stack:GetAmount() ~= from_stack_copy:GetAmount() then
+
+            from_inventory.contents[args.from_slot] = return_stack
+            to_inventory.contents[args.to_slot] = to_stack
+
+            if not return_stack then
+                from_inventory:Sync({
+                    sync_remove = true,
+                    index = args.from_slot
+                })
+            else
+                from_inventory:Sync({
+                    sync_stack = true,
+                    index = args.from_slot,
+                    stack = from_inventory.contents[args.from_slot]
+                })    
+            end
+
+            to_inventory:Sync({
+                sync_stack = true,
+                index = args.to_slot,
+                stack = to_inventory.contents[args.to_slot]
+            })
+
+            return
+        end
+
+    end
+
+    -- Swapping two items in inventories
     if from_inventory.id == to_inventory.id then
         -- Dragging within an inventory
         local from_item = from_inventory.contents[args.from_slot]
@@ -151,7 +229,6 @@ end
 
 function sPlayerInventory:LoadInventory(inventory_type)
 
-    print("sPlayerInventory:LoadInventory " .. tostring(inventory_type))
     local key = string.format("inventory_%s", tostring(inventory_type))
 
     self.player:GetStoredValue({
@@ -170,8 +247,6 @@ function sPlayerInventory:LoadInventory(inventory_type)
                 sync_full = true,
                 player = self.player
             })
-
-            print("Loaded and synced inventory to player")
 
         end
     })
