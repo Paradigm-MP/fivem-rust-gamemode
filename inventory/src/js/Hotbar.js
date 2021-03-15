@@ -36,7 +36,7 @@ export default class Hotbar extends React.Component {
                         itemMouseUp={this.itemMouseUp.bind(this)}
                         itemMouseDown={this.itemMouseDown.bind(this)}
                         slot={index}
-                        selected={index == this.props.selectedSlot && this.props.selectedDragSection == this.drag_section}
+                        selected={(index == this.props.selectedSlot && this.props.selectedDragSection == this.drag_section) || index == this.props.equipped_hotbar_slot}
                         drag_section={this.drag_section}
                         stack={this.props.contents_hotbar[index]}></Item>
                     })}

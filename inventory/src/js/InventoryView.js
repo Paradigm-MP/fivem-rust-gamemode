@@ -33,7 +33,7 @@ export default class InventoryView extends React.Component {
             selected_slot: -1,
             selected_drag_section: InventorySections.Main,
 
-            //
+            // Current equipped hotbar slot
             equipped_hotbar_slot: -1,
 
             // Current split amount used in ItemInfo
@@ -65,24 +65,22 @@ export default class InventoryView extends React.Component {
                 drag_ready: false
             })
         }
+
+        if (!this.props.open && prevProps.open)
+        {
+            // Reset selected slot if hotbar is selected
+            if (this.state.selected_drag_section == InventorySections.Hotbar)
+            {
+                this.setState({
+                    selected_drag_section: InventorySections.Main,
+                    selected_slot: -1
+                })
+            }
+        }
     }
 
     componentDidMount ()
     {
-        // Test code
-        // const copy = this.getInventoryCopy();
-        // copy[InventorySections.Main][0] = 
-        // {
-        //     name: "Rock",
-        //     amount: Math.floor(Math.random() * 1000),
-        //     durable: true,
-        //     durability: Math.random(),
-        //     actions: ["drop"]
-        // }
-        // this.setState({
-        //     inventory: copy
-        // })
-
         OOF.Subscribe("InventoryUpdated", (args) => 
         {
             if (args.action == "full")
@@ -111,6 +109,13 @@ export default class InventoryView extends React.Component {
                 this.inventoryRemoved(args)
             }
 
+        })
+
+        OOF.Subscribe("Inventory/SelectHotbar", (args) => 
+        {
+            this.setState({
+                equipped_hotbar_slot: args.index
+            })
         })
 
         OOF.CallEvent("Inventory/Ready")
@@ -225,7 +230,7 @@ export default class InventoryView extends React.Component {
             return;
         }
 
-        console.log(`Dragged from ${this.state.drag_slot} ${this.state.drag_section} to ${this.state.hover_slot} ${this.state.hover_section}`);
+        // console.log(`Dragged from ${this.state.drag_slot} ${this.state.drag_section} to ${this.state.hover_slot} ${this.state.hover_section}`);
 
         if (this.state.hover_slot == -1)
         {
@@ -436,6 +441,7 @@ export default class InventoryView extends React.Component {
                                 selectedDragSection={this.state.selected_drag_section}
                                 contents={this.state.inventory[InventorySections.Main]}
                                 contents_hotbar={this.state.inventory[InventorySections.Hotbar]}
+                                equipped_hotbar_slot={this.state.equipped_hotbar_slot}
                                 {...this.props}
                             ></MainInventory>
                         </div>

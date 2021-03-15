@@ -13,7 +13,14 @@ function sInventoryManager:__init()
 
     Network:Subscribe("Inventory/DragItem", self, self.DragItem)
     Network:Subscribe("Inventory/SplitStack", self, self.SplitStack)
+    Network:Subscribe("Inventory/SelectHotbar", self, self.SelectHotbar)
 
+end
+
+function sInventoryManager:SelectHotbar(args)
+    local player_inventory = args.player:GetValue("Inventory")
+    if not player_inventory then return end
+    player_inventory:SelectHotbar(args)
 end
 
 function sInventoryManager:SplitStack(args)

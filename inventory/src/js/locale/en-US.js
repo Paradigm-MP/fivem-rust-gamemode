@@ -23,6 +23,11 @@ export default {
         {
             name: "Stone",
             description: "Stone obtained from rocks on the ground or from larger boulders. Useful for many crafting recipes and base building."
+        },
+        ["stone_hatchet"]:
+        {
+            name: "Stone Hatchet",
+            description: "A crude tool that makes chopping down trees easier."
         }
     }
 }

@@ -24,6 +24,18 @@ function sInventory:__init(args)
                     }),
                 }
             })
+            self.contents[20] = sStack({
+                contents = {
+                    sItem({
+                        name = "stone_hatchet",
+                        amount = 1,
+                        stacklimit = 1,
+                        durable = true,
+                        durability = math.random() * 200,
+                        max_durability = 200
+                    }),
+                }
+            })
         else
             self.contents[i] = sStack({
                 contents = {

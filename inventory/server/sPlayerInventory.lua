@@ -14,6 +14,8 @@ function sPlayerInventory:__init(player)
         [InventoryTypeEnum.Character] = true
     }
 
+    self.hotbar_index = -1
+
     -- If they have a lootbox open, it will be in self.inventories
 
     self.network_events = 
@@ -23,15 +25,24 @@ function sPlayerInventory:__init(player)
 
 end
 
+function sPlayerInventory:SelectHotbar(args)
+    if not args.index then return end
+    if args.index < -1 or args.index > 5 then return end
+
+    self.hotbar_index = args.index
+
+    -- TODO: equip/unequip item based on index
+end
+
 function sPlayerInventory:AddItem(args)
     return self:AddStack({stack = sStack({contents = {args.item}}), index = args.index})
 end
 
 function sPlayerInventory:AddStack(args)
-    local return_stack = self.inventories[InventoryTypeEnum.Main]:AddStack(args)
+    local return_stack = self.inventories[InventoryTypeEnum.Hotbar]:AddStack(args)
 
     if return_stack and return_stack:GetAmount() > 0 then
-        return_stack = self.inventories[InventoryTypeEnum.Hotbar]:AddStack(args)
+        return_stack = self.inventories[InventoryTypeEnum.Main]:AddStack(args)
 
         if return_stack and return_stack:GetAmount() > 0 then
             return return_stack

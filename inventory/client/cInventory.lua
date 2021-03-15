@@ -5,6 +5,7 @@ function cInventory:__init()
     self.open = false
     self.player_inventories_loaded = 0
     self.total_player_inventories = 3
+    self.hotbar_index = -1
 
     self.restricted_actions = 
     {
@@ -26,17 +27,62 @@ function cInventory:__init()
         [Control.VehicleDriveLook2] = true
     }
 
+    Events:Subscribe("Loadingscreen/Ready", self, self.LoadingscreenReady)
+    Events:Subscribe("onResourceStop", self, self.onResourceStop)
+
+    Network:Subscribe("InventoryUpdated", self, self.InventoryUpdated)
+
+end
+
+function cInventory:RegisterKeymaps()
+
+    self.hotbar_scroll_timer = Timer()
+
     Keymap:Register("tab", "keyboard", "Inventory", function(args)
         if args.down then
             self:ToggleOpen()
         end
     end)
 
-    Events:Subscribe("Loadingscreen/Ready", self, self.LoadingscreenReady)
-    Events:Subscribe("onResourceStop", self, self.onResourceStop)
+    Keymap:Register("IOM_WHEEL_UP", "mouse_wheel", "Hotbar Scroll Up", function(args)
+        self:ScrollHotbar(-1)
+    end)
 
-    Network:Subscribe("InventoryUpdated", self, self.InventoryUpdated)
+    Keymap:Register("IOM_WHEEL_DOWN", "mouse_wheel", "Hotbar Scroll Down", function(args)
+        self:ScrollHotbar(1)
+    end)
 
+    for i = 1, 6 do
+        Keymap:Register(tostring(i), "keyboard", string.format("Hotbar %d", i), function(args)
+            if args.down then
+                self:SelectHotbar(i)
+            end
+        end)
+    end
+
+end
+
+function cInventory:ScrollHotbar(change)
+    if self.hotbar_scroll_timer:GetMilliseconds() < 20 then return end
+    self.hotbar_scroll_timer:Restart()
+
+    self.hotbar_index = self.hotbar_index + change
+    if self.hotbar_index < 0 then self.hotbar_index = 5 end
+    if self.hotbar_index > 5 then self.hotbar_index = 0 end
+    
+    Network:Send("Inventory/SelectHotbar", {index = self.hotbar_index})
+    self.ui:CallEvent("Inventory/SelectHotbar", {index = self.hotbar_index})
+end
+
+function cInventory:SelectHotbar(index)
+    if self.hotbar_index == index - 1 then
+        self.hotbar_index = -1 -- Selecting a selected slot, so unselect it
+    else
+        self.hotbar_index = index - 1 -- Convert to 0 based index
+    end
+
+    Network:Send("Inventory/SelectHotbar", {index = self.hotbar_index})
+    self.ui:CallEvent("Inventory/SelectHotbar", {index = self.hotbar_index})
 end
 
 function cInventory:IsOpen()
@@ -171,6 +217,7 @@ end
 function cInventory:UIReady()
 
     self.ui:CallEvent("SetLocale", {locale = GetConvar("locale", "en-US")})
+    self:RegisterKeymaps()
 
     Citizen.CreateThread(function()
 
