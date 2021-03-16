@@ -39,8 +39,7 @@ function sResourceManager:CharacterHitResource(args)
         local inventory = args.player:GetValue("Inventory")
         local item = sItem({
             name = "wood",
-            amount = math.random(7) + 5,
-            stacklimit = 1000
+            amount = math.random(7) + 5
         })
         local return_stack = inventory:AddItem({
             item = item

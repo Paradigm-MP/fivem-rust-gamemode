@@ -14,7 +14,12 @@ ItemData =
         name = "stone",
         stacklimit = 1000
     },
-
+    {
+        name = "stone_hatchet",
+        stacklimit = 1,
+        durable = true,
+        max_durability = 200
+    }
 }
 
 Items_indexed = {}

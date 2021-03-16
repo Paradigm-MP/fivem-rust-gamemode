@@ -6,18 +6,26 @@ function sItem:__init(args)
     not args or 
     not args.name or 
     not args.amount or 
-    args.amount < 1 or
-    not args.stacklimit 
+    args.amount < 1
     then
         error(debug.traceback("sItem:__init failed: missing a key piece of information"))
+    end
+
+    local default_data = Items_indexed[args.name]
+    if not default_data then
+        error(debug.traceback("sItem:__init failed: could not find default data for " .. args.name))
     end
 
     self.uid = args.uid or UID:GetNew()
     self.name = args.name
     self.amount = args.amount
-    self.stacklimit = args.stacklimit
-    self.durable = args.durable
-    self.custom_data = args.custom_data or {}
+    self.stacklimit = args.stacklimit or default_data.stacklimit
+    self.durable = args.durable or default_data.durable
+    self.custom_data = args.custom_data and shallow_copy(args.custom_data) or {}
+
+    if self.amount > self.stacklimit then
+        error(debug.traceback("sItem:__init failed: amount was greater than stack limit"))
+    end
 
     self:GetCustomData()
 
@@ -29,11 +37,7 @@ function sItem:__init(args)
 
         self.durability = math.floor(args.durability)
 
-        if args.max_durability then
-            self.max_durability = args.max_durability
-        else
-            error(debug.traceback("sItem:__init failed: max_durability was not given when an item had durability"))
-        end
+        self.max_durability = args.max_durability or default_data.max_durability
     end
 
 end

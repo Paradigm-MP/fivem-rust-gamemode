@@ -17,8 +17,6 @@ function sInventory:__init(args)
                     sItem({
                         name = "rock",
                         amount = 1,
-                        stacklimit = 1,
-                        durable = true,
                         durability = math.random() * 100,
                         max_durability = 100
                     }),
@@ -29,8 +27,6 @@ function sInventory:__init(args)
                     sItem({
                         name = "stone_hatchet",
                         amount = 1,
-                        stacklimit = 1,
-                        durable = true,
                         durability = math.random() * 200,
                         max_durability = 200
                     }),
@@ -41,9 +37,9 @@ function sInventory:__init(args)
                 contents = {
                     sItem({
                         name = "rock",
-                        amount = math.random(1000),
-                        stacklimit = 1000,
-                        durable = false
+                        amount = 1,
+                        durability = math.random() * 100,
+                        max_durability = 100
                     }),
                 }
             })
