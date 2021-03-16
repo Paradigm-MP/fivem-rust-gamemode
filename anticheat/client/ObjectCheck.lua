@@ -5,7 +5,7 @@ function AnticheatObject:__init()
     self.strikes = 0
     self.max_strikes = 3
 
-    self:Loop()
+    -- self:Loop()
 end
 
 function AnticheatObject:Loop()
