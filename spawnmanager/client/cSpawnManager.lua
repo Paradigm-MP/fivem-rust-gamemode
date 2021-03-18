@@ -44,47 +44,10 @@ function cSpawnManager:SpawnPlayer(args)
                 id3,
                 math.random(0, 3)
             )
+
+            -- Remove all ped clothes
+            ped:RemoveAllClothes()
       
-            -- Top
-            SetPedComponentVariation(ped.ped_id, 
-                11,
-                15, 
-                0,
-                0
-            )
-
-            -- Undershirt
-            SetPedComponentVariation(ped.ped_id, 
-                8,
-                15, 
-                0,
-                0
-            )
-
-            -- Shirt
-            SetPedComponentVariation(ped.ped_id, 
-                3,
-                15, 
-                0,
-                0
-            )
-
-            -- Pants
-            SetPedComponentVariation(ped.ped_id, 
-                4,
-                21, 
-                0,
-                0
-            )
-
-            -- Feet
-            SetPedComponentVariation(ped.ped_id, 
-                6,
-                34, 
-                0,
-                0
-            )
-
             -- Reset randomseed
             math.randomseed(GetGameTimer())
         end
