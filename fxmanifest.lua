@@ -147,6 +147,8 @@ server_scripts {
     'cells/shared/*.lua',
     'cells/server/*.lua',
 
+    'spawnmanager/server/*.lua',
+
     'inventory/server/*.lua',
     'inventory/shared/*.lua',
 

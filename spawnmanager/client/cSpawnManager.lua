@@ -3,18 +3,19 @@ cSpawnManager = class()
 function cSpawnManager:__init()
 
     Events:Subscribe("Loadingscreen/Finished", self, self.LoadingScreenFinished)
+    Network:Subscribe("Player/Spawn", self, self.SpawnPlayer)
 
 end
 
-function cSpawnManager:LoadingScreenFinished()
+function cSpawnManager:SpawnPlayer(args)
 
     Camera:Reset()
 
     LocalPlayer:Spawn({
-        pos = vector3(-441, 890, 237),
-        model = "mp_m_freemode_01",
+        pos = args.position,
+        model = args.model,
         callback = function()
-            LocalPlayer:GetPed():GiveWeapon(GetHashKey("weapon_stone_hatchet"), 1, true)
+            -- LocalPlayer:GetPed():GiveWeapon(GetHashKey("weapon_stone_hatchet"), 1, true)
             math.randomseed(LocalPlayer:GetPlayer():GetUniqueId())
 
             -- Give ped random attributes
@@ -89,6 +90,10 @@ function cSpawnManager:LoadingScreenFinished()
         end
     })
     
+end
+
+function cSpawnManager:LoadingScreenFinished()
+    Network:Send("Loadingscreen/Finished")
 end
 
 cSpawnManager = cSpawnManager()
