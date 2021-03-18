@@ -138,8 +138,6 @@ function Anticheat:EntityCreating(entity)
         return
     end
 
-    DeleteEntity(entity)
-
     -- Player is not allowed to spawn this
     if not self:CanPlayerEntitySpawn({player = _player, type = _type, model = _model}) then
         CancelEvent()
