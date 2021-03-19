@@ -2,14 +2,75 @@ sItemDrops = class()
 
 function sItemDrops:__init()
 
-    self.drops = {}
+    self.drops = {} -- [x][y][id] = {...}
     self.drop_id_pool = IdPool()
     self.cell_size = 64
+    self.player_cells = {}
 
     self.drop_timeout = 1000 * 60 * 5 -- Drops expire in 5 minutes or if no one is around
 
     Events:Subscribe("entityCreated", self, self.EntityCreated)
     Events:Subscribe("ClientModulesLoaded", self, self.ClientModulesLoaded)
+    Events:Subscribe("Cells/PlayerCellUpdate" .. tostring(cell_size), self, self.PlayerCellUpdate)
+
+end
+
+-- Syncs to all players in the given cell or in adjacent cells
+function sItemDrops:SyncToAdjacentPlayers(cell, args)
+    local adjacent_players = {}
+
+    local adjacent_cells = GetAdjacentCells(cell)
+
+    for _, adj_cell in pairs(adjacent_cells) do
+        if self.player_cells[adj_cell.x]
+        and self.player_cells[adj_cell.x][adj_cell.y] then
+            for id, player in pairs(self.player_cells[adj_cell.x][adj_cell.y]) do
+                adjacent_players[id] = player
+            end
+        end
+    end
+
+    Network:Send("Inventory/DropStackSync", adjacent_players, args)
+
+end
+
+function sItemDrops:RemoveFromCellTableIfExists(cell_table, cell, id)
+    if cell_table[cell.x] 
+    and cell_table[cell.x][cell.y] then
+        cell_table[cell.x][cell.y][id] = nil
+
+        if count_table(cell_table[cell.x][cell.y]) == 0 then
+            cell_table[cell.x] = nil
+
+            if count_table(cell_table[cell.x]) == 0 then
+                cell_table[cell.x] = nil
+            end
+        end
+    end
+end
+
+function sItemDrops:RemoveDrop(cell, id)
+
+    -- Delete entity if it exists
+    if cell_table[cell.x] 
+    and cell_table[cell.x][cell.y]
+    and cell_table[cell.x][cell.y][id] then
+        if cell_table[cell.x][cell.y][id].entity:Exists() then
+            cell_table[cell.x][cell.y][id].entity:Remove()
+        end
+    end
+
+    self:RemoveFromCellTableIfExists(self.drops, cell, id)
+    Network:Broadcast("Inventory/RemoveDrop", {cell = cell, id = id})
+end
+
+function sItemDrops:PlayerCellUpdate(args)
+    self:RemoveFromCellTableIfExists(self.player_cells, args.old_cell, args.player:GetUniqueId())
+
+    VerifyCellExists(args.cell)
+    self.player_cells[args.cell.x][args.cell.y][args.player:GetUniqueId()] = player
+
+    -- TODO: sync nearby drops to player
 
 end
 
@@ -17,31 +78,42 @@ function sItemDrops:ClientModulesLoaded(args)
     args.player:SetValue("DroppingStacks", {})
 end
 
-function sItemDrops:EntityCreated(entity)
+function sItemDrops:EntityCreated(entity_id)
 
-    local _source = NetworkGetEntityOwner(entity)
-    local player = sPlayers:GetById(_source)
-    local _type = GetEntityType(entity)
-    local _model = GetEntityModel(entity)
+    local entity = Entity(entity_id)
+    local player = sPlayers:GetById(entity:GetNetworkOwner())
 
     local dropping_items = player:GetValue("DroppingStacks")
     if count_table(dropping_items) == 0 then return end
 
     local dropping_item = table.remove(dropping_items, 1)
-    local pos = GetEntityCoords(entity)
+    local pos = entity:GetPosition()
+    local cell = GetCell(pos, self.cell_size)
 
-    if _type == EntityTypeEnum.Object
-    and _model == GetHashKey(DroppedItemModel)
+    if entity:GetType() == EntityTypeEnum.Object
+    and entity:GetModel() == GetHashKey(DroppedItemModel)
     and Vector3Math:Distance(pos, dropping_item.position) < 1 then
-        self.drops[dropping_item.id] = {stack = dropping_item.stack, net_id = NetworkGetNetworkIdFromEntity(entity)}
+        local dropping_stack = 
+        {
+            stack = dropping_item.stack, 
+            entity = entity
+        }
 
-        -- TODO: also sync stack on player enter cell (and reorganize stack layout in self.drops)
-        Network:Broadcast("Inventory/DropStackSync", {
+        VerifyCellExists(self.drops, cell)
+        self.drops[cell.x][cell.y][dropping_item.id] = dropping_stack
+
+        -- Sync to players in nearby cells
+        self:SyncToAdjacentPlayers(cell, {
             id = dropping_item.id,
-            net_id = self.drops[dropping_item.id].net_id,
-            name = self.drops[dropping_item.id].stack:GetProperty("name"),
-            amount = self.drops[dropping_item.id].stack:GetAmount()
+            net_id = dropping_stack.net_id,
+            name = dropping_stack.stack:GetProperty("name"),
+            amount = dropping_stack.stack:GetAmount()
         })
+
+        Citizen.CreateThread(function()
+            Wait(self.drop_timeout)
+            self:RemoveDrop(cell, dropping_item.id)
+        end)
     end
 
 end
@@ -73,7 +145,6 @@ function sItemDrops:DropStack(args)
 
     local player_pos = args.player:GetPosition()
     local cell = GetCell(player_pos, self.cell_size)
-    VerifyCellExists(self.drops, cell)
 
     local id = self.drop_id_pool:GetNextId()
     local player_dropping = args.player:GetValue("DroppingStacks")

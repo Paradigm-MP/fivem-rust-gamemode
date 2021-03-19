@@ -127,12 +127,12 @@ function Anticheat:ClientModulesLoaded(args)
     args.player:SetValue("AllowedEntitySpawns", entity_spawns)
 end
 
-function Anticheat:EntityCreating(entity)
+function Anticheat:EntityCreating(entity_id)
     -- Potentially replace with NetworkGetFirstEntityOwner https://github.com/citizenfx/fivem/pull/669
-    local _source = NetworkGetEntityOwner(entity)
-    local _player = sPlayers:GetById(_source)
-    local _type = GetEntityType(entity)
-    local _model = GetEntityModel(entity)
+    local entity = Entity(entity_id)
+    local _player = sPlayers:GetById(entity:GetNetworkOwner())
+    local _type = entity:GetType()
+    local _model = entity:GetModel()
 
     -- No associated player found
     if not _player then

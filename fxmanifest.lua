@@ -128,6 +128,8 @@ server_scripts {
     'oof/server/player/sPlayer.lua', -- Player class
     'oof/server/player/sPlayers.lua', -- Players class
     'oof/server/player/sPlayerManager.lua', -- PlayerManager class
+    'oof/server/entity/sEntity.lua', -- Entity class
+    'oof/server/ped/sPed.lua', -- Ped class
     'oof/server/world/*.lua', -- World class
     -- events module
     'events/server/sDefaultEvents.lua',

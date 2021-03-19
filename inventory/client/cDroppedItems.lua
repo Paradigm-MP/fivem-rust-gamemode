@@ -12,6 +12,9 @@ end
 function cItemDrops:DropStackSync(args)
     self.drops[args.id] = args
     self.drops[args.id].object = ObjectManager:FindObjectByEntityId(NetworkGetEntityFromNetworkId(args.net_id))
+
+    -- Disable collision on dropped items
+    self.drops[args.id].object:SetEntityNoCollisionEntity(LocalPlayer:GetEntityId(), false)
 end
 
 function cItemDrops:DropStackSpawn(args)
