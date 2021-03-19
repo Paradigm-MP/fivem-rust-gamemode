@@ -52,11 +52,11 @@ end
 function sItemDrops:RemoveDrop(cell, id)
 
     -- Delete entity if it exists
-    if cell_table[cell.x] 
-    and cell_table[cell.x][cell.y]
-    and cell_table[cell.x][cell.y][id] then
-        if cell_table[cell.x][cell.y][id].entity:Exists() then
-            cell_table[cell.x][cell.y][id].entity:Remove()
+    if self.drops[cell.x] 
+    and self.drops[cell.x][cell.y]
+    and self.drops[cell.x][cell.y][id] then
+        if self.drops[cell.x][cell.y][id].entity:Exists() then
+            self.drops[cell.x][cell.y][id].entity:Remove()
         end
     end
 
