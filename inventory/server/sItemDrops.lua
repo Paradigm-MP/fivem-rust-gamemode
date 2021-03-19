@@ -88,12 +88,12 @@ function sItemDrops:RemoveDrop(cell, id)
     and self.drops[cell.x][cell.y]
     and self.drops[cell.x][cell.y][id] then
         if self.drops[cell.x][cell.y][id].entity:Exists() then
+            Network:Broadcast("Inventory/RemoveDrop", {net_id = self.drops[cell.x][cell.y][id].entity:GetNetworkId()})
             self.drops[cell.x][cell.y][id].entity:Remove()
         end
     end
 
     self:RemoveFromCellTableIfExists(self.drops, cell, id)
-    Network:Broadcast("Inventory/RemoveDrop", {cell = cell, id = id})
 end
 
 function sItemDrops:PlayerCellUpdate(args)

@@ -23,6 +23,11 @@ function cItemDrops:__init()
 
     Network:Subscribe("Inventory/DropStackSpawn", self, self.DropStackSpawn)
     Network:Subscribe("Inventory/DropStackSync", self, self.DropStackSync)
+    Network:Subscribe("Inventory/RemoveDrop", self, self.DropStackRemove)
+end
+
+function cItemDrops:DropStackRemove(args)
+    self.drops[args.net_id] = nil
 end
 
 function cItemDrops:TryToPickUpItem()
