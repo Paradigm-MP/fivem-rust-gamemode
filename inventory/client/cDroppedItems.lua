@@ -42,7 +42,7 @@ end
 function cItemDrops:UpdateLookAtDrop(net_id)
 
     local drop = self.drops[net_id]
-    if not drop then return end
+    if not drop then self:HideLookAtIndicator() return end
 
     Inventory.ui:CallEvent("UpdateLookAtItem",
     {
@@ -56,32 +56,34 @@ function cItemDrops:UpdateLookAtDrop(net_id)
     return true
 end
 
+function cItemDrops:HideLookAtIndicator()
+    if self.lookat_drop_net_id == -1 then return end
+
+    Inventory.ui:CallEvent("UpdateLookAtItem",
+    {
+        active = false
+    })
+    self.lookat_drop_net_id = -1
+end
+
 function cItemDrops:CheckForLookAtDrops()
     if not Inventory.ui then return end
 
     local ray = Physics:Raycast(Camera:GetPosition(), Camera:GetPosition() + Camera:GetRotation() * 2.25, -1, LocalPlayer:GetEntityId())
 
     if ray.hit and ray.entity ~= 0 then
-        if not NetworkGetEntityIsNetworked(ray.entity) then return end
+        if not NetworkGetEntityIsNetworked(ray.entity) then self:HideLookAtIndicator() return end
 
         local net_id = NetworkGetNetworkIdFromEntity(ray.entity)
-        if net_id == 0 then return end
+        if net_id == 0 then self:HideLookAtIndicator() return end
 
         local out_of_range = Vector3Math:Distance(ray.position, LocalPlayer:GetPosition()) > 2.25
 
-        if (out_of_range or not self:UpdateLookAtDrop(net_id)) and net_id ~= self.lookat_drop_net_id then
-            Inventory.ui:CallEvent("UpdateLookAtItem",
-            {
-                active = false
-            })
-            self.lookat_drop_net_id = -1
+        if (out_of_range or not self:UpdateLookAtDrop(net_id)) then
+            self:HideLookAtIndicator()
         end
-    elseif not ray.hit and self.lookat_drop_net_id > -1 then
-        Inventory.ui:CallEvent("UpdateLookAtItem",
-        {
-            active = false
-        })
-        self.lookat_drop_net_id = -1
+    else
+        self:HideLookAtIndicator()
     end
 end
 
