@@ -65,6 +65,7 @@ end
 function Anticheat:AllowPlayerEntitySpawn(args)
     local allowed_entity_spawns = args.player:GetValue("AllowedEntitySpawns")
     if not allowed_entity_spawns then return end
+    args.model = GetHashKey(args.model)
 
     if allowed_entity_spawns[args.type][args.model] then
         allowed_entity_spawns[args.type][args.model] = allowed_entity_spawns[args.type][args.model] + 1
@@ -127,6 +128,7 @@ function Anticheat:ClientModulesLoaded(args)
 end
 
 function Anticheat:EntityCreating(entity)
+    -- Potentially replace with NetworkGetFirstEntityOwner https://github.com/citizenfx/fivem/pull/669
     local _source = NetworkGetEntityOwner(entity)
     local _player = sPlayers:GetById(_source)
     local _type = GetEntityType(entity)
