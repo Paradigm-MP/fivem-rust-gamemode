@@ -13,8 +13,13 @@ function sInventoryManager:__init()
 
     Network:Subscribe("Inventory/DragItem", self, self.DragItem)
     Network:Subscribe("Inventory/SplitStack", self, self.SplitStack)
+    Network:Subscribe("Inventory/DropStack", self, self.DropStack)
     Network:Subscribe("Inventory/SelectHotbar", self, self.SelectHotbar)
 
+end
+
+function sInventoryManager:DropStack(args)
+    sItemDrops:DropStack(args)
 end
 
 function sInventoryManager:SelectHotbar(args)

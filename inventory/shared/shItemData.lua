@@ -22,6 +22,13 @@ ItemData =
     }
 }
 
+-- body bag: bkr_prop_duffel_bag_01a.ydr
+-- item bag: prop_money_bag_01.ydr
+-- sleeping bag: prop_skid_sleepbag_1.ydr
+
+DroppedItemModel = "prop_money_bag_01"
+
+
 Items_indexed = {}
 
 for _, item_data in pairs(ItemData) do
