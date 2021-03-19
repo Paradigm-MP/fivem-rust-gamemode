@@ -23,6 +23,7 @@ function cItemDrops:__init()
 
     Network:Subscribe("Inventory/DropStackSpawn", self, self.DropStackSpawn)
     Network:Subscribe("Inventory/DropStackSync", self, self.DropStackSync)
+    Network:Subscribe("Inventory/DropStackCellSync", self, self.DropStackCellSync)
     Network:Subscribe("Inventory/RemoveDrop", self, self.DropStackRemove)
 end
 
@@ -92,12 +93,26 @@ function cItemDrops:CheckForLookAtDrops()
     end
 end
 
-function cItemDrops:DropStackSync(args)
-    self.drops[args.net_id] = args
-    self.drops[args.net_id].object = ObjectManager:FindObjectByEntityId(NetworkGetEntityFromNetworkId(args.net_id))
+function cItemDrops:DropStackCellSync(args)
+    for id, drop in pairs(args) do
+        self:DropStackSync(drop)
+    end
+end
 
-    -- Disable collision on dropped items
-    self.drops[args.net_id].object:SetEntityNoCollisionEntity(LocalPlayer:GetEntityId(), false)
+function cItemDrops:DropStackSync(args)
+    Citizen.CreateThread(function()
+        Wait(500)
+
+        self.drops[args.net_id] = args
+
+        local ent_id = NetworkGetEntityFromNetworkId(args.net_id)
+        local object = ObjectManager:FindObjectByEntityId(ent_id) or Entity(ent_id)
+
+        self.drops[args.net_id].object = object
+
+        -- Disable collision on dropped items
+        object:SetEntityNoCollisionEntity(LocalPlayer:GetEntityId(), false)
+    end)
 end
 
 function cItemDrops:DropStackSpawn(args)

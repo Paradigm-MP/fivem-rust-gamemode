@@ -102,7 +102,25 @@ function sItemDrops:PlayerCellUpdate(args)
     VerifyCellExists(self.player_cells, args.cell)
     self.player_cells[args.cell.x][args.cell.y][args.player:GetUniqueId()] = args.player
 
-    -- TODO: sync nearby drops to player
+    local drops_to_sync = {}
+    
+    -- Sync all nearby drops to player
+    for _, cell in pairs(args.updated) do
+        if self.drops[cell.x]
+        and self.drops[cell.x][cell.y] then
+            for id, drop in pairs(self.drops[cell.x][cell.y]) do
+                drops_to_sync[id] = {
+                    id = id,
+                    net_id = drop.entity:GetNetworkId(),
+                    name = drop.stack:GetProperty("name"),
+                    amount = drop.stack:GetAmount(),
+                    cell = cell
+                }
+            end
+        end
+    end
+
+    Network:Send("Inventory/DropStackCellSync", args.player, drops_to_sync)
 
 end
 
