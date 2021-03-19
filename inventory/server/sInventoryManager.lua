@@ -19,7 +19,7 @@ function sInventoryManager:__init()
 end
 
 function sInventoryManager:DropStack(args)
-    sItemDrops:DropStack(args)
+    sItemDrops:PlayerDropStack(args)
 end
 
 function sInventoryManager:SelectHotbar(args)

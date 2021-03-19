@@ -122,51 +122,6 @@ function sInventory:FindIndexFromUID(uid)
     return 0
 end
 
-function sInventory:DropStack(args, player)
-
-    if not self:CanPlayerPerformOperations(player) then return end
-
-    args.index = self:FindIndexFromUID(args.uid) -- Get new new index from UID
-
-    if not self.contents[args.index] then return end
-    if not args.amount or args.amount < 1 then return end
-
-    if not tonumber(tostring(args.amount)) then
-        args.amount = 1
-    end
-
-    local stack = self.contents[args.index]
-
-    if not stack then return end
-    if args.amount > stack:GetAmount() then return end
-
-    if player:InVehicle() then return end
-
-    local dropping_in_stash = false
-    local current_lootbox_data = player:GetValue("CurrentLootbox")
-    local stash = nil
-
-    if current_lootbox_data then
-
-        local current_lootbox = LootCells.Loot[current_lootbox_data.cell.x][current_lootbox_data.cell.y][current_lootbox_data.uid]
-
-        if current_lootbox and current_lootbox.active and current_lootbox.is_stash then
-
-            stash = current_lootbox.stash
-            
-            if stash and stash:CanPlayerOpen(player) then
-                dropping_in_stash = true
-            end
-        end
-    end
-
-    -- Always will drop the entire stack
-    self:RemoveStack({stack = stack:Copy(), index = args.index})
-    
-    -- TODO: drop on ground or add to other inventory that it was dragged to
-
-end
-
 function sInventory:AddItem(args)
     return self:AddStack({stack = sStack({contents = {args.item}}), index = args.index})
 end

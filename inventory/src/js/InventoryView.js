@@ -235,6 +235,11 @@ export default class InventoryView extends React.Component {
         if (this.state.hover_slot == -1)
         {
             // Drop on ground
+            OOF.CallEvent("Inventory/DropStack",
+            {
+                index: this.state.drag_slot,
+                section: this.state.drag_section
+            })
             return;
         }
 

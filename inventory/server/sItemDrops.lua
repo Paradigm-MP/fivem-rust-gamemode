@@ -11,8 +11,40 @@ function sItemDrops:__init()
 
     Events:Subscribe("entityCreated", self, self.EntityCreated)
     Events:Subscribe("ClientModulesLoaded", self, self.ClientModulesLoaded)
-    Events:Subscribe("Cells/PlayerCellUpdate" .. tostring(cell_size), self, self.PlayerCellUpdate)
+    Events:Subscribe("Cells/PlayerCellUpdate" .. tostring(self.cell_size), self, self.PlayerCellUpdate)
 
+    Network:Subscribe("Inventory/PickUpStack", self, self.PickUpStack)
+
+end
+
+function sItemDrops:PickUpStack(args)
+    if not args.cell 
+    or not args.cell.x
+    or not args.cell.y
+    or not args.id then return end
+
+    if not self.drops[args.cell.x]
+    or not self.drops[args.cell.x][args.cell.y] then return end
+
+    local drop = self.drops[args.cell.x][args.cell.y][args.id]
+    if not drop then return end
+
+    if not drop.entity:Exists() then return end
+    if Vector3Math:Distance(drop.entity:GetPosition(), args.player:GetPosition()) > 3 then return end
+
+    local player_inventory = args.player:GetValue("Inventory")
+    if not player_inventory then return end
+
+    local stack = drop.stack
+    self:RemoveDrop(args.cell, args.id)
+
+    local return_stack = player_inventory:AddStack({stack = stack})
+    if return_stack and return_stack:GetAmount() > 0 then
+        self:DropStack({
+            player = args.player,
+            stack = return_stack
+        })
+    end
 end
 
 -- Syncs to all players in the given cell or in adjacent cells
@@ -40,7 +72,7 @@ function sItemDrops:RemoveFromCellTableIfExists(cell_table, cell, id)
         cell_table[cell.x][cell.y][id] = nil
 
         if count_table(cell_table[cell.x][cell.y]) == 0 then
-            cell_table[cell.x] = nil
+            cell_table[cell.x][cell.y] = nil
 
             if count_table(cell_table[cell.x]) == 0 then
                 cell_table[cell.x] = nil
@@ -67,8 +99,8 @@ end
 function sItemDrops:PlayerCellUpdate(args)
     self:RemoveFromCellTableIfExists(self.player_cells, args.old_cell, args.player:GetUniqueId())
 
-    VerifyCellExists(args.cell)
-    self.player_cells[args.cell.x][args.cell.y][args.player:GetUniqueId()] = player
+    VerifyCellExists(self.player_cells, args.cell)
+    self.player_cells[args.cell.x][args.cell.y][args.player:GetUniqueId()] = args.player
 
     -- TODO: sync nearby drops to player
 
@@ -105,9 +137,10 @@ function sItemDrops:EntityCreated(entity_id)
         -- Sync to players in nearby cells
         self:SyncToAdjacentPlayers(cell, {
             id = dropping_item.id,
-            net_id = dropping_stack.net_id,
+            net_id = dropping_stack.entity:GetNetworkId(),
             name = dropping_stack.stack:GetProperty("name"),
-            amount = dropping_stack.stack:GetAmount()
+            amount = dropping_stack.stack:GetAmount(),
+            cell = cell
         })
 
         Citizen.CreateThread(function()
@@ -118,7 +151,41 @@ function sItemDrops:EntityCreated(entity_id)
 
 end
 
--- Called when a player drops a stack of items
+--[[
+    Called when a player drops a stack of items.
+
+    args (in table):
+        player: player who is dropping the item
+        stack: stack of items to drop
+]]
+function sItemDrops:DropStack(args)
+
+    if not args.stack or not args.player then return end
+
+    local player_pos = args.player:GetPosition()
+    local cell = GetCell(player_pos, self.cell_size)
+
+    local id = self.drop_id_pool:GetNextId()
+    local player_dropping = args.player:GetValue("DroppingStacks")
+    table.insert(player_dropping, {
+        id = id,
+        cell = cell,
+        stack = args.stack,
+        position = player_pos
+    })
+    args.player:SetValue("DroppingStacks", player_dropping)
+
+    -- Allow the player to spawn the entity through anticheat
+    Anticheat:AllowPlayerEntitySpawn({
+        player = args.player, 
+        model = DroppedItemModel,
+        type = EntityTypeEnum.Object
+    })
+
+    Network:Send("Inventory/DropStackSpawn", args.player, {position = player_pos})
+
+end
+
 --[[
     Called when a player drops a stack of items
 
@@ -127,7 +194,7 @@ end
         index: index of the stack to drop 
         section: InventoryTypeEnum of the inventory section it is being dropped from
 ]]
-function sItemDrops:DropStack(args)
+function sItemDrops:PlayerDropStack(args)
 
     local player_inventory = args.player:GetValue("Inventory")
     if not player_inventory then return end
@@ -143,28 +210,10 @@ function sItemDrops:DropStack(args)
     from_inventory.contents[args.index] = nil
     from_inventory:Sync({sync_remove = true, index = args.index})
 
-    local player_pos = args.player:GetPosition()
-    local cell = GetCell(player_pos, self.cell_size)
-
-    local id = self.drop_id_pool:GetNextId()
-    local player_dropping = args.player:GetValue("DroppingStacks")
-    table.insert(player_dropping, {
-        id = id,
-        cell = cell,
-        stack = stack,
-        position = player_pos
+    self:DropStack({
+        player = args.player,
+        stack = stack
     })
-    args.player:SetValue("DroppingStacks", player_dropping)
-
-    -- Allow the player to spawn the entity through anticheat
-    Anticheat:AllowPlayerEntitySpawn({
-        player = args.player, 
-        model = DroppedItemModel,
-        type = EntityTypeEnum.Object
-    })
-
-    Network:Send("Inventory/DropStackSpawn", args.player, {position = player_pos})
-
 end
 
 sItemDrops = sItemDrops()

@@ -1,0 +1,40 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+div.look-at-item-container
+{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: grid;
+    grid-column-gap: 2px;
+    grid-template-rows: auto;
+    grid-template-columns: 24px auto;
+    align-items: center;
+    padding: 4px;
+    width: fit-content;
+    color: white;
+    font-family: 'Source Sans Pro';
+    text-shadow: 1px 1px 1px black;
+}
+
+div.look-at-item-container img
+{
+    display: inline-block;
+    width: 22px;
+    padding: 4px;
+}
+
+div.look-at-item-container div.text
+{
+    margin-left: 8px;
+    display: inline-block;
+    font-size: 22px;
+    font-weight: bold;
+}
+
+div.look-at-item-container div.item-name
+{
+    display: inline-block;
+    text-transform: capitalize;
+}
