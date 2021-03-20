@@ -101,11 +101,17 @@ end
 
 function cItemDrops:DropStackSync(args)
     Citizen.CreateThread(function()
-        Wait(500)
-
         self.drops[args.net_id] = args
 
         local ent_id = NetworkGetEntityFromNetworkId(args.net_id)
+
+        local num_tries = 0
+        while ent_id <= 0 and num_tries < 10 do
+            Wait(500)
+            ent_id = NetworkGetEntityFromNetworkId(args.net_id)
+            num_tries = num_tries + 1
+        end
+
         local object = ObjectManager:FindObjectByEntityId(ent_id) or Entity(ent_id)
 
         self.drops[args.net_id].object = object
