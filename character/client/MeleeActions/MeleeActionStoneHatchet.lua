@@ -52,14 +52,25 @@ function MeleeActionStoneHatchet:HitSomething(ray)
             animName = "plyr_walking_attack_a"
         })
 
-        local pfx = ParticleEffect({
-            bank = "core",
-            effect = "bul_wood_splinter",
-            type = ParticleEffectTypes.Position,
-            position = ray.position,
-            scale = 1,
-            rotation = vector3(0, 0, 0)
-        })
+        if obj:GetValue("ResourceType") == ResourceType.Wood then
+            local pfx = ParticleEffect({
+                bank = "core",
+                effect = "bul_wood_splinter",
+                type = ParticleEffectTypes.Position,
+                position = ray.position,
+                scale = 1,
+                rotation = vector3(0, 0, 0)
+            })
+        else
+            local pfx = ParticleEffect({
+                bank = "core",
+                effect = "ent_dst_rocks",
+                type = ParticleEffectTypes.Position,
+                position = ray.position,
+                scale = 1,
+                rotation = vector3(0, 0, 0)
+            })
+        end
 
         self.active = false
 

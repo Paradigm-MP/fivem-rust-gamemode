@@ -30,23 +30,51 @@ function sResourceManager:CharacterHitResource(args)
     if resource.health <= 0 then return end
     if resource.type ~= args.type then return end
 
+    local player_pos = args.player:GetPosition()
+    local resource_pos = vector3(resource.posX, resource.posY, resource.posZ)
+
+    if Vector3Math:Distance(player_pos, resource_pos) > 5 then return end
+
+    
+
     -- TODO: handle resources on a type by type basis
-    -- TODO: check player tool and distance to resource and check player countdown
+    -- TODO: check player tool and check player cooldown (cannot harvest too quickly)
     -- TODO: damage player tool
 
-    if resource.type == ResourceType.Tree then
+    if resource.type == ResourceType.Wood then
 
         local inventory = args.player:GetValue("Inventory")
         local item = sItem({
             name = "wood",
-            amount = math.random(7) + 5
+            amount = math.random(700) + 5
         })
         local return_stack = inventory:AddItem({
             item = item
         })
 
         if return_stack then
-            -- Drop on ground
+            sItemDrops:DropStack({
+                player = args.player,
+                stack = return_stack
+            })
+        end
+
+    elseif resource.type == ResourceType.Stone then
+        
+        local inventory = args.player:GetValue("Inventory")
+        local item = sItem({
+            name = "stone",
+            amount = math.random(700) + 5
+        })
+        local return_stack = inventory:AddItem({
+            item = item
+        })
+
+        if return_stack then
+            sItemDrops:DropStack({
+                player = args.player,
+                stack = return_stack
+            })
         end
 
     end
@@ -230,8 +258,8 @@ end
 function sResourceManager:LoadAllResourcesFromFile(callback)
 
     Citizen.CreateThread(function()
-        self:LoadResourcesFromFile(ResourceType.Tree)
-        self:LoadResourcesFromFile(ResourceType.Rock)
+        self:LoadResourcesFromFile(ResourceType.Wood)
+        self:LoadResourcesFromFile(ResourceType.Stone)
         -- self:LoadResourcesFromFile("barrels")
 
         if callback then callback() end

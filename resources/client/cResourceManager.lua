@@ -8,7 +8,6 @@ function cResourceManager:__init()
         self.resources[resource_type] = {}
     end
 
-    -- Events:Subscribe('Loadingscreen/Ready', self, self.LoadingScreenReady)
     Network:Subscribe('ResourceManager/SyncCells', self, self.SyncCells)
 
 end
