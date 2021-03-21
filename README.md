@@ -20,7 +20,7 @@ Replace `en-US` with the locale of your choice.
 Unsupported locales will fallback to the `en-US` locale by default. If a locale for your language does not exist, please feel free to add it and create a PR! Follow the steps below to add a locale.
 
 **Supported Locales:**
- - `en-us`: English
+ - `en-US`: English
 
 ### Adding a New Locale
 If you'd like to use a language other than English and your locale currently isn't added, follow these steps.
