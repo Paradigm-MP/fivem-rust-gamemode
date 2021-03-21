@@ -46,18 +46,11 @@ function sResourceManager:CharacterHitResource(args)
         local inventory = args.player:GetValue("Inventory")
         local item = sItem({
             name = "wood",
-            amount = math.random(700) + 5
+            amount = 1000
         })
-        local return_stack = inventory:AddItem({
+        inventory:GiveItem({
             item = item
         })
-
-        if return_stack then
-            sItemDrops:DropStack({
-                player = args.player,
-                stack = return_stack
-            })
-        end
 
     elseif resource.type == ResourceType.Stone then
         
@@ -66,16 +59,9 @@ function sResourceManager:CharacterHitResource(args)
             name = "stone",
             amount = math.random(700) + 5
         })
-        local return_stack = inventory:AddItem({
+        inventory:GiveItem({
             item = item
         })
-
-        if return_stack then
-            sItemDrops:DropStack({
-                player = args.player,
-                stack = return_stack
-            })
-        end
 
     end
 
@@ -128,7 +114,7 @@ function sResourceManager:PlayerCellUpdate(args)
             VerifyCellExists(resources, cell)
             resources[cell.x][cell.y] = self.resources[cell.x][cell.y]
 
-            print(string.format("Loaded cell %d %d", cell.x, cell.y))
+            -- print(string.format("Loaded cell %d %d", cell.x, cell.y))
 
         end
 
