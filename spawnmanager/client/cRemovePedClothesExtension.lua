@@ -1,7 +1,7 @@
 -- Removes all clothes from mp_m_freemode_01 model
 function Ped:RemoveAllClothes()
     -- Top
-    SetPedComponentVariation(self.ped_id, 
+    self:SetComponentVariation(
         11,
         15, 
         0,
@@ -9,7 +9,7 @@ function Ped:RemoveAllClothes()
     )
 
     -- Undershirt
-    SetPedComponentVariation(self.ped_id, 
+    self:SetComponentVariation(
         8,
         15, 
         0,
@@ -17,7 +17,7 @@ function Ped:RemoveAllClothes()
     )
 
     -- Shirt
-    SetPedComponentVariation(self.ped_id, 
+    self:SetComponentVariation(
         3,
         15, 
         0,
@@ -25,7 +25,7 @@ function Ped:RemoveAllClothes()
     )
 
     -- Pants
-    SetPedComponentVariation(self.ped_id, 
+    self:SetComponentVariation(
         4,
         21, 
         0,
@@ -33,7 +33,7 @@ function Ped:RemoveAllClothes()
     )
 
     -- Feet
-    SetPedComponentVariation(self.ped_id, 
+    self:SetComponentVariation(
         6,
         34, 
         0,
