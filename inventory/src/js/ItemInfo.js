@@ -133,6 +133,31 @@ export default class ItemInfo extends React.Component {
 
         this.props.setSplitAmount(split_amount);
     }
+
+
+
+    getItemActions()
+    {
+        const actions = this.getItem(this.props.stack).actions || {};
+        actions["drop"] = true;
+
+        const actions_elements = [];
+        Object.keys(actions).forEach((action) => 
+        {
+            actions_elements.push(
+            <div className='action-container' onClick={() => this.props.clickItemAction(action)} key={`item_action_${action}`}>
+                <img src={`./images/${action}.png`} className='icon'></img>
+                <div className='title'>{action}</div>
+            </div>)
+        })
+
+        return actions_elements;
+    }
+    
+    getItemAttributes()
+    {
+        // TODO
+    }
     
     render () {
         return (
@@ -146,19 +171,15 @@ export default class ItemInfo extends React.Component {
                     <div className='info-actions-container'>
                         <div className='info-container'>
                             <div className='title'>{Localizations.GetMenuItemName("information")}</div>
-                            <div className='content'></div>
+                            <div className='content'>
+                                {this.getItemAttributes()}
+                            </div>
                         </div>
                         <div className='actions-container'>
                             <div className='title'>{Localizations.GetMenuItemName("actions")}</div>
                             <div className='content'>
                                 <div className='content-abs'>
-                                    {this.getItem(this.props.stack).actions && this.getItem(this.props.stack).actions.map((action) => 
-                                    {
-                                        return <div className='action-container' key={`item_action_${action}`}>
-                                            <img src={`./images/${action}.png`} className='icon'></img>
-                                            <div className='title'>{action}</div>
-                                        </div>
-                                    })}
+                                    {this.getItemActions()}
                                 </div>
                             </div>
                         </div>

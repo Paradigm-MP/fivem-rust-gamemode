@@ -166,9 +166,14 @@ function cInventory:LoadingscreenReady()
             self.ui:Subscribe("Inventory/DragItem", self, self.DragItem)
             self.ui:Subscribe("Inventory/SplitStack", self, self.SplitStack)
             self.ui:Subscribe("Inventory/DropStack", self, self.DropStack)
+            self.ui:Subscribe("Inventory/DoAction", self, self.DoAction)
 
         end
     })
+end
+
+function cInventory:DoAction(args)
+    Network:Send("Inventory/DoAction", args)
 end
 
 function cInventory:DropStack(args)

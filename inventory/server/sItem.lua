@@ -11,7 +11,7 @@ function sItem:__init(args)
         error(debug.traceback("sItem:__init failed: missing a key piece of information"))
     end
 
-    local default_data = Items_indexed[args.name]
+    local default_data = deepcopy(Items_indexed[args.name])
     if not default_data then
         error(debug.traceback("sItem:__init failed: could not find default data for " .. args.name))
     end
@@ -21,6 +21,8 @@ function sItem:__init(args)
     self.amount = args.amount
     self.stacklimit = args.stacklimit or default_data.stacklimit
     self.durable = args.durable or default_data.durable
+    self.attributes = args.attributes and shallow_copy(args.attributes) or default_data.attributes
+    self.actions = args.actions and shallow_copy(args.actions) or default_data.actions
     self.custom_data = args.custom_data and shallow_copy(args.custom_data) or {}
 
     if self.amount > self.stacklimit then
@@ -88,6 +90,8 @@ function sItem:GetSyncObject()
         durable = self.durable,
         durability = self.durability,
         max_durability = self.max_durability,
+        actions = self.actions,
+        attributes = self.attributes,
         custom_data = self.custom_data
     }
 

@@ -121,6 +121,26 @@ export default class InventoryView extends React.Component {
         OOF.CallEvent("Inventory/Ready")
     }
 
+    // Called when a player clicks to perform an action from the ItemInfo section (such as Drop)
+    clickItemAction(action)
+    {
+        if (typeof this.action_timer == 'undefined')
+        {
+            OOF.CallEvent("Inventory/DoAction",
+            {
+                index: this.state.selected_slot,
+                section: this.state.selected_drag_section,
+                amount: this.state.split_amount,
+                action: action
+            })
+
+            this.action_timer = setTimeout(() => {
+                this.action_timer = undefined;
+            }, 1000);
+        }
+
+    }
+
     inventorySwapped(args)
     {
         const copy = this.getInventoryCopy();
@@ -436,6 +456,7 @@ export default class InventoryView extends React.Component {
                                     setSplitAmount={this.setSplitAmount.bind(this)}
                                     split_amount={this.state.split_amount}
                                     mouse_down={this.state.mouse_down}
+                                    clickItemAction={this.clickItemAction.bind(this)}
                                 ></ItemInfo>}
 
                             <MainInventory

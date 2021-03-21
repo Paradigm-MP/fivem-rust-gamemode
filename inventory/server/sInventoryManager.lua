@@ -11,11 +11,29 @@ function sInventoryManager:__init()
 
     Events:Subscribe("ClientModulesLoaded", self, self.ClientModulesLoaded)
 
+    Events:Subscribe("Inventory/DoAction", self, self.DoActionServerside)
+
     Network:Subscribe("Inventory/DragItem", self, self.DragItem)
     Network:Subscribe("Inventory/SplitStack", self, self.SplitStack)
     Network:Subscribe("Inventory/DropStack", self, self.DropStack)
+    Network:Subscribe("Inventory/DoAction", self, self.DoAction)
     Network:Subscribe("Inventory/SelectHotbar", self, self.SelectHotbar)
 
+end
+
+function sInventoryManager:DoActionServerside(args)
+    -- Only handle the drop action here
+    if args.action == "drop" then
+        sItemDrops:DropStack(args)
+        -- Return false to remove item from action
+        return false
+    end
+end
+
+function sInventoryManager:DoAction(args)
+    local player_inventory = args.player:GetValue("Inventory")
+    if not player_inventory then return end
+    player_inventory:DoAction(args)
 end
 
 function sInventoryManager:DropStack(args)

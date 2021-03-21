@@ -19,6 +19,30 @@ ItemData =
         stacklimit = 1,
         durable = true,
         max_durability = 200
+    },
+    {
+        name = "apple",
+        stacklimit = 10,
+        attributes = {
+            ["healing"] = 5,
+            ["calories"] = 15,
+            ["hydration"] = 5
+        },
+        actions = {
+            ["eat"] = true
+        }
+    },
+    {
+        name = "mushroom",
+        stacklimit = 10,
+        attributes = {
+            ["instant_health"] = 3,
+            ["calories"] = 15,
+            ["hydration"] = 5
+        },
+        actions = {
+            ["eat"] = true
+        }
     }
 }
 

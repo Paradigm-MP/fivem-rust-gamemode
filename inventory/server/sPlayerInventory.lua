@@ -3,6 +3,7 @@ sPlayerInventory = class()
 function sPlayerInventory:__init(player)
 
     self.player = player
+    self.action_timer = Timer()
 
     -- Player inventories
     -- Adjust true/false to toggle loading of that inventory type
@@ -25,6 +26,72 @@ function sPlayerInventory:__init(player)
 
 end
 
+function sPlayerInventory:DoAction(args)
+    -- Only can do one action per second
+    if self.action_timer:GetSeconds() < 1 then return end
+    self.action_timer:Restart()
+
+    if not args.index
+    or not args.section
+    or not args.amount
+    or args.amount < 1
+    or not args.action then return end
+
+    args.amount = math.ceil(args.amount)
+
+    local inventory = self.inventories[args.section]
+    if not inventory then return end
+
+    local stack = inventory.contents[args.index]
+    if not stack then return end
+    if args.amount > stack:GetAmount() then return end
+
+    local first_item = stack.contents[0]
+
+    -- If the action is not drop (all items have that action), then check if it has the action requested
+    if args.action ~= "drop" and not first_item.actions[args.action] then return end
+
+    -- Amount of items to work on
+    local total_amount = stack:GetAmount()
+    local split_stack = stack:Split(args.amount)
+    if not split_stack then return end
+
+    if split_stack:GetAmount() == total_amount then
+        stack = nil
+    end
+
+    -- Now perform the action, letting another module handle it
+    -- A module can return false to remove the stack (split), or
+    -- return a stack to replace the existing stack with it
+    -- For example, eating an item would remove the top item of the stack
+    -- and return the modified stack
+    local return_table = Events:Fire("Inventory/DoAction", {
+        player = args.player,
+        action = args.action,
+        amount = amount,
+        stack = split_stack
+    })
+
+    -- Event was not handled, so don't do anything
+    if count_table(return_table) == 0 then return end
+
+    -- After handling, get the return stack as either nil or a stack
+    local return_stack = return_table[0] ~= false and return_table[0] or stack
+    if return_table[0] ~= false and return_table[0] ~= nil and stack then
+        return_stack = stack:AddStack(return_table[0])
+    end
+
+    inventory.contents[args.index] = return_stack
+
+    -- Sync based on if the stack was removed or modified
+    if not return_stack then
+        inventory:Sync({sync_remove = true, index = args.index})
+    else
+        inventory:Sync({sync_stack = true, index = args.index, stack = return_stack})
+    end
+
+end
+
 function sPlayerInventory:SelectHotbar(args)
     if not args.index then return end
     if args.index < -1 or args.index > 5 then return end
@@ -32,6 +99,18 @@ function sPlayerInventory:SelectHotbar(args)
     self.hotbar_index = args.index
 
     -- TODO: equip/unequip item based on index
+
+    -- Small stone
+    -- proc_mntn_stone01
+    if self.hotbar_index == -1 then
+        args.player:SetNetworkValue("EquippedItem", nil)
+    else
+        local stack = self.inventories[InventoryTypeEnum.Hotbar].contents[self.hotbar_index]
+
+        if stack then
+            args.player:SetNetworkValue("EquippedItem", stack:GetProperty("name"))
+        end
+    end
 end
 
 function sPlayerInventory:AddItem(args)
@@ -118,11 +197,11 @@ function sPlayerInventory:DragItem(args)
     if from_stack and to_stack 
     and from_stack:GetProperty("name") == to_stack:GetProperty("name") then
 
-        local from_stack_copy = from_stack:Copy()
+        local from_stack_amount = from_stack:GetAmount()
         local return_stack = to_stack:AddStack(from_stack)
 
         -- Combined at least one item in the stacks, so don't swap and just return after syncing
-        if not return_stack or return_stack:GetAmount() ~= from_stack_copy:GetAmount() then
+        if not return_stack or return_stack:GetAmount() ~= from_stack_amount then
 
             from_inventory.contents[args.from_slot] = return_stack
             to_inventory.contents[args.to_slot] = to_stack
