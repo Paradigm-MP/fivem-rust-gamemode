@@ -77,7 +77,7 @@ function sPlayerInventory:DoAction(args)
     if not stack then return end
     if args.amount > stack:GetAmount() then return end
 
-    local first_item = stack.contents[0]
+    local first_item = stack.contents[1]
 
     -- If the action is not drop (all items have that action), then check if it has the action requested
     if args.action ~= "drop" and not first_item.actions[args.action] then return end
@@ -107,9 +107,9 @@ function sPlayerInventory:DoAction(args)
     if count_table(return_table) == 0 then return end
 
     -- After handling, get the return stack as either nil or a stack
-    local return_stack = return_table[0] ~= false and return_table[0] or stack
-    if return_table[0] ~= false and return_table[0] ~= nil and stack then
-        return_stack = stack:AddStack(return_table[0])
+    local return_stack = return_table[1] ~= false and return_table[1] or stack
+    if return_table[1] ~= false and return_table[1] ~= nil and stack then
+        return_stack = stack:AddStack(return_table[1])
     end
 
     inventory.contents[args.index] = return_stack
