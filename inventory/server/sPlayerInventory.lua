@@ -26,6 +26,37 @@ function sPlayerInventory:__init(player)
 
 end
 
+--[[
+    Gives an item to a player. If the player cannot hold it, the
+    item will drop on the ground.
+
+    Use argument no_drop = true to prevent the item from going on ground.
+    It will simply not be added if there is no room.
+
+]]
+function sPlayerInventory:GiveItem(args)
+    self:GiveStack({stack = sStack({contents = {args.item}}), index = args.index, player = args.player})
+end
+
+--[[
+    Gives an stack to a player. If the player cannot hold it, the
+    stack will drop on the ground.
+
+    Use argument no_drop = true to prevent the stack from going on ground.
+    It will simply not be added if there is no room.
+
+]]
+function sPlayerInventory:GiveStack(args)
+    local return_stack = self:AddStack(args)
+
+    if return_stack and args.no_drop ~= true then
+        sItemDrops:DropStack({
+            player = self.player,
+            stack = return_stack
+        })
+    end
+end
+
 function sPlayerInventory:DoAction(args)
     -- Only can do one action per second
     if self.action_timer:GetSeconds() < 1 then return end
