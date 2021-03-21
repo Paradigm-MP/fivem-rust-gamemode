@@ -7,6 +7,12 @@ export default {
         ["splitting"]: "Splitting",
         ["set amount and drag icon"]: "Set Amount & Drag Icon"
     },
+    attributes:
+    {
+        ["instant_health"]: "Instant Health",
+        ["calories"]: "Calories",
+        ["hydration"]: "Hydration"
+    },
     items: 
     {
         ["rock"]:
@@ -28,6 +34,11 @@ export default {
         {
             name: "Stone Hatchet",
             description: "A crude tool that makes chopping down trees easier."
+        },
+        ["mushroom"]:
+        {
+            name: "Mushroom",
+            description: "A mushroom found on the ground. Eating it provides a small boost to health, hunger, and thirst."
         }
     }
 }

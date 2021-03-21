@@ -18,7 +18,7 @@ div.item-info-container
 
 div.item-info-container div.item-title
 {
-    font-size: 24px;
+    font-size: 30px;
     text-transform: uppercase;
     font-weight: bold;
     margin-bottom: 6px;
@@ -59,6 +59,8 @@ div.item-info-container div.info-actions-container div.title
     color: rgb(201, 201, 201);
     background-color: rgba(255, 255, 255, 0.15);
     animation: none;
+    text-transform: uppercase;
+    font-weight: bold;
 }
 
 div.item-info-container div.info-actions-container div.content
@@ -99,11 +101,13 @@ div.item-info-container div.splitting-container div.content-container div.title
     margin-bottom: 2px;
     color: rgb(201, 201, 201);
     animation: none;
+    text-transform: uppercase;
 }
 
 div.item-info-container div.splitting-container div.content-container div.title div.title-left
 {
     display: inline-block;
+    font-weight: bold;
 }
 
 div.item-info-container div.splitting-container div.content-container div.title div.title-right
@@ -177,4 +181,38 @@ div.item-info-container div.actions-container div.action-container div.title
     text-transform: capitalize;
     color: white;
     font-size: 22px;
+    margin-left: 6px;
+}
+
+div.item-info-container div.info-container div.content div.attr-container
+{
+    text-transform: capitalize;
+    color: white;
+    font-size: 18px;
+}
+
+div.item-info-container div.info-container div.content div.attr-container
+{
+    text-transform: capitalize;
+    display: grid;
+    grid-template-columns: 50% minmax(0, 1fr);
+    grid-template-rows: auto;
+    color: white;
+    font-size: 16px;
+    padding: 6px;
+    font-weight: bold;
+    text-shadow: 2px 2px 1px black;
+    width: 100%;
+}
+
+div.item-info-container div.info-container div.content div.attr-container div.attr-title
+{
+    display: inline-block;
+    text-align: right;
+}
+
+div.item-info-container div.info-container div.content div.attr-container div.attr-amount
+{
+    margin-left: 30px;
+    display: inline-block;
 }

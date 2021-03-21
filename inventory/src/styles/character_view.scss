@@ -7,25 +7,24 @@ div.inv-section:nth-child(1) div.main-character-container
     animation: appear 0.2s ease-in-out;
 }
 
-div.inv-section:nth-child(1) div.title
-{
-    font-size: 30px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: white;
-    font-family: 'Source Sans Pro';
-}
+// div.inv-section:nth-child(1) div.title
+// {
+//     font-size: 30px;
+//     font-weight: bold;
+//     text-transform: uppercase;
+//     color: white;
+//     font-family: 'Source Sans Pro';
+// }
 
 div.inv-section:nth-child(1) div.items-container
 {
-    // border: 2px dashed red;
     display: grid;
     grid-column-gap: 6px;
     grid-template-rows: minmax(0, 1fr);
     grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
-div.inv-section:nth-child(1) div.hotbar-container-outer
-{
-    border: 2px dashed green;
-}
+// div.inv-section:nth-child(1) div.hotbar-container-outer
+// {
+//     border: 2px dashed green;
+// }

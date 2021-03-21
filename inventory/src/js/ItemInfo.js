@@ -156,7 +156,29 @@ export default class ItemInfo extends React.Component {
     
     getItemAttributes()
     {
-        // TODO
+        const attributes = this.getItem(this.props.stack).attributes || {};
+
+        const elements = [];
+        Object.keys(attributes).forEach((attribute_name) => 
+        {
+            let attr_value = attributes[attribute_name];
+            const localized_name = Localizations.GetAttributeName(attribute_name);
+            const color = attr_value < 0 ? 'rgb(202, 75, 17)' : 'rgb(17, 202, 17)';
+
+            // Add a + to the front of the value if it is positive
+            if (attr_value > 0)
+            {
+                attr_value = `+${attr_value}`;
+            }
+
+            elements.push(
+            <div className='attr-container' key={`item_attr_${attribute_name}`}>
+                <div className='attr-title'>{localized_name}</div>
+                <div className='attr-amount' style={{color: color}}>{attr_value}</div>
+            </div>)
+        })
+
+        return elements;
     }
     
     render () {
