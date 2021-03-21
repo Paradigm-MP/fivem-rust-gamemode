@@ -10,42 +10,6 @@ function sInventory:__init(args)
     self.contents = args.contents or {} -- Contents of the inventory
     self.type = args.type -- Inventory type
 
-    for i = 0, math.random(4) do
-        if self.type == InventoryTypeEnum.Main then
-            self.contents[i] = sStack({
-                contents = {
-                    sItem({
-                        name = "rock",
-                        amount = 1,
-                        durability = math.random() * 100,
-                        max_durability = 100
-                    }),
-                }
-            })
-            self.contents[20] = sStack({
-                contents = {
-                    sItem({
-                        name = "stone_hatchet",
-                        amount = 1,
-                        durability = math.random() * 200,
-                        max_durability = 200
-                    }),
-                }
-            })
-        else
-            self.contents[i] = sStack({
-                contents = {
-                    sItem({
-                        name = "rock",
-                        amount = 1,
-                        durability = math.random() * 100,
-                        max_durability = 100
-                    }),
-                }
-            })
-        end
-    end
-
     -- Functionality for admins to spectate any inventory
     self.invsee = {}
 
@@ -56,11 +20,6 @@ function sInventory:__init(args)
 
     -- All network events
     self.network_events = {}
-    -- table.insert(self.network_events, Network:Subscribe("Inventory/Shift" .. self.id, self, self.ShiftStack))
-    -- table.insert(self.network_events, Network:Subscribe("Inventory/Use" .. self.id, self, self.UseItem))
-    -- table.insert(self.network_events, Network:Subscribe("Inventory/Drop" .. self.id, self, self.DropStack))
-    -- table.insert(self.network_events, Network:Subscribe("Inventory/Split" .. self.id, self, self.SplitStack))
-    -- table.insert(self.network_events, Network:Subscribe("Inventory/Swap" .. self.id, self, self.SwapStack))
 
 end
 

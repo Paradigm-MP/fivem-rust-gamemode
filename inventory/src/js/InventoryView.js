@@ -293,6 +293,10 @@ export default class InventoryView extends React.Component {
         }
         else
         {
+            // Dragging a non-equippable item to the Character section
+            if (this.state.hover_section == InventorySections.Character &&
+                !dragged_item.contents[0].can_equip) {return;}
+
             OOF.CallEvent("Inventory/DragItem", 
             {
                 from_section: this.state.drag_section,

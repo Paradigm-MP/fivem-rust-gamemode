@@ -193,6 +193,10 @@ function sPlayerInventory:DragItem(args)
     local from_stack = from_inventory.contents[args.from_slot]
     local to_stack = to_inventory.contents[args.to_slot]
 
+    -- Trying to drag a non-equippable item to the character section
+    if to_inventory.type == InventoryTypeEnum.Character
+    and not from_stack:GetProperty("can_equip") then return end
+
     -- Dragging same type of items on top of each other - try to combine them
     if from_stack and to_stack 
     and from_stack:GetProperty("name") == to_stack:GetProperty("name") then

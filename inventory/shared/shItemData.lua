@@ -43,6 +43,15 @@ ItemData =
         actions = {
             ["eat"] = true
         }
+    },
+    {
+        name = "wood_helmet",
+        stacklimit = 10,
+        actions = {
+            ["eat"] = true
+        },
+        can_equip = true,
+        equip_type = "head"
     }
 }
 

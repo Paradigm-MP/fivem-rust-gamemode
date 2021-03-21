@@ -19,11 +19,17 @@ function sItem:__init(args)
     self.uid = args.uid or UID:GetNew()
     self.name = args.name
     self.amount = args.amount
+    self.can_equip = args.can_equip or default_data.can_equip -- Determines if it can go in the Character inventory section
+    self.equip_type = args.equip_type or default_data.equip_type -- Type of equipped item in the Character section
     self.stacklimit = args.stacklimit or default_data.stacklimit
     self.durable = args.durable or default_data.durable
     self.attributes = args.attributes and shallow_copy(args.attributes) or default_data.attributes
     self.actions = args.actions and shallow_copy(args.actions) or default_data.actions
     self.custom_data = args.custom_data and shallow_copy(args.custom_data) or {}
+
+    if self.can_equip and not self.equip_type then
+        error(debug.traceback("sItem:__init failed: can_equip was true but no equip_type was given for " .. self.name))
+    end
 
     if self.amount > self.stacklimit then
         error(debug.traceback("sItem:__init failed: amount was greater than stack limit"))

@@ -37,7 +37,9 @@ function sStack:UpdateProperties()
         stacklimit = self.contents[1].stacklimit,
         durable = self.contents[1].durable,
         durability = self.contents[1].durability,
-        max_durability = self.contents[1].max_durability
+        max_durability = self.contents[1].max_durability,
+        can_equip = self.contents[1].can_equip,
+        equip_type = self.contents[1].equip_type
     }
 end
 
