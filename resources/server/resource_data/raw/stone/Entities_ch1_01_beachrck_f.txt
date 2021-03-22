@@ -1,0 +1,3 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+ch1_01_beachrck_f, -2533.545, -224.3778, 11.13057, 0, 0, 0.258819, 0.9659258, x64n.rpf\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\ch1_01_strm_0.ymap
+ch1_01_beachrck_f, -2533.545, -224.3778, 11.13057, 0, 0, 0.258819, 0.9659258, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\hei_ch1_01_strm_0.ymap
