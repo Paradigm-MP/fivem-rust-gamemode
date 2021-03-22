@@ -11,7 +11,8 @@ function MeleeActionDefinitions:__init()
             animFlag = AnimationFlags.ANIM_FLAG_CANCELABLE,
             animTime = 0,
             method = MeleeActionRock,
-            tool_length = 0.4
+            tool_length = 0.4,
+            detection_delay = 500
         },
         ["stone_hatchet"] = 
         {

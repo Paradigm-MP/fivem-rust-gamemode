@@ -75,9 +75,13 @@ function Movement:TryToAttack()
     local melee_action = action_definition.method(LocalPlayer:GetPed(), function()
         self.can_attack = true
     end)
-    
+
     melee_action:PlayAnim()
-    melee_action:DetectHits()
+
+    Citizen.CreateThread(function()
+        Wait(action_definition.detection_delay)
+        melee_action:DetectHits()
+    end)
     self.can_attack = false
 
 end

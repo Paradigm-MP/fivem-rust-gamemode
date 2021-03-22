@@ -18,14 +18,14 @@ end
 
 local ResourceSizeConversions = 
 {
-    [ResourceType.Wood] = 75,
-    [ResourceType.Stone] = 100
+    [ResourceType.Wood] = 50,
+    [ResourceType.Stone] = 50
 }
 
 local ResourceLimits = 
 {
-    [ResourceType.Wood] = {min = 100, max = 3000},
-    [ResourceType.Stone] = {min = 100, max = 3000}
+    [ResourceType.Wood] = {min = 100, max = 1000},
+    [ResourceType.Stone] = {min = 100, max = 1000}
 }
 
 ResourceYieldBounds = 

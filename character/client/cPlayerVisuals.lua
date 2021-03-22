@@ -22,7 +22,7 @@ function PlayerVisuals:Create()
                 bone_enum = visual_data.bone,
                 position = visual_data.offset,
                 rotation = visual_data.rotation,
-                collision = true,
+                collision = false,
                 isPed = true,
                 fixedRot = true
             })
