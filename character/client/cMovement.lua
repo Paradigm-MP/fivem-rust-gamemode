@@ -9,11 +9,7 @@ function Movement:__init()
 
     self:StartStaminaLoop()
 
-    self.action_timers = 
-    {
-        attack = Timer(),
-        attack_cooldown = 1
-    }
+    self.can_attack = true
 
     Keymap:Register("mouse_left", "mouse_button", "attack", function(args)
         if args.down and not Inventory:IsOpen() then
@@ -66,9 +62,7 @@ end
 
 function Movement:TryToAttack()
     -- TODO: put the attack timer on a per-weapon basis
-    if self.action_timers.attack:GetSeconds() < self.action_timers.attack_cooldown then return end
-
-    self.action_timers.attack:Restart()
+    if not self.can_attack then return end
 
     -- TODO: separation of attacks based on type of item, eg. gun or melee
 
@@ -78,11 +72,13 @@ function Movement:TryToAttack()
     local action_definition = MeleeActionDefinitions:Get(equipped_item_name)
     if not action_definition then return end
 
-    self.action_timers.attack_cooldown = action_definition.delay_between
-
-    local melee_action = action_definition.method(LocalPlayer:GetPed())
+    local melee_action = action_definition.method(LocalPlayer:GetPed(), function()
+        self.can_attack = true
+    end)
+    
     melee_action:PlayAnim()
     melee_action:DetectHits()
+    self.can_attack = false
 
 end
 

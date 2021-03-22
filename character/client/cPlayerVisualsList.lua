@@ -6,9 +6,15 @@ function PlayerVisualsList:__init()
         ["rock"] = 
         {
             bone = PedBoneEnum.RightHand,
-            model = "prop_rock_5_e", -- It is kinda huge but I didn't find any smaller rocks
-            offset = vector3(0, 0, -0.25),
-            rotation = vector3(0, 0, 0)
+            model = "prop_rock_5_e",
+            offset = vector3(0, 0, -0.325),
+            rotation = vector3(0, 45, 0),
+            idle = {
+                animDict = "anim@heists@box_carry@",
+                animName = "idle",
+                flag = AnimationFlags.ANIM_FLAG_REPEAT + AnimationFlags.ANIM_FLAG_CANCELABLE,
+                duration = -1
+            }
         }
     }
 end

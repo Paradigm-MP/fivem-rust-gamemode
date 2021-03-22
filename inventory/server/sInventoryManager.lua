@@ -61,7 +61,6 @@ end
 function sInventoryManager:ClientModulesLoaded(args)
     local player_inventory = sPlayerInventory(args.player)
     args.player:SetValue("Inventory", player_inventory)
-
 end
 
 function sInventoryManager:GetNewInventoryId()

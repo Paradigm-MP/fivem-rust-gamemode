@@ -385,6 +385,13 @@ function sPlayerInventory:LoadInventory(inventory_type)
                 player = self.player
             })
 
+            if inventory_type == InventoryTypeEnum.Hotbar then
+                self:GiveItem({item = sItem({
+                    name = "rock",
+                    amount = 1
+                })})
+            end
+
         end
     })
 

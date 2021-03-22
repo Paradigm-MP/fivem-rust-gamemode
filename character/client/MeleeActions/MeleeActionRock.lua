@@ -1,10 +1,11 @@
 MeleeActionRock = class()
 
-function MeleeActionRock:__init(ped)
+function MeleeActionRock:__init(ped, cb)
     self.active = false
     self.name = "rock"
     self.ped = ped
     self.definition = MeleeActionDefinitions:Get(self.name)
+    self.callback = cb
 end
 
 function MeleeActionRock:StopDetecting()
@@ -12,18 +13,21 @@ function MeleeActionRock:StopDetecting()
 end
 
 function MeleeActionRock:StopAnim()
-    self.ped:StopAnim({
+    PedAnimationController:StopAnim({
         animDict = self.definition.animDict,
-        animName = self.definition.animName
+        animName = self.definition.animName,
+        ped = self.ped
     })
 end
 
 function MeleeActionRock:PlayAnim()
-    self.ped:PlayAnim({
+    PedAnimationController:PlayAnim({
         animDict = self.definition.animDict,
         animName = self.definition.animName,
         flag = self.definition.animFlag,
-        animTime = self.definition.animTime
+        animTime = self.definition.animTime,
+        duration = self.definition.duration,
+        ped = self.ped
     })
 end
 
@@ -38,10 +42,11 @@ function MeleeActionRock:DetectHits()
     end)
 
     Citizen.CreateThread(function()
-        Wait(1000 * self.definition.duration)
+        Wait(self.definition.duration)
+        if self.callback then self.callback() end
         if not self.active then return end
-        self:StopDetecting()
         self:StopAnim()
+        self:StopDetecting()
     end)
 end
 
@@ -86,7 +91,6 @@ function MeleeActionRock:HitSomething(ray)
         end
 
         self:StopDetecting()
-        self:StopAnim()
 
         -- TODO: sync particles so other players can see and hear them
         Network:Send("Character/HitResource", {

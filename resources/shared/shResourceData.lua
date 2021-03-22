@@ -30,8 +30,8 @@ local ResourceLimits =
 
 ResourceYieldBounds = 
 {
-    [ResourceType.Wood] = {min = 10, max = 20},
-    [ResourceType.Stone] = {min = 10, max = 20}
+    [ResourceType.Wood] = {min = 15, max = 20},
+    [ResourceType.Stone] = {min = 15, max = 20}
 }
 
 -- Gets the total amount of resource (items to give / health) for a given size of a resource

@@ -5,23 +5,21 @@ function MeleeActionDefinitions:__init()
     {
         ["rock"] = 
         {
-            duration = 1, -- Animation duration
+            duration = 2000, -- Animation duration
             animDict = "melee@large_wpn@streamed_core",
             animName = "ground_attack_on_spot",
             animFlag = AnimationFlags.ANIM_FLAG_CANCELABLE,
             animTime = 0,
-            delay_between = 2, -- Time in seconds to wait between uses
             method = MeleeActionRock,
-            tool_length = 0.2
+            tool_length = 0.4
         },
         ["stone_hatchet"] = 
         {
-            duration = 1, -- Animation duration
+            duration = 1000, -- Animation duration
             animDict = "anim@melee@machete@streamed_core@",
             animName = "plyr_walking_attack_a",
             animFlag = AnimationFlags.ANIM_FLAG_CANCELABLE,
             animTime = 0.15,
-            delay_between = 1, -- Time in seconds to wait between uses
             method = MeleeActionStoneHatchet,
             tool_length = 0.5
         }
