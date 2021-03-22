@@ -178,6 +178,8 @@ end
 ]]
 function sItemDrops:DropStack(args)
 
+    -- TODO: find nearby drops of the same type and combine them, if possible.
+    -- ex. two drops of 200 wood should be combined to 1 drop of 400 wood
     if not args.stack or not args.player then return end
 
     local player_pos = args.player:GetPosition()
@@ -232,6 +234,8 @@ function sItemDrops:PlayerDropStack(args)
         player = args.player,
         stack = stack
     })
+    
+    player_inventory:UpdateEquippedItem()
 end
 
 sItemDrops = sItemDrops()

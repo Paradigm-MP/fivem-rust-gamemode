@@ -16,6 +16,12 @@ function sResourceManager:__init()
 
 end
 
+function sResourceManager:GetResourceYield(resource_type, health)
+    return math.ceil(
+        math.min(health, math.random(ResourceYieldBounds[resource_type].min, ResourceYieldBounds[resource_type].max)) 
+        * RustConfig.ResourceGatherMultiplier)
+end
+
 function sResourceManager:CharacterHitResource(args)
     if not args.id
     or not args.type
@@ -30,14 +36,17 @@ function sResourceManager:CharacterHitResource(args)
     if resource.health <= 0 then return end
     if resource.type ~= args.type then return end
 
+    local equipped_item_name = args.player:GetValue("EquippedItem")
+    if not equipped_item_name then return end
+
     local player_pos = args.player:GetPosition()
     local resource_pos = vector3(resource.posX, resource.posY, resource.posZ)
 
     if Vector3Math:Distance(player_pos, resource_pos) > 5 then return end
 
-    
+    local yield = self:GetResourceYield(resource.type, resource.health)
+    local item_yield = math.max(1, math.ceil(yield * RustConfig.ResourceGatherMultiplier))
 
-    -- TODO: handle resources on a type by type basis
     -- TODO: check player tool and check player cooldown (cannot harvest too quickly)
     -- TODO: damage player tool
 
@@ -46,7 +55,7 @@ function sResourceManager:CharacterHitResource(args)
         local inventory = args.player:GetValue("Inventory")
         local item = sItem({
             name = "wood",
-            amount = 1000
+            amount = item_yield
         })
         inventory:GiveItem({
             item = item
@@ -57,12 +66,26 @@ function sResourceManager:CharacterHitResource(args)
         local inventory = args.player:GetValue("Inventory")
         local item = sItem({
             name = "stone",
-            amount = math.random(700) + 5
+            amount = item_yield
         })
         inventory:GiveItem({
             item = item
         })
 
+    end
+
+    resource.health = math.max(0, resource.health - yield)
+    self.resources[args.cell.x][args.cell.y][resource.id] = resource
+
+    -- Resource was destroyed
+    if resource.health == 0 then
+        -- Remove resource and respawn later
+        Network:Broadcast("ResourceManager/SyncDestroyed", {
+            cell = {x = args.cell.x, y = args.cell.y},
+            id = resource.id
+        })
+
+        -- TODO: respawn later
     end
 
 end
@@ -114,8 +137,6 @@ function sResourceManager:PlayerCellUpdate(args)
             VerifyCellExists(resources, cell)
             resources[cell.x][cell.y] = self.resources[cell.x][cell.y]
 
-            -- print(string.format("Loaded cell %d %d", cell.x, cell.y))
-
         end
 
         Network:Send('ResourceManager/SyncCells', args.player, resources)
@@ -131,8 +152,13 @@ function sResourceManager:LoadCellResources(cell)
         -- All resources start at 100% health
         for _, resource in pairs(data) do
             resource.id = self.resource_id_pool:GetNextId()
-            resource.health = 1 -- TODO: use health from ResourceData
             resource.type = GetResourceTypeFromModel(resource.model)
+            if not resource.type then
+                error("Failed to get resource type for " .. tostring(resource.model))
+            end
+            resource.no_spawn = NoSpawnResources[resource.model]
+            resource.max_health = GetResourceAmountFromSize(resource.type, GetResourceData(resource.model, resource.type).size)
+            resource.health = resource.max_health
             indexed_data[resource.id] = resource
         end
 

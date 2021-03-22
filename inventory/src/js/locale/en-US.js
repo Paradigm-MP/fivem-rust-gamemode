@@ -11,7 +11,8 @@ export default {
     {
         ["instant_health"]: "Instant Health",
         ["calories"]: "Calories",
-        ["hydration"]: "Hydration"
+        ["hydration"]: "Hydration",
+        ["damage"]: "Damage"
     },
     items: 
     {
@@ -28,7 +29,7 @@ export default {
         ["stone"]:
         {
             name: "Stone",
-            description: "Stone obtained from rocks on the ground or from larger boulders. Useful for many crafting recipes and base building."
+            description: "Stone obtained from rocks. Useful for many crafting recipes and base building."
         },
         ["stone_hatchet"]:
         {

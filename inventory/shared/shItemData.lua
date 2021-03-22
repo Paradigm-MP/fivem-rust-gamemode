@@ -4,7 +4,10 @@ ItemData =
         name = "rock",
         stacklimit = 1,
         durable = true,
-        max_durability = 200
+        max_durability = 200,
+        attributes = {
+            ["damage"] = 10
+        }
     },
     {
         name = "wood",

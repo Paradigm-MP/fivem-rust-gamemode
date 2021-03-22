@@ -5,6 +5,7 @@ import GetItemImage from "./constants/Images"
 import InventorySections from "./constants/InventorySections"
 import $ from "jquery";
 import Localizations from "./locale/common"
+import ColoredAttributes from "./constants/ColoredAttributes"
 
 export default class ItemInfo extends React.Component {
 
@@ -163,12 +164,18 @@ export default class ItemInfo extends React.Component {
         {
             let attr_value = attributes[attribute_name];
             const localized_name = Localizations.GetAttributeName(attribute_name);
-            const color = attr_value < 0 ? 'rgb(202, 75, 17)' : 'rgb(17, 202, 17)';
+            let color = 'white';
 
-            // Add a + to the front of the value if it is positive
-            if (attr_value > 0)
+            // If it is a colored/labeled attribute, like healing or calorites +/-
+            if (ColoredAttributes[attribute_name])
             {
-                attr_value = `+${attr_value}`;
+                color = attr_value < 0 ? 'rgb(202, 75, 17)' : 'rgb(17, 202, 17)';
+
+                // Add a + to the front of the value if it is positive
+                if (attr_value > 0)
+                {
+                    attr_value = `+${attr_value}`;
+                }
             }
 
             elements.push(

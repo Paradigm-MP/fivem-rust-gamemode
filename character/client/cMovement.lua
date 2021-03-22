@@ -11,7 +11,8 @@ function Movement:__init()
 
     self.action_timers = 
     {
-        attack = Timer()
+        attack = Timer(),
+        attack_cooldown = 1
     }
 
     Keymap:Register("mouse_left", "mouse_button", "attack", function(args)
@@ -65,25 +66,23 @@ end
 
 function Movement:TryToAttack()
     -- TODO: put the attack timer on a per-weapon basis
-    if self.action_timers.attack:GetSeconds() < 1 then return end
+    if self.action_timers.attack:GetSeconds() < self.action_timers.attack_cooldown then return end
 
     self.action_timers.attack:Restart()
 
-    -- TODO: animations should be on a per-weapon basis
-    LocalPlayer:GetPed():PlayAnim({
-        animDict = "anim@melee@machete@streamed_core@",
-        animName = "plyr_walking_attack_a",
-        flag = AnimationFlags.ANIM_FLAG_CANCELABLE,
-        animTime = 0.15
-    })
+    -- TODO: separation of attacks based on type of item, eg. gun or melee
 
-    local detection = MeleeActionStoneHatchet(LocalPlayer:GetPed())
-    detection:DetectHits()
+    local equipped_item_name = LocalPlayer:GetPlayer():GetValue("EquippedItem")
+    if not equipped_item_name then return end
 
-    Citizen.CreateThread(function()
-        Wait(800)
-        detection:StopDetecting()
-    end)
+    local action_definition = MeleeActionDefinitions:Get(equipped_item_name)
+    if not action_definition then return end
+
+    self.action_timers.attack_cooldown = action_definition.delay_between
+
+    local melee_action = action_definition.method(LocalPlayer:GetPed())
+    melee_action:PlayAnim()
+    melee_action:DetectHits()
 
 end
 
@@ -101,10 +100,10 @@ function Movement:TestCommands()
 
     RegisterCommand('anim', function()
         LocalPlayer:GetPed():PlayAnim({
-            animDict = "anim@melee@machete@streamed_core@",
-            animName = "plyr_walking_attack_a",
+            animDict = "melee@large_wpn@streamed_core",
+            animName = "ground_attack_on_spot",
             flag = AnimationFlags.ANIM_FLAG_CANCELABLE,
-            animTime = 0.15
+            animTime = 0
         })
     end)
 

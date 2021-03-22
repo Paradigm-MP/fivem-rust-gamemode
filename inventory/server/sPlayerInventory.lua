@@ -55,6 +55,7 @@ function sPlayerInventory:GiveStack(args)
             stack = return_stack
         })
     end
+    self:UpdateEquippedItem()
 end
 
 function sPlayerInventory:DoAction(args)
@@ -123,6 +124,28 @@ function sPlayerInventory:DoAction(args)
 
 end
 
+function sPlayerInventory:UpdateEquippedItem()
+    local old_equipped_item = self.player:GetValue("EquippedItem")
+    
+    local stack = self.inventories[InventoryTypeEnum.Hotbar].contents[self.hotbar_index]
+
+    -- No update needed
+    if self.hotbar_index == -1 and old_equipped_item == nil then return end
+    if not stack and old_equipped_item == nil then return end
+    if stack and stack:GetProperty("name") == old_equipped_item then return end
+
+    -- There was a change, so update it
+    if self.hotbar_index == -1 then
+        self.player:SetNetworkValue("EquippedItem", nil)
+    else
+        if stack then
+            self.player:SetNetworkValue("EquippedItem", stack:GetProperty("name"))
+        else
+            self.player:SetNetworkValue("EquippedItem", nil)
+        end
+    end
+end
+
 function sPlayerInventory:SelectHotbar(args)
     if not args.index then return end
     if args.index < -1 or args.index > 5 then return end
@@ -133,15 +156,7 @@ function sPlayerInventory:SelectHotbar(args)
 
     -- Small stone
     -- proc_mntn_stone01
-    if self.hotbar_index == -1 then
-        args.player:SetNetworkValue("EquippedItem", nil)
-    else
-        local stack = self.inventories[InventoryTypeEnum.Hotbar].contents[self.hotbar_index]
-
-        if stack then
-            args.player:SetNetworkValue("EquippedItem", stack:GetProperty("name"))
-        end
-    end
+    self:UpdateEquippedItem()
 end
 
 function sPlayerInventory:AddItem(args)
@@ -311,6 +326,8 @@ function sPlayerInventory:DragItem(args)
             })
         end
     end
+
+    self:UpdateEquippedItem()
 end
 
 -- Called when the player's UI finishes loading
@@ -320,11 +337,6 @@ function sPlayerInventory:InventoryUILoaded(args)
     if args.player:GetUniqueId() ~= self.player:GetUniqueId() then return end
 
     self:LoadInventories()
-
-end
-
--- Sync all player inventories on initial load
-function sPlayerInventory:SyncInventories()
 
 end
 

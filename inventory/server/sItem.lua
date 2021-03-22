@@ -37,15 +37,15 @@ function sItem:__init(args)
 
     self:GetCustomData()
 
-    if args.durability then
+    if self.durable then
 
-        if args.amount > 1 then
+        if self.amount > 1 then
             error(debug.traceback("sItem:__init failed: durability was given but item had more than one amount"))
         end
 
-        self.durability = math.floor(args.durability)
-
         self.max_durability = args.max_durability or default_data.max_durability
+        self.durability = math.floor(args.durability or self.max_durability)
+
     end
 
 end

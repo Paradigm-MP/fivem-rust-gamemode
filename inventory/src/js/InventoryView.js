@@ -69,7 +69,8 @@ export default class InventoryView extends React.Component {
         if (!this.props.open && prevProps.open)
         {
             // Reset selected slot if hotbar is selected
-            if (this.state.selected_drag_section == InventorySections.Hotbar)
+            if (this.state.selected_drag_section == InventorySections.Hotbar
+                && this.state.selected_slot != this.state.equipped_hotbar_slot)
             {
                 this.setState({
                     selected_drag_section: InventorySections.Main,

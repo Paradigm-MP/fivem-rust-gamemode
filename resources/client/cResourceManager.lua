@@ -4,12 +4,19 @@ function cResourceManager:__init()
 
     self.resources = {}
 
-    for resource_type, _ in pairs(ResourceData) do
-        self.resources[resource_type] = {}
-    end
-
     Network:Subscribe('ResourceManager/SyncCells', self, self.SyncCells)
+    Network:Subscribe('ResourceManager/SyncDestroyed', self, self.SyncDestroyed)
 
+end
+
+function cResourceManager:SyncDestroyed(args)
+    if self.resources[args.cell.x]
+    and self.resources[args.cell.x][args.cell.y]
+    and self.resources[args.cell.x][args.cell.y][args.id] then
+        local object = self.resources[args.cell.x][args.cell.y][args.id].object
+        object:Destroy()
+        self.resources[args.cell.x][args.cell.y][args.id].object = nil
+    end
 end
 
 function cResourceManager:SyncCells(args)
@@ -18,12 +25,19 @@ function cResourceManager:SyncCells(args)
             local cell = {x = x, y = y}
             VerifyCellExists(self.resources, cell)
 
-            self.resources[cell.x][cell.y] = args[x][y]
-
             for _, resource in pairs(args[x][y]) do
-                CreateModelHide(resource.posX, resource.posY, resource.posZ, 0.1, GetHashKey(resource.model), false)
 
-                if resource.health > 0 then
+                if self.resources[cell.x][cell.y][resource.id]
+                and self.resources[cell.x][cell.y][resource.id].object then
+                    self.resources[cell.x][cell.y][resource.id].object:Remove()
+                    self.resources[cell.x][cell.y][resource.id] = nil
+                end
+
+                CreateModelHide(resource.posX, resource.posY, resource.posZ, 0.1, GetHashKey(resource.model), false)
+                resource.cell = cell
+                self.resources[cell.x][cell.y][resource.id] = resource
+
+                if resource.health > 0 and not resource.no_spawn then
                     resource.object = Object({
                         model = resource.model,
                         position = vector3(resource.posX, resource.posY, resource.posZ),
