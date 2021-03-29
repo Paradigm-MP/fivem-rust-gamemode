@@ -3,8 +3,6 @@
 # FiveM Rust Gamemode
 Rust-inspired survival gamemode for FiveM using [OOF](https://github.com/Paradigm-MP/oof).
 
-This gamemode is set to release in **Q2 2021**, but will continue to be developed afterwards.
-
 ## Disclaimer
 This gamemode is not currently functional in any sense. When this gamemode reaches a working state, this readme will be updated. The goal of open sourcing this gamemode to encourage more people to learn and use OOF as well as this gamemode.
 
