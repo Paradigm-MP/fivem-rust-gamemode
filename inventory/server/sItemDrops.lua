@@ -47,8 +47,7 @@ function sItemDrops:PickUpStack(args)
     end
 end
 
--- Syncs to all players in the given cell or in adjacent cells
-function sItemDrops:SyncToAdjacentPlayers(cell, args)
+function sItemDrops:GetNearbyPlayers(cell)
     local adjacent_players = {}
 
     local adjacent_cells = GetAdjacentCells(cell)
@@ -62,8 +61,12 @@ function sItemDrops:SyncToAdjacentPlayers(cell, args)
         end
     end
 
-    Network:Send("Inventory/DropStackSync", adjacent_players, args)
+    return adjacent_players
+end
 
+-- Syncs to all players in the given cell or in adjacent cells
+function sItemDrops:SyncToAdjacentPlayers(cell, args)
+    Network:Send("Inventory/DropStackSync", self:GetNearbyPlayers(cell), args)
 end
 
 function sItemDrops:RemoveFromCellTableIfExists(cell_table, cell, id)
@@ -109,13 +112,17 @@ function sItemDrops:PlayerCellUpdate(args)
         if self.drops[cell.x]
         and self.drops[cell.x][cell.y] then
             for id, drop in pairs(self.drops[cell.x][cell.y]) do
-                drops_to_sync[id] = {
-                    id = id,
-                    net_id = drop.entity:GetNetworkId(),
-                    name = drop.stack:GetProperty("name"),
-                    amount = drop.stack:GetAmount(),
-                    cell = cell
-                }
+                if drop.entity:Exists() then
+                    drops_to_sync[id] = {
+                        id = id,
+                        net_id = drop.entity:GetNetworkId(),
+                        name = drop.stack:GetProperty("name"),
+                        amount = drop.stack:GetAmount(),
+                        cell = cell
+                    }
+                else
+                    self:RemoveDrop(cell, id)
+                end
             end
         end
     end

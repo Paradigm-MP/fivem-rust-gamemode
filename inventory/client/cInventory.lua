@@ -226,6 +226,9 @@ end
 
 function cInventory:UIReady()
 
+    if self.loaded then return end
+
+    self.loaded = true
     self.ui:CallEvent("SetLocale", {locale = GetConvar("locale", "en-US")})
     self:RegisterKeymaps()
 

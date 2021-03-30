@@ -76,8 +76,7 @@ function MeleeActionRock:HitSomething(ray)
                 effect = "bul_wood_splinter",
                 type = ParticleEffectTypes.Position,
                 position = ray.position,
-                scale = 1,
-                rotation = vector3(0, 0, 0)
+                scale = 1
             })
         else
             local pfx = ParticleEffect({
@@ -85,8 +84,7 @@ function MeleeActionRock:HitSomething(ray)
                 effect = "ent_dst_concrete_large",
                 type = ParticleEffectTypes.Position,
                 position = ray.position,
-                scale = 1,
-                rotation = vector3(0, 0, 0)
+                scale = 1
             })
         end
 
@@ -96,7 +94,8 @@ function MeleeActionRock:HitSomething(ray)
         Network:Send("Character/HitResource", {
             id = obj:GetValue("ResourceId"),
             type = obj:GetValue("ResourceType"),
-            cell = obj:GetValue("Cell")
+            cell = obj:GetValue("Cell"),
+            hit_position = {x = ray.position.x, y = ray.position.y, z = ray.position.z}
         })
 
     end

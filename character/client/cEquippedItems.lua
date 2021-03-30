@@ -24,8 +24,13 @@ function cEquippedItems:PlayerNetworkValueChanged(args)
         if args.name == "EquippedItem" then
             local visuals = self.equipped_items[args.player:GetUniqueId()]
             if visuals then
-                visuals:Update()
-            else
+                if args.val == nil then
+                    visuals:Remove()
+                    self.equipped_items[args.player:GetUniqueId()] = nil
+                else
+                    visuals:Update()
+                end
+            elseif args.player:GetPed():Exists() then
                 self:CheckPlayerVisuals(args.player, args.player:GetPed())
             end
         end
@@ -42,6 +47,8 @@ function cEquippedItems:CheckForEquippedItemVisuals()
             visuals:Update()
         end
     end
+
+    -- TODO: fix players joining not updating visuals properly (ped not correct?)
 
     local players = cPlayers:GetPlayers()
     for id, player in pairs(players) do
