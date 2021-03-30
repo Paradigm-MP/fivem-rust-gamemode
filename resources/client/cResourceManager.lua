@@ -6,7 +6,18 @@ function cResourceManager:__init()
 
     Network:Subscribe('ResourceManager/SyncCells', self, self.SyncCells)
     Network:Subscribe('ResourceManager/SyncDestroyed', self, self.SyncDestroyed)
+    Network:Subscribe('Resources/ParticleEffect', self, self.ParticleEffect)
 
+end
+
+function cResourceManager:ParticleEffect(args)
+    ParticleEffect({
+        bank = args.bank,
+        effect = args.effect,
+        type = ParticleEffectTypes.Position,
+        position = args.position,
+        scale = args.scale
+    })
 end
 
 function cResourceManager:SyncDestroyed(args)

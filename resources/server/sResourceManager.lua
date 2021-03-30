@@ -61,6 +61,16 @@ function sResourceManager:CharacterHitResource(args)
             item = item
         })
 
+
+        local nearby_players = sItemDrops:GetNearbyPlayers(args.cell)
+        nearby_players[args.player:GetUniqueId()] = nil -- Do not send to this player
+        Network:Send("Resources/ParticleEffect", nearby_players, {
+            bank = "core",
+            effect = "bul_wood_splinter",
+            position = args.hit_position,
+            scale = 1
+        })
+
     elseif resource.type == ResourceType.Stone then
         
         local inventory = args.player:GetValue("Inventory")
@@ -72,6 +82,14 @@ function sResourceManager:CharacterHitResource(args)
             item = item
         })
 
+        local nearby_players = sItemDrops:GetNearbyPlayers(args.cell)
+        nearby_players[args.player:GetUniqueId()] = nil -- Do not send to this player
+        Network:Send("Resources/ParticleEffect", nearby_players, {
+            bank = "core",
+            effect = "ent_dst_concrete_large",
+            position = args.hit_position,
+            scale = 1
+        })
     end
 
     resource.health = math.max(0, resource.health - yield)
