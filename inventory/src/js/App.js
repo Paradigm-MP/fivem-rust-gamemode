@@ -5,6 +5,7 @@ import InventoryView from "./InventoryView"
 import CraftingView from "./CraftingView"
 import Views from "./constants/Views"
 import LookAtItemView from "./LookAtItemView"
+import SurvivalHUD from "./SurvivalHUD"
 import OOF from "./OOF"
 import Localizations from "./locale/common"
 
@@ -80,6 +81,7 @@ export default class App extends React.Component {
                     <LookAtItemView open={this.state.open}></LookAtItemView>
                     {this.view == Views.InventoryView && <InventoryView open={this.state.open}></InventoryView>}
                     {this.view == Views.CraftingView && <CraftingView open={this.state.open}></CraftingView>}
+                    <SurvivalHUD></SurvivalHUD>
                 </div>
             </>
         )

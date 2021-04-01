@@ -1,0 +1,80 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Sans+Pro');
+
+div.survival-hud-container
+{
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    margin: 1vh;
+    width: fit-content;
+    height: fit-content;
+}
+
+div.survival-hud-container div.inner-container
+{
+    position: relative;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto;
+}
+
+div.survival-hud-container div.inner-container div.stat-container
+{
+    position: relative;
+    display: flex;
+    height: 4vh;
+    width: 16vw;
+    max-width: 400px;
+    background-color: rgba(255, 255, 255, 0.15);
+    margin: 2px;
+}
+
+div.survival-hud-container div.inner-container div.stat-container .icon
+{
+    display: inline-block;
+    width: 2.5vh;
+    margin: 0.7vh;
+    margin-right: 0.3vh;
+    opacity: 0.5;
+}
+
+div.survival-hud-container div.inner-container div.stat-container div.text-and-fill-container
+{
+    position: relative;
+    margin: 0.5vh;
+    flex: auto;
+}
+
+div.survival-hud-container div.inner-container div.stat-container div.text-and-fill-container div.fill
+{
+    position: relative;
+    width: 50%;
+    height: 100%;
+}
+
+div.survival-hud-container div.inner-container div.stat-container div.text-and-fill-container div.fill.green
+{
+    background-color: rgb(127, 192, 73);
+}
+
+div.survival-hud-container div.inner-container div.stat-container div.text-and-fill-container div.fill.blue
+{
+    background-color: rgb(59, 151, 194);
+}
+
+div.survival-hud-container div.inner-container div.stat-container div.text-and-fill-container div.fill.orange
+{
+    background-color: rgb(218, 122, 66);
+}
+
+div.survival-hud-container div.inner-container div.stat-container div.text-and-fill-container div.text
+{
+    position: absolute;
+    left: 6px;
+    top: 50%;
+    transform: translate(0, -50%);
+    color: rgba($color: #ffffff, $alpha: 0.75);
+    font-family: 'Source Sans Pro';
+    font-weight: bold;
+    font-size: 2vh;
+}
