@@ -34,6 +34,8 @@ ResourceYieldBounds =
     [ResourceType.Stone] = {min = 15, max = 20}
 }
 
+ResourceCompleteBonus = 0.2 -- 20% bonus upon destroying a resource
+
 -- Gets the total amount of resource (items to give / health) for a given size of a resource
 function GetResourceAmountFromSize(resource_type, size)
     return math.clamp(

@@ -18,8 +18,7 @@ end
 
 function sResourceManager:GetResourceYield(resource_type, health)
     return math.ceil(
-        math.min(health, math.random(ResourceYieldBounds[resource_type].min, ResourceYieldBounds[resource_type].max)) 
-        * RustConfig.ResourceGatherMultiplier)
+        math.min(health, math.random(ResourceYieldBounds[resource_type].min, ResourceYieldBounds[resource_type].max)))
 end
 
 function sResourceManager:CharacterHitResource(args)
@@ -44,11 +43,28 @@ function sResourceManager:CharacterHitResource(args)
 
     if Vector3Math:Distance(player_pos, resource_pos) > 5 then return end
 
-    local yield = self:GetResourceYield(resource.type, resource.health)
-    local item_yield = math.max(1, math.ceil(yield * RustConfig.ResourceGatherMultiplier))
+    local yield = math.ceil(self:GetResourceYield(resource.type, resource.health) * (1 - ResourceCompleteBonus))
 
     -- TODO: check player tool and check player cooldown (cannot harvest too quickly)
     -- TODO: damage player tool
+
+    resource.health = math.max(0, resource.health - yield)
+    self.resources[args.cell.x][args.cell.y][resource.id] = resource
+
+    -- Resource was destroyed
+    if resource.health <= resource.max_health * ResourceCompleteBonus then
+        -- Remove resource and respawn later
+        Network:Broadcast("ResourceManager/SyncDestroyed", {
+            cell = {x = args.cell.x, y = args.cell.y},
+            id = resource.id
+        })
+
+        yield = yield + math.ceil(resource.max_health * ResourceCompleteBonus)
+
+        -- TODO: respawn later
+    end
+
+    local item_yield = math.max(1, math.ceil(yield * RustConfig.ResourceGatherMultiplier))
 
     if resource.type == ResourceType.Wood then
 
@@ -90,20 +106,6 @@ function sResourceManager:CharacterHitResource(args)
             position = args.hit_position,
             scale = 1
         })
-    end
-
-    resource.health = math.max(0, resource.health - yield)
-    self.resources[args.cell.x][args.cell.y][resource.id] = resource
-
-    -- Resource was destroyed
-    if resource.health == 0 then
-        -- Remove resource and respawn later
-        Network:Broadcast("ResourceManager/SyncDestroyed", {
-            cell = {x = args.cell.x, y = args.cell.y},
-            id = resource.id
-        })
-
-        -- TODO: respawn later
     end
 
 end
