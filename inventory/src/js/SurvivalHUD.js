@@ -19,7 +19,12 @@ export default class SurvivalHUD extends React.Component {
 
     componentDidMount()
     {
-        
+        OOF.Subscribe("Inventory/SurvivalHUD/UpdateHealth", (args) => 
+        {
+            this.setState({
+                health: args.health
+            })
+        })
     }
 
     formatNumber(number)
@@ -43,14 +48,14 @@ export default class SurvivalHUD extends React.Component {
                             <img src={`./images/thirst.png`} className='icon'></img>
                             <div className='text-and-fill-container'>
                                 <div className='fill blue' style={{width: `${this.state.thirst * 100}%`}}></div>
-                                <div className='text'>{this.formatNumber(this.state.health)}</div>
+                                <div className='text'>{this.formatNumber(this.state.thirst)}</div>
                             </div>
                         </div>
                         <div className='stat-container'>
                             <img src={`./images/eat.png`} className='icon'></img>
                             <div className='text-and-fill-container'>
                                 <div className='fill orange' style={{width: `${this.state.hunger * 100}%`}}></div>
-                                <div className='text'>{this.formatNumber(this.state.health)}</div>
+                                <div className='text'>{this.formatNumber(this.state.hunger)}</div>
                             </div>
                         </div>
                     </div>
