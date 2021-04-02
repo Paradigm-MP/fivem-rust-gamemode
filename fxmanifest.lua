@@ -189,6 +189,7 @@ files {
 
     'inventory/client/ui/*',
     'inventory/client/ui/images/*',
+    'inventory/client/ui/images/rust/*',
 
     -- Streaming
     'stream/**/*.ytyp',
