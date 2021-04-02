@@ -11,6 +11,7 @@ license.cfg
 **/resource_data/generated.txt
 inventory/client/ui/app.js*
 inventory/client/ui/images/
+inventory/src/images/rust/
 .DS_Store
 .env
 .gclient_done

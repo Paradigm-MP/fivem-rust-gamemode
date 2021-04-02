@@ -43,6 +43,14 @@ Now you'll need to build the UI again, which is covered in the below step.
 
 Now you should be all set with your new localization! Please make a [PR](https://github.com/Paradigm-MP/fivem-rust-gamemode/pulls) so it can be included in the main repository.
 
+### Item Icons
+Since this is a Rust-inspired gamemode, we are using the icons from the Rust game. However, we will not be distributing these icons with these scripts because we do not have permission to do so. This means that if you run the gamemode right out of the box, you will be missing all item icons.
+
+You have two options to fix this:
+1. Download Rust and copy the necessary images from `Rust/Bundles/items` to `inventory/src/images/rust`. _Please do not copy them all, but instead only copy the those that are needed (see `inventory/src/js/contents/Images.js` for a list). You don't have to rename these images - the scripts use the default names from the Rust game.
+2. Create or find icons for each of the items used yourself (see `inventory/src/js/contents/Images.js` for a list of icons used). This is much more tedious, but you won't be using Rust's icons (and thus won't get in legal trouble!). If you end up creating custom icons that you would like to be included in this repository instead of the Rust icons, please let me know! It would be great to have icons included by default for easier setup. Recommended image size: 512x512.
+
+Also, if you know a contact at FacePunch, [please let us know](mailto:mp.paradigm@gmail.com)! We'd love to talk about getting permission to use the Rust icons in this fun gamemode.
 
 ### Inventory UI
 The inventory/crafting UI uses React, so you'll need to compile it using webpack first.

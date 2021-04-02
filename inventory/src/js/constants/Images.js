@@ -3,7 +3,12 @@
 const item_images = {
     ["DEFAULT"]:            "images/default.png",
     ["TRANSPARENT"]:        "images/transparent.png",
-    // ["Rock"]:               "images/rock.png"
+
+    // All item icons that are necessary
+    ["rock"]:               "images/rust/rock.png",
+    ["wood"]:               "images/rust/wood.png",
+    ["stone_hatchet"]:      "images/rust/stonehatchet.png",
+    ["stone"]:              "images/rust/stone.png"
 }
 
 function GetItemImage(item_name)
