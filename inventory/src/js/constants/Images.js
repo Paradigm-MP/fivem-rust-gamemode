@@ -8,7 +8,9 @@ const item_images = {
     ["rock"]:               "images/rust/rock.png",
     ["wood"]:               "images/rust/wood.png",
     ["stone_hatchet"]:      "images/rust/stonehatchet.png",
-    ["stone"]:              "images/rust/stone.png"
+    ["stone"]:              "images/rust/stone.png",
+    ["apple"]:              "images/rust/apple.png",
+    ["mushroom"]:           "images/rust/mushroom.png"
 }
 
 function GetItemImage(item_name)

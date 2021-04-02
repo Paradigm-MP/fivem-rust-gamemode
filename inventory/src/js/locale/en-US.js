@@ -40,6 +40,11 @@ export default {
         {
             name: "Mushroom",
             description: "A mushroom found on the ground. Eating it provides a small boost to health, hunger, and thirst."
+        },
+        ["apple"]:
+        {
+            name: "Apple",
+            description: "An Apple. Eating it provides a small boost to health, hunger, and thirst."
         }
     }
 }

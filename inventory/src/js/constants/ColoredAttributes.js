@@ -2,5 +2,6 @@
 export default {
     ["healing"]: true,
     ["calories"]: true,
-    ["hydration"]: true
+    ["hydration"]: true,
+    ["instant_health"]: true
 }

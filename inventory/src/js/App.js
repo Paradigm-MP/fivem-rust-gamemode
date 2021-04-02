@@ -29,6 +29,7 @@ export default class App extends React.Component {
         document.addEventListener("keydown", (e) => 
         {
             this.onKeyDown(e);
+            e.preventDefault();
         }, false);
 
         OOF.Subscribe('Open', () => 

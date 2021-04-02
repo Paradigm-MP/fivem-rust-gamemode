@@ -194,9 +194,9 @@ div.item-info-container div.info-container div.content div.attr-container
 div.item-info-container div.info-container div.content div.attr-container
 {
     text-transform: capitalize;
-    display: grid;
-    grid-template-columns: 50% minmax(0, 1fr);
-    grid-template-rows: auto;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: row;
     color: white;
     font-size: 16px;
     padding: 6px;
@@ -207,12 +207,12 @@ div.item-info-container div.info-container div.content div.attr-container
 
 div.item-info-container div.info-container div.content div.attr-container div.attr-title
 {
-    display: inline-block;
     text-align: right;
+    flex: 0 0 40%;
 }
 
 div.item-info-container div.info-container div.content div.attr-container div.attr-amount
 {
     margin-left: 30px;
-    display: inline-block;
+    flex: 0 0 auto;
 }
