@@ -88,7 +88,7 @@ end
 function sInventory:ModifyItemCustomDataRemote(args)
 
     if args.player ~= self.player then
-        error(debug.traceback("sInventory:ModifyItemCustomDataRemote failed: player does not match"))
+        error("sInventory:ModifyItemCustomDataRemote failed: player does not match")
         return
     end
 

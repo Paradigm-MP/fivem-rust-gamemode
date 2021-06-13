@@ -8,12 +8,12 @@ function sItem:__init(args)
     not args.amount or 
     args.amount < 1
     then
-        error(debug.traceback("sItem:__init failed: missing a key piece of information"))
+        error("sItem:__init failed: missing a key piece of information")
     end
 
     local default_data = deepcopy(Items_indexed[args.name])
     if not default_data then
-        error(debug.traceback("sItem:__init failed: could not find default data for " .. args.name))
+        error("sItem:__init failed: could not find default data for " .. args.name)
     end
 
     self.uid = args.uid or UID:GetNew()
@@ -28,11 +28,11 @@ function sItem:__init(args)
     self.custom_data = args.custom_data and shallow_copy(args.custom_data) or {}
 
     if self.can_equip and not self.equip_type then
-        error(debug.traceback("sItem:__init failed: can_equip was true but no equip_type was given for " .. self.name))
+        error("sItem:__init failed: can_equip was true but no equip_type was given for " .. self.name)
     end
 
     if self.amount > self.stacklimit then
-        error(debug.traceback("sItem:__init failed: amount was greater than stack limit"))
+        error("sItem:__init failed: amount was greater than stack limit")
     end
 
     self:GetCustomData()
@@ -40,7 +40,7 @@ function sItem:__init(args)
     if self.durable then
 
         if self.amount > 1 then
-            error(debug.traceback("sItem:__init failed: durability was given but item had more than one amount"))
+            error("sItem:__init failed: durability was given but item had more than one amount")
         end
 
         self.max_durability = args.max_durability or default_data.max_durability

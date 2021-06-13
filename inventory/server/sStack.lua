@@ -2,7 +2,7 @@ sStack = class()
 
 function sStack:__init(args)
     if not args.contents or #args.contents == 0 then
-        error(debug.traceback("sStack:__init failed: contents is empty"))
+        error("sStack:__init failed: contents is empty")
     end
 
     self.uid = args.uid or UID:GetNew()
@@ -48,7 +48,7 @@ function sStack:AddStack(_stack)
     local stack = _stack:Copy()
 
     if not self:CanStack(stack.contents[1]) then
-        error(debug.traceback("sStack:AddStack failed: the stack cannot be added to the stack"))
+        error("sStack:AddStack failed: the stack cannot be added to the stack")
     end
 
     if self:GetAmount() >= self:GetProperty("stacklimit") then
@@ -78,7 +78,7 @@ function sStack:AddItem(_item)
     local item = _item:Copy()
 
     if not self:CanStack(item) then
-        error(debug.traceback("sStack:AddItem failed: the item cannot be added to the stack"))
+        error("sStack:AddItem failed: the item cannot be added to the stack")
     end
 
     if self:GetAmount() >= self:GetProperty("stacklimit") then
@@ -122,7 +122,7 @@ function sStack:RemoveItem(_item, index, only_one)
     if index ~= nil then
 
         if not self.contents[index] then
-            error(debug.traceback(string.format("sStack:RemoveItem failed: the specified index %s does not exist in the contents", index)))
+            error(string.format("sStack:RemoveItem failed: the specified index %s does not exist in the contents", index))
         end
 
         return table.remove(self.contents, index)
@@ -143,11 +143,11 @@ function sStack:RemoveItem(_item, index, only_one)
     local item = _item:Copy()
 
     if not self:CanStack(item) then
-        error(debug.traceback("sStack:RemoveItem failed: the item cannot be removed from the stack"))
+        error("sStack:RemoveItem failed: the item cannot be removed from the stack")
     end
 
     if item.amount > self:GetAmount() then
-        error(debug.traceback("sStack:RemoveItem failed: the amount you are trying to remove is greater than the total amount in the stack"))
+        error("sStack:RemoveItem failed: the amount you are trying to remove is greater than the total amount in the stack")
     end
 
     if not self:IsStackable() then
@@ -167,7 +167,7 @@ function sStack:RemoveItem(_item, index, only_one)
     end
 
     if item then
-        error(debug.traceback("sStack:RemoveItem failed: something went wrong and the item failed to remove"))
+        error("sStack:RemoveItem failed: something went wrong and the item failed to remove")
     end
 
 end
