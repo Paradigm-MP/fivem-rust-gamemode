@@ -64,3 +64,20 @@ div.subtitle
     color: rgba(255, 255, 255, 0.527);
     font-weight: 700;
 }
+
+div.line
+{
+    position: absolute;
+    height: 1px;
+    width: 5%;
+    background-color: rgba(255, 255, 255, 0.76);
+    bottom: 0;
+    animation: line-anim 3s ease-in-out infinite;
+}
+
+@keyframes line-anim
+{
+    0% {left: 0;}
+    50% {left: 95%;}
+    100% {left: 0;}
+}
