@@ -7,7 +7,7 @@ function cResourceManager:__init()
     Network:Subscribe('ResourceManager/SyncCells', self, self.SyncCells)
     Network:Subscribe('ResourceManager/SyncDestroyed', self, self.SyncDestroyed)
     Network:Subscribe('Resources/ParticleEffect', self, self.ParticleEffect)
-
+    
 end
 
 function cResourceManager:ParticleEffect(args)
@@ -25,6 +25,7 @@ function cResourceManager:SyncDestroyed(args)
     and self.resources[args.cell.x][args.cell.y]
     and self.resources[args.cell.x][args.cell.y][args.id] then
         local object = self.resources[args.cell.x][args.cell.y][args.id].object
+        if not object then return end
         object:Destroy()
         self.resources[args.cell.x][args.cell.y][args.id].object = nil
     end

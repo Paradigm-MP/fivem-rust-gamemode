@@ -1,0 +1,15 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+prop_recyclebin_02_c, -1536.876, -902.3742, 9.168404, -0.007458001, 0.003679001, 0.3879211, 0.9216551, x64m.rpf\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\sm_21_strm_0.ymap
+prop_recyclebin_02_c, -1520.688, -915.9529, 9.166672, -0.004373001, 0.0009250003, 0.3834731, 0.9235412, x64m.rpf\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\sm_21_strm_0.ymap
+prop_recyclebin_02_c, -1488.035, -942.9521, 9.196861, -0.004196003, 0.002160002, 0.3852733, 0.9227905, x64m.rpf\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\sm_21_strm_0.ymap
+prop_recyclebin_02_c, -3149.529, 1117.505, 19.86694, 0, -1E-06, 0.2080441, 0.9781194, x64n.rpf\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\ch1_11_strm_1.ymap
+prop_recyclebin_02_c, -1536.876, -902.3742, 9.168404, -0.007458001, 0.003679001, 0.3879211, 0.9216551, update\update.rpf\dlc_patch\mpheist\x64\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\hei_sm_21_strm_0.ymap
+prop_recyclebin_02_c, -1520.688, -915.9529, 9.166672, -0.004373001, 0.0009250003, 0.3834731, 0.9235412, update\update.rpf\dlc_patch\mpheist\x64\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\hei_sm_21_strm_0.ymap
+prop_recyclebin_02_c, -1488.035, -942.9521, 9.196861, -0.004196003, 0.002160002, 0.3852733, 0.9227905, update\update.rpf\dlc_patch\mpheist\x64\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\hei_sm_21_strm_0.ymap
+prop_recyclebin_02_c, -1536.876, -902.3742, 9.168404, -0.007458001, 0.003679001, 0.3879211, 0.9216551, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\hei_sm_21_strm_0.ymap
+prop_recyclebin_02_c, -1520.688, -915.9529, 9.166672, -0.004373001, 0.0009250003, 0.3834731, 0.9235412, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\hei_sm_21_strm_0.ymap
+prop_recyclebin_02_c, -1488.035, -942.9521, 9.196861, -0.004196003, 0.002160002, 0.3852733, 0.9227905, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\hei_sm_21_strm_0.ymap
+prop_recyclebin_02_c, -3149.529, 1117.505, 19.86694, 0, -1E-06, 0.2080441, 0.9781194, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\hei_ch1_11_strm_1.ymap
+prop_recyclebin_02_c, -1536.876, -902.3742, 9.168404, -0.007458001, 0.003679001, 0.3879211, 0.9216551, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\sm_21_strm_0.ymap
+prop_recyclebin_02_c, -1520.688, -915.9529, 9.166672, -0.004373001, 0.0009250003, 0.3834731, 0.9235412, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\sm_21_strm_0.ymap
+prop_recyclebin_02_c, -1488.035, -942.9521, 9.196861, -0.004196003, 0.002160002, 0.3852733, 0.9227905, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_cityw\santamon_01\santamon_metadata.rpf\sm_21_strm_0.ymap

@@ -1,0 +1,7 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+prop_recyclebin_02_d, -600.0312, -983.9626, 21.32708, 7.400001E-05, 6.600001E-05, -0.6757761, 0.737107, x64l.rpf\levels\gta5\_cityw\koreatown_01\koreatown_metadata.rpf\kt1_15_strm_0.ymap
+prop_recyclebin_02_d, -600.0323, -984.6617, 21.32724, -0.000342, 0.0003779999, 0.708127, -0.706085, x64l.rpf\levels\gta5\_cityw\koreatown_01\koreatown_metadata.rpf\kt1_15_strm_0.ymap
+prop_recyclebin_02_d, -3149.237, 1118.12, 19.86694, 0, -1E-06, 0.2080441, 0.9781194, x64n.rpf\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\ch1_11_strm_1.ymap
+prop_recyclebin_02_d, -600.0312, -983.9626, 21.32708, 7.400001E-05, 6.600001E-05, -0.6757761, 0.737107, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_cityw\koreatown_01\koreatown_metadata.rpf\hei_kt1_15_strm_0.ymap
+prop_recyclebin_02_d, -600.0323, -984.6617, 21.32724, -0.000342, 0.0003779999, 0.708127, -0.706085, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_cityw\koreatown_01\koreatown_metadata.rpf\hei_kt1_15_strm_0.ymap
+prop_recyclebin_02_d, -3149.237, 1118.12, 19.86694, 0, -1E-06, 0.2080441, 0.9781194, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\hei_ch1_11_strm_1.ymap

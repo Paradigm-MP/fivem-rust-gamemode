@@ -1,0 +1,5 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+prop_bin_14b, -3244.329, 996.2213, 11.47241, 0, 0, 0, 1, x64n.rpf\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\ch1_12_strm_0.ymap
+prop_bin_14b, -3248.526, 1008.827, 11.45335, 0, 0, 0, 1, x64n.rpf\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\ch1_12_strm_0.ymap
+prop_bin_14b, -3244.329, 996.2213, 11.47241, 0, 0, 0, 1, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\hei_ch1_12_strm_0.ymap
+prop_bin_14b, -3248.526, 1008.827, 11.45335, 0, 0, 0, 1, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_01\cityhills_01_metadata.rpf\hei_ch1_12_strm_0.ymap

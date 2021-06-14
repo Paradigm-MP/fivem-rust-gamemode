@@ -18,6 +18,10 @@ ItemData =
         stacklimit = 1000
     },
     {
+        name = "metal_fragments",
+        stacklimit = 1000
+    },
+    {
         name = "stone_hatchet",
         stacklimit = 1,
         durable = true,

@@ -1,14 +1,17 @@
 ResourceType = 
 {
-    Wood = "wood",
-    Stone = "stone"
+    Wood = "wood", -- Trees that give wood when chopped
+    Stone = "stone", -- Rocks that give stone when mined
+    Metal = "metal", -- Broken pieces of metal that give metal fragments when mined
+    Loot = "loot", -- Lootboxes / objects with loot inside that cannot be destroyed
+    Barrel = "barrel", -- Barrels/objects that can be broken to get loot inside
 }
 
 function GetResourceTypeFromModel(model)
-    if ResourceData[ResourceType.Wood][model] then
-        return ResourceType.Wood
-    elseif ResourceData[ResourceType.Stone][model] then
-        return ResourceType.Stone
+    for resource_type, _ in pairs(ResourceData) do
+        if ResourceData[resource_type][model] then
+            return resource_type
+        end
     end
 end
 
@@ -19,22 +22,25 @@ end
 local ResourceSizeConversions = 
 {
     [ResourceType.Wood] = 50,
-    [ResourceType.Stone] = 50
+    [ResourceType.Stone] = 50,
+    [ResourceType.Metal] = 50
 }
 
 local ResourceLimits = 
 {
     [ResourceType.Wood] = {min = 100, max = 1000},
-    [ResourceType.Stone] = {min = 100, max = 1000}
+    [ResourceType.Stone] = {min = 100, max = 1000},
+    [ResourceType.Metal] = {min = 100, max = 1000}
 }
 
 ResourceYieldBounds = 
 {
     [ResourceType.Wood] = {min = 15, max = 20},
-    [ResourceType.Stone] = {min = 15, max = 20}
+    [ResourceType.Stone] = {min = 15, max = 20},
+    [ResourceType.Metal] = {min = 15, max = 20}
 }
 
-ResourceCompleteBonus = 0.2 -- 20% bonus upon destroying a resource
+ResourceCompleteBonus = 0.20 -- % bonus upon destroying a resource
 
 -- Gets the total amount of resource (items to give / health) for a given size of a resource
 function GetResourceAmountFromSize(resource_type, size)
@@ -286,6 +292,121 @@ ResourceData =
         -- ["ch1_01_beachrck_h_lod"] = {size = 1},
         -- ["ch1_01_beachrck_i_lod"] = {size = 1},
         -- ["ch1_01_beachrck_j_lod"] = {size = 1}
+    },
+    [ResourceType.Barrel] = 
+    {
+        -- Barrels
+        ["prop_barrel_01a"] = {}, -- Metal barrel
+        ["prop_barrel_02a"] = {}, -- Plastic barrel
+        ["prop_barrel_02b"] = {}, -- Plastic barrel
+        ["prop_barrel_03a"] = {}, -- Open metal barrel
+        ["prop_barrel_03d"] = {}, -- Open yellow metal barrel
+        
+        -- "Explosive" barrels
+        ["prop_barrel_exp_01a"] = {},
+        -- ["prop_barrel_exp_01b"] = {}, -- Does not exist
+        ["prop_barrel_exp_01c"] = {},
+        
+        -- Barrel piles
+        ["prop_barrel_pile_01"] = {num_barrels = 6},
+        ["prop_barrel_pile_02"] = {num_barrels = 4},
+        ["prop_barrel_pile_03"] = {num_barrels = 3},
+        ["prop_barrel_pile_04"] = {num_barrels = 2},
+        ["prop_barrel_pile_05"] = {num_barrels = 2},
+        
+        -- Trash cans
+        ["prop_bin_01a"] = {},
+        ["prop_bin_02a"] = {},
+        ["prop_bin_03a"] = {},
+        ["prop_bin_04a"] = {},
+        ["prop_bin_05a"] = {},
+        ["prop_bin_06a"] = {},
+        ["prop_bin_07a"] = {},
+        ["prop_bin_07b"] = {},
+        ["prop_bin_07c"] = {},
+        ["prop_bin_07d"] = {},
+        ["prop_bin_08a"] = {},
+        ["prop_bin_08open"] = {},
+        ["prop_bin_09a"] = {},
+        
+        ["prop_bin_10a"] = {},
+        ["prop_bin_10b"] = {},
+        ["prop_bin_11a"] = {},
+        ["prop_bin_11b"] = {},
+        ["prop_bin_12a"] = {},
+        ["prop_bin_beach_01d"] = {},
+        ["prop_bin_delpiero"] = {},
+        ["prop_bin_delpiero_b"] = {},
+        
+        ["prop_bin_beach_01a"] = {},
+        ["prop_recyclebin_01a"] = {},
+        ["prop_recyclebin_02a"] = {},
+        ["prop_recyclebin_02b"] = {},
+        ["prop_recyclebin_02_c"] = {},
+        ["prop_recyclebin_02_d"] = {},
+        -- ["prop_recyclebin_03_a"] = {}, -- Does not exist
+        ["prop_recyclebin_04_a"] = {},
+        ["prop_recyclebin_04_b"] = {},
+        ["prop_recyclebin_05_a"] = {},
+        
+        -- Carts with stuff in them
+        ["prop_skid_trolley_1"] = {},
+        ["prop_skid_trolley_2"] = {},
+        
+        -- Large dumpsters
+        ["prop_dumpster_01a"] = {},
+        ["prop_dumpster_02a"] = {},
+        ["prop_dumpster_02b"] = {},
+        ["prop_dumpster_3a"] = {},
+        ["prop_dumpster_4a"] = {},
+        ["prop_dumpster_4b"] = {},
+        ["prop_bin_13a"] = {},
+        ["prop_bin_14a"] = {},
+        ["prop_bin_14b"] = {},
+        
+    },
+    [ResourceType.Metal] = 
+    {
+        -- Any old/rusted stuff works as a harvestable metal source
+        
+        ["prop_rub_buswreck_01"] = {size = 4.571653},
+        ["prop_rub_buswreck_03"] = {size = 3.90609},
+        ["prop_rub_buswreck_06"] = {size = 7.162016},
+        
+        ["prop_rub_trukwreck_1"] = {size = 5.109186},
+        ["prop_rub_trukwreck_2"] = {size = 3.209199},
+        
+        ["prop_rub_carwreck_2"] = {size = 2.779599},
+        ["prop_rub_carwreck_3"] = {size = 2.919425},
+        ["prop_rub_carwreck_5"] = {size = 3.022905},
+        ["prop_rub_carwreck_7"] = {size = 2.928027},
+        ["prop_rub_carwreck_8"] = {size = 2.635303},
+        ["prop_rub_carwreck_9"] = {size = 2.918734},
+        ["prop_rub_carwreck_10"] = {size = 2.351594},
+        ["prop_rub_carwreck_11"] = {size = 2.42959},
+        ["prop_rub_carwreck_12"] = {size = 3.269597},
+        ["prop_rub_carwreck_13"] = {size = 2.981343},
+        ["prop_rub_carwreck_14"] = {size = 2.611573},
+        ["prop_rub_carwreck_15"] = {size = 2.52965},
+        ["prop_rub_carwreck_16"] = {size = 2.285459},
+        ["prop_rub_carwreck_17"] = {size = 2.385922},
+        
+        ["prop_rub_wreckage_3"] = {size = 5.496653},
+        ["prop_rub_wreckage_4"] = {size = 4.565409},
+        -- ["prop_rub_wreckage_5"] = {size = 7.830047}, -- Not suitable
+        -- ["prop_rub_wreckage_6"] = {size = 7.664493}, -- Not suitable
+        -- ["prop_rub_wreckage_7"] = {size = 4.565409}, -- Not suitable
+        -- ["prop_rub_wreckage_8"] = {size = 4.565409}, -- Not suitable
+        ["prop_rub_wreckage_9"] = {size = 4.565409},
+        
+        ["prop_rub_scrap_02"] = {size = 1.330668},
+        ["prop_rub_scrap_03"] = {size = 1.769524},
+        ["prop_rub_scrap_04"] = {size = 2.155283},
+        ["prop_rub_scrap_05"] = {size = 1.780236},
+        ["prop_rub_scrap_06"] = {size = 1.134745},
+        ["prop_rub_scrap_07"] = {size = 1.363021},
+        
+        ["prop_rub_generator"] = {size = 1.228987},
     }
 }
 

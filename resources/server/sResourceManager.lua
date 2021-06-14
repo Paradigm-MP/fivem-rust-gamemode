@@ -60,7 +60,8 @@ function sResourceManager:CharacterHitResource(args)
         })
 
         yield = yield + math.ceil(resource.max_health * ResourceCompleteBonus)
-
+        
+        self.resources[args.cell.x][args.cell.y][resource.id] = nil
         -- TODO: respawn later
     end
 
@@ -103,6 +104,26 @@ function sResourceManager:CharacterHitResource(args)
         Network:Send("Resources/ParticleEffect", nearby_players, {
             bank = "core",
             effect = "ent_dst_concrete_large",
+            position = args.hit_position,
+            scale = 1
+        })
+        
+    elseif resource.type == ResourceType.Metal then
+        
+        local inventory = args.player:GetValue("Inventory")
+        local item = sItem({
+            name = "metal_fragments",
+            amount = item_yield
+        })
+        inventory:GiveItem({
+            item = item
+        })
+
+        local nearby_players = sItemDrops:GetNearbyPlayers(args.cell)
+        nearby_players[args.player:GetUniqueId()] = nil -- Do not send to this player
+        Network:Send("Resources/ParticleEffect", nearby_players, {
+            bank = "core",
+            effect = "liquid_splash_gloopy",
             position = args.hit_position,
             scale = 1
         })
@@ -292,7 +313,7 @@ function sResourceManager:LoadAllResourcesFromFile(callback)
     Citizen.CreateThread(function()
         self:LoadResourcesFromFile(ResourceType.Wood)
         self:LoadResourcesFromFile(ResourceType.Stone)
-        -- self:LoadResourcesFromFile("barrels")
+        self:LoadResourcesFromFile(ResourceType.Metal)
 
         if callback then callback() end
     end)

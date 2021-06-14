@@ -1,0 +1,9 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+prop_rub_wreckage_5, 86.65973, 6262.887, 30.4379, 0, 0, -0.3123711, 0.9499602, x64q.rpf\levels\gta5\_hills\country_01\country_01_metadata.rpf\cs1_roads_pb_strm_1.ymap
+prop_rub_wreckage_5, 2915.939, 4331.621, 49.25284, 0, 0, 0.5372996, 0.8433914, x64r.rpf\levels\gta5\_hills\country_02\country_02_metadata.rpf\cs2_05_strm_2.ymap
+prop_rub_wreckage_5, 86.65973, 6262.887, 30.4379, 0, 0, -0.3123711, 0.9499602, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_01\country_01_metadata.rpf\hei_cs1_roads_pb_strm_1.ymap
+prop_rub_wreckage_5, 2915.939, 4331.621, 49.25284, 0, 0, 0.5372996, 0.8433914, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_02\country_02_metadata.rpf\hei_cs2_05_strm_2.ymap
+prop_rub_wreckage_5, 86.65973, 6262.887, 30.4379, 0, 0, -0.3123711, 0.9499602, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_hills\country_01\country_01_metadata.rpf\cs1_roads_pb_strm_1.ymap
+prop_rub_wreckage_5, 86.65973, 6262.887, 30.4379, 0, 0, -0.3123711, 0.9499602, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_hills\country_01\country_01_metadata.rpf\cs1_roads_pb_strm_1.ymap
+prop_rub_wreckage_5, 2915.939, 4331.621, 49.25284, 0, 0, 0.5372996, 0.8433914, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_hills\country_02\country_02_metadata.rpf\cs2_05_strm_2.ymap
+prop_rub_wreckage_5, 2915.939, 4331.621, 49.25284, 0, 0, 0.5372996, 0.8433914, update\x64\dlcpacks\patchday3ng\dlc.rpf\x64\levels\gta5\_hills\country_02\country_02_metadata.rpf\cs2_05_strm_2.ymap

@@ -9,6 +9,7 @@ const item_images = {
     ["wood"]:               "images/rust/wood.png",
     ["stone_hatchet"]:      "images/rust/stonehatchet.png",
     ["stone"]:              "images/rust/stone.png",
+    ["metal_fragments"]:    "images/rust/metalfragments.png",
     ["apple"]:              "images/rust/apple.png",
     ["mushroom"]:           "images/rust/mushroom.png"
 }

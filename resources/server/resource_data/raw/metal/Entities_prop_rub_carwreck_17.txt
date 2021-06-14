@@ -1,0 +1,15 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+prop_rub_carwreck_17, 165.0065, 3143.318, 41.52914, -0.02657101, -0.004685001, -0.173585, 0.9844492, x64s.rpf\levels\gta5\_hills\country_03\country_03_metadata.rpf\cs3_05_strm_1.ymap
+prop_rub_carwreck_17, 2363.141, 3039.866, 47.13379, 0, 0, 0.7049883, 0.709219, x64t.rpf\levels\gta5\_hills\country_04\country_04_metadata.rpf\cs4_02_strm_8.ymap
+prop_rub_carwreck_17, 2367.953, 3068.897, 47.16241, -0.003095, 0.003076, 0.7049811, 0.7092128, x64t.rpf\levels\gta5\_hills\country_04\country_04_metadata.rpf\cs4_02_strm_8.ymap
+prop_rub_carwreck_17, 165.0065, 3143.318, 41.52914, -0.02657101, -0.004685001, -0.173585, 0.9844492, update\update.rpf\dlc_patch\mpheist\x64\levels\gta5\_hills\country_03\country_03_metadata.rpf\hei_cs3_05_strm_1.ymap
+prop_rub_carwreck_17, 2363.141, 3039.866, 47.13379, 0, 0, 0.7049883, 0.709219, update\update.rpf\dlc_patch\mplowrider\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\lr_cs4_02_strm_8.ymap
+prop_rub_carwreck_17, 2367.953, 3068.897, 47.16241, -0.003095001, 0.003076, 0.7049811, 0.7092128, update\update.rpf\dlc_patch\mplowrider\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\lr_cs4_02_strm_8.ymap
+prop_rub_carwreck_17, 165.0065, 3143.318, 41.52914, -0.02657101, -0.004685001, -0.173585, 0.9844492, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_03\country_03_metadata.rpf\hei_cs3_05_strm_1.ymap
+prop_rub_carwreck_17, 2363.141, 3039.866, 47.13379, 0, 0, 0.7049883, 0.709219, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\hei_cs4_02_strm_8.ymap
+prop_rub_carwreck_17, 2367.953, 3068.897, 47.16241, -0.003095, 0.003076, 0.7049811, 0.7092128, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\hei_cs4_02_strm_8.ymap
+prop_rub_carwreck_17, 2363.141, 3039.866, 47.13379, 0, 0, 0.7049883, 0.709219, update\x64\dlcpacks\mplowrider\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\lr_cs4_02_strm_8.ymap
+prop_rub_carwreck_17, 2367.953, 3068.897, 47.16241, -0.003095, 0.003076, 0.7049811, 0.7092128, update\x64\dlcpacks\mplowrider\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\lr_cs4_02_strm_8.ymap
+prop_rub_carwreck_17, 2363.141, 3039.866, 47.13379, 0, 0, 0.7049883, 0.709219, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\cs4_02_strm_8.ymap
+prop_rub_carwreck_17, 2367.953, 3068.897, 47.16241, -0.003095, 0.003076, 0.7049811, 0.7092128, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_hills\country_04\country_04_metadata.rpf\cs4_02_strm_8.ymap
+prop_rub_carwreck_17, 165.0065, 3143.318, 41.52914, -0.02657101, -0.004685001, -0.173585, 0.9844492, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_hills\country_03\country_03_metadata.rpf\cs3_05_strm_1.ymap

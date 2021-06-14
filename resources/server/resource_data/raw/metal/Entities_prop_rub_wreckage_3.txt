@@ -1,0 +1,15 @@
+ArchetypeName, PositionX, PositionY, PositionZ, RotationX, RotationY, RotationZ, RotationW, YmapFile
+prop_rub_wreckage_3, -531.3823, -1613.144, 16.70636, 0, 0, 0.9063079, 0.422618, x64m.rpf\levels\gta5\_cityw\sanpedro_01\sanpedro_metadata.rpf\sp1_rd_strm_1.ymap
+prop_rub_wreckage_3, -478.0655, -1713.975, 17.55536, 0, 0, 0.6427881, 0.7660441, x64m.rpf\levels\gta5\_cityw\sanpedro_01\sanpedro_metadata.rpf\sp1_rd_strm_1.ymap
+prop_rub_wreckage_3, 1265.797, -2571.848, 41.99543, -0.02072101, -0.02314301, 0.8070713, -0.5896363, x64p.rpf\levels\gta5\_hills\cityhills_03\cityhills_03_metadata.rpf\ch3_11_strm_0.ymap
+prop_rub_wreckage_3, 1575.024, -2148.363, 76.67778, 0, 0, 0.9984463, 0.05572302, x64p.rpf\levels\gta5\_hills\cityhills_03\cityhills_03_metadata.rpf\ch3_11_strm_2.ymap
+prop_rub_wreckage_3, 1265.797, -2571.848, 41.99543, -0.02072101, -0.02314301, 0.8070713, -0.5896363, update\update.rpf\dlc_patch\mpheist\x64\levels\gta5\_hills\cityhills_03\cityhills_03_metadata.rpf\hei_ch3_11_strm_0.ymap
+prop_rub_wreckage_3, 1575.024, -2148.363, 76.67778, 0, 0, 0.9984463, 0.05572302, update\update.rpf\dlc_patch\mpheist\x64\levels\gta5\_hills\cityhills_03\cityhills_03_metadata.rpf\hei_ch3_11_strm_2.ymap
+prop_rub_wreckage_3, 1265.797, -2571.848, 41.99543, -0.02072101, -0.02314301, 0.8070713, -0.5896363, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_03\cityhills_03_metadata.rpf\hei_ch3_11_strm_0.ymap
+prop_rub_wreckage_3, 1575.024, -2148.363, 76.67778, 0, 0, 0.9984463, 0.05572302, update\x64\dlcpacks\mpheist\dlc.rpf\x64\levels\gta5\_hills\cityhills_03\cityhills_03_metadata.rpf\hei_ch3_11_strm_2.ymap
+prop_rub_wreckage_3, -531.3823, -1613.144, 16.70636, 0, 0, 0.9063079, 0.422618, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_cityw\sanpedro_01\sanpedro_metadata.rpf\sp1_rd_strm_1.ymap
+prop_rub_wreckage_3, -478.0655, -1713.975, 17.55536, 0, 0, 0.6427881, 0.7660441, update\x64\dlcpacks\patchday1ng\dlc.rpf\x64\levels\gta5\_cityw\sanpedro_01\sanpedro_metadata.rpf\sp1_rd_strm_1.ymap
+prop_rub_wreckage_3, -531.3823, -1613.144, 16.70636, 0, 0, 0.9063079, 0.422618, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_cityw\sanpedro_01\sanpedro_metadata.rpf\sp1_rd_strm_1.ymap
+prop_rub_wreckage_3, -478.0655, -1713.975, 17.55536, 0, 0, 0.6427881, 0.7660441, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_cityw\sanpedro_01\sanpedro_metadata.rpf\sp1_rd_strm_1.ymap
+prop_rub_wreckage_3, 1265.797, -2571.848, 41.99543, -0.02072101, -0.02314301, 0.8070713, -0.5896363, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_hills\cityhills_03\cityhills_03_metadata.rpf\ch3_11_strm_0.ymap
+prop_rub_wreckage_3, 1575.024, -2148.363, 76.67778, 0, 0, 0.9984463, 0.05572302, update\x64\dlcpacks\patchday2ng\dlc.rpf\x64\levels\gta5\_hills\cityhills_03\cityhills_03_metadata.rpf\ch3_11_strm_2.ymap

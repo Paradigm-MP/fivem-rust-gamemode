@@ -78,10 +78,18 @@ function MeleeActionRock:HitSomething(ray)
                 position = ray.position,
                 scale = 1
             })
-        else
+        elseif obj:GetValue("ResourceType") == ResourceType.Stone then
             local pfx = ParticleEffect({
                 bank = "core",
                 effect = "ent_dst_concrete_large",
+                type = ParticleEffectTypes.Position,
+                position = ray.position,
+                scale = 1
+            })
+        elseif obj:GetValue("ResourceType") == ResourceType.Metal then
+            local pfx = ParticleEffect({
+                bank = "core",
+                effect = "ent_dst_concrete_large", -- Ideally use ent_dst_metal_frag, but it doesn't have any sound
                 type = ParticleEffectTypes.Position,
                 position = ray.position,
                 scale = 1
@@ -90,7 +98,6 @@ function MeleeActionRock:HitSomething(ray)
 
         self:StopDetecting()
 
-        -- TODO: sync particles so other players can see and hear them
         Network:Send("Character/HitResource", {
             id = obj:GetValue("ResourceId"),
             type = obj:GetValue("ResourceType"),

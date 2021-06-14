@@ -31,6 +31,11 @@ export default {
             name: "Stone",
             description: "Stone obtained from rocks. Useful for many crafting recipes and base building."
         },
+        ["metal_fragments"]:
+        {
+            name: "Metal Fragments",
+            description: "Metal fragments obtained from rusted objects. Useful for many crafting recipes and base building."
+        },
         ["stone_hatchet"]:
         {
             name: "Stone Hatchet",
