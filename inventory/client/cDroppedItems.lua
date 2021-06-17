@@ -16,7 +16,7 @@ function cItemDrops:__init()
 
     Citizen.CreateThread(function()
         while true do
-            Wait(10)
+            Wait(50)
             self:CheckForLookAtDrops()
         end
     end)
