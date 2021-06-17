@@ -15,17 +15,6 @@ function cCells:__init()
 
     Events:Subscribe("ModulesLoaded", self, self.ModulesLoaded)
 
-    Network:Send(CellSyncRequestEvent, {
-        position = self:GetViewpoint()
-    })
-
-    Citizen.CreateThread(function()
-        while true do
-            self:TryCellCheck()
-            Wait(self.CELL_SCAN_INTERVAL)
-        end
-    end)
-
     --[[
     To subscribe to cell events, use this:
 
@@ -108,6 +97,17 @@ function cCells:ModulesLoaded()
     end
 
     self.ready_for_cell = true
+    
+    Citizen.CreateThread(function()
+        while true do
+            self:TryCellCheck()
+            Wait(self.CELL_SCAN_INTERVAL)
+        end
+    end)
+
+    Network:Send(CellSyncRequestEvent, {
+        position = self:GetViewpoint()
+    })
 end
 
 cCells = cCells()

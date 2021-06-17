@@ -42,6 +42,13 @@ function sResourceManager:CharacterHitResource(args)
     local resource_pos = vector3(resource.posX, resource.posY, resource.posZ)
 
     if Vector3Math:Distance(player_pos, resource_pos) > 5 then return end
+    
+    -- Barrel resources are handled separately
+    if resource.type == ResourceType.Barrel then
+        args.resource = resource
+        self:CharacterHitBarrel(args)
+        return 
+    end
 
     local yield = math.ceil(self:GetResourceYield(resource.type, resource.health) * (1 - ResourceCompleteBonus))
 
@@ -131,6 +138,36 @@ function sResourceManager:CharacterHitResource(args)
 
 end
 
+function sResourceManager:CharacterHitBarrel(args)
+     
+    local equipped_item_name = args.player:GetValue("EquippedItem")
+    if not equipped_item_name then return end
+
+    local damage = GetWeaponBarrelDamage(equipped_item_name)
+    
+    if damage == 0 then return end
+    
+    args.resource.health = math.max(0, args.resource.health - damage)
+    self.resources[args.cell.x][args.cell.y][args.resource.id] = args.resource
+
+    -- Barrel was destroyed
+    if args.resource.health == 0 then
+        -- Remove resource and respawn later
+        Network:Broadcast("ResourceManager/SyncDestroyed", {
+            cell = {x = args.cell.x, y = args.cell.y},
+            id = args.resource.id
+        })
+
+        self.resources[args.cell.x][args.cell.y][args.resource.id] = nil
+        -- TODO: respawn later
+        
+        args.resource.position = vector3(args.resource.posX, args.resource.posY, args.resource.posZ)
+        Events:Fire("ResourceManager/BarrelDestroyed", args)
+    end
+
+    
+end
+
 function sResourceManager:ModulesLoaded()
 
     -- Generate cell data if it does not exist
@@ -198,7 +235,7 @@ function sResourceManager:LoadCellResources(cell)
                 error("Failed to get resource type for " .. tostring(resource.model))
             end
             resource.no_spawn = NoSpawnResources[resource.model]
-            resource.max_health = GetResourceAmountFromSize(resource.type, GetResourceData(resource.model, resource.type).size)
+            resource.max_health = GetResourceAmountFromSize(resource.type, GetResourceData(resource.model, resource.type).size or 0)
             resource.health = resource.max_health
             indexed_data[resource.id] = resource
         end
@@ -314,6 +351,7 @@ function sResourceManager:LoadAllResourcesFromFile(callback)
         self:LoadResourcesFromFile(ResourceType.Wood)
         self:LoadResourcesFromFile(ResourceType.Stone)
         self:LoadResourcesFromFile(ResourceType.Metal)
+        self:LoadResourcesFromFile(ResourceType.Barrel)
 
         if callback then callback() end
     end)

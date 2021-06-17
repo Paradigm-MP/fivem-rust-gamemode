@@ -41,7 +41,7 @@ function cResourceManager:SyncCells(args)
 
                 if self.resources[cell.x][cell.y][resource.id]
                 and self.resources[cell.x][cell.y][resource.id].object then
-                    self.resources[cell.x][cell.y][resource.id].object:Remove()
+                    self.resources[cell.x][cell.y][resource.id].object:Destroy()
                     self.resources[cell.x][cell.y][resource.id] = nil
                 end
 

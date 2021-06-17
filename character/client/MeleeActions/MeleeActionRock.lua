@@ -94,6 +94,14 @@ function MeleeActionRock:HitSomething(ray)
                 position = ray.position,
                 scale = 1
             })
+        elseif obj:GetValue("ResourceType") == ResourceType.Barrel then
+            local pfx = ParticleEffect({
+                bank = "core",
+                effect = "ent_dst_concrete_large", -- Ideally use ent_dst_metal_frag, but it doesn't have any sound
+                type = ParticleEffectTypes.Position,
+                position = ray.position,
+                scale = 1
+            })
         end
 
         self:StopDetecting()

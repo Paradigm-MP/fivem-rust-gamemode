@@ -23,14 +23,16 @@ local ResourceSizeConversions =
 {
     [ResourceType.Wood] = 50,
     [ResourceType.Stone] = 50,
-    [ResourceType.Metal] = 50
+    [ResourceType.Metal] = 50,
+    [ResourceType.Barrel] = 50
 }
 
 local ResourceLimits = 
 {
     [ResourceType.Wood] = {min = 100, max = 1000},
     [ResourceType.Stone] = {min = 100, max = 1000},
-    [ResourceType.Metal] = {min = 100, max = 1000}
+    [ResourceType.Metal] = {min = 100, max = 1000},
+    [ResourceType.Barrel] = {min = 50, max = 50}
 }
 
 ResourceYieldBounds = 
@@ -39,6 +41,16 @@ ResourceYieldBounds =
     [ResourceType.Stone] = {min = 15, max = 20},
     [ResourceType.Metal] = {min = 15, max = 20}
 }
+
+-- The amount of damage a type of weapon does to a barrel
+WeaponBarrelDamages = 
+{
+    ["rock"] = 12
+}
+
+function GetWeaponBarrelDamage(weapon_name)
+    return WeaponBarrelDamages[weapon_name] or 0
+end
 
 ResourceCompleteBonus = 0.20 -- % bonus upon destroying a resource
 
