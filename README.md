@@ -1,6 +1,6 @@
 <p align="center"><img src="icon.png"></p>
 
-<p align="center"><b>⚠️ This project is discontinued ⚠️ <br><br>...but I am working on a new Rust survival server! <a href="https://discord.gg/4tKnUJSTJU">Join the discord for progress updates here.</a></b></p>
+<p align="center"><b>⚠️ This project is discontinued ⚠️ <br><br>...but I am working on a new Rust-inspired survival server! <a href="https://discord.gg/4tKnUJSTJU">Join the discord for progress updates here.</a></b></p>
 
 # FiveM Rust Gamemode
 Rust-inspired survival gamemode for FiveM using [OOF](https://github.com/Paradigm-MP/oof).
