@@ -1,6 +1,6 @@
 <p align="center"><img src="icon.png"></p>
 
-<p align="center"><b>This project has been taken over by <a href="https://yuzulabs.dev">Yuzu Labs</a>, who is working to bring this gamemode to FiveM in 2025. Join their <a href="https://discord.yuzulabs.dev">Discord</a> to stay updated. This project will be known as SCRAP - a Rust inspired survival server for FiveM by Yuzu Labs. </b></p>
+<p align="center"><b>⚠️ This project is discontinued ⚠️ </b></p>
 
 # FiveM Rust Gamemode
 Rust-inspired survival gamemode for FiveM using [OOF](https://github.com/Paradigm-MP/oof).
